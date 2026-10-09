@@ -1,5 +1,5 @@
 <!-- ==========================================================================
-     FILE: index.html (Unified E-WEEK 2026 Portal - App Inventor Native Fix)
+     FILE: index.html (Unified E-WEEK 2026 Portal - Desktop Layout Preserved on Mobile)
      ========================================================================== -->
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -102,8 +102,8 @@
     ::-webkit-scrollbar-track { background: var(--color-obsidian); }
     ::-webkit-scrollbar-thumb { background: rgba(197, 160, 89, 0.4); border-radius: 2px; }
 
-    a { color: inherit; text-decoration: none; cursor: pointer; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    a { color: inherit; text-decoration: none; cursor: pointer; pointer-events: auto !important; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; pointer-events: auto !important; }
     button:active { transform: scale(0.96); }
     img { max-width: 100%; height: auto; display: block; }
 
@@ -243,6 +243,7 @@
       color: var(--color-stone-light);
       cursor: pointer;
       padding: 4px 0;
+      pointer-events: auto !important;
     }
     .mob-nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; pointer-events: none; }
     .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; pointer-events: none; }
@@ -279,7 +280,7 @@
       letter-spacing: 0.15em; text-transform: uppercase; color: #0b0d12;
       background: linear-gradient(135deg, var(--color-gold) 0%, #d97706 100%);
       border: 1px solid var(--color-gold-light); border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.25); z-index: 10; text-decoration: none;
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.25); z-index: 10; text-decoration: none; cursor: pointer;
     }
     .btn-silver-secondary {
       background: var(--color-steel-dark);
@@ -434,6 +435,7 @@
       font-family: var(--font-google-sans); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em;
       padding: 10px 22px; background: var(--color-card-bg); border: 1px solid var(--color-card-border);
       color: var(--color-silver-bright); border-radius: 12px; cursor: pointer; text-transform: uppercase;
+      pointer-events: auto !important;
     }
     .batch-tab-btn.active { background: linear-gradient(135deg, var(--color-gold) 0%, #d97706 100%); color: #fff; font-weight: 700; }
     .initial-placeholder { padding: 60px 20px; text-align: center; background: var(--color-card-bg); border: 1px dashed var(--color-card-border); border-radius: 22px; }
@@ -531,64 +533,6 @@
     .footer-nav-list { display: flex; align-items: center; justify-content: center; gap: 16px; list-style: none; flex-wrap: wrap; margin: 12px 0; }
     .footer-nav-link { font-family: var(--font-google-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; color: var(--color-silver-mid); text-transform: uppercase; cursor: pointer; }
     .footer-bottom { border-top: 1px solid var(--color-card-border); padding-top: 14px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 0.75rem; color: var(--color-stone); font-family: var(--font-google-sans); }
-
-    @media (max-width: 992px) {
-      .desktop-nav-menu { display: none; }
-      .hamburger-btn { display: none; }
-      .top-stories-container, .contact-grid-layout { grid-template-columns: 1fr; }
-
-      .mobile-bottom-bar {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100vw;
-        height: 60px;
-        background: var(--color-ticker-bg);
-        backdrop-filter: blur(20px);
-        border-top: 1px solid var(--color-card-border);
-        z-index: 1002;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0 4px;
-        box-shadow: 0 -10px 25px rgba(0,0,0,0.15);
-      }
-      .mob-nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        flex: 1;
-        height: 100%;
-        background: transparent;
-        border: none;
-        color: var(--color-stone-light);
-        cursor: pointer;
-        padding: 4px 0;
-      }
-      .mob-nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; pointer-events: none; }
-      .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; pointer-events: none; }
-      .mob-nav-item.active { color: var(--color-gold); }
-
-      .fixed-bottom-ticker {
-        bottom: 60px;
-        grid-template-columns: 1fr;
-        gap: 2px;
-        padding: 4px 8px;
-      }
-      .fbt-col-latest {
-        border-right: none;
-        border-bottom: 1px solid var(--color-card-border);
-        padding-right: 0;
-        padding-bottom: 2px;
-        justify-content: space-between;
-      }
-      .fbt-col-history { display: none; }
-      .fbt-col-status { padding-left: 0; justify-content: center; padding-top: 2px; }
-
-      body { padding-bottom: 130px; }
-      .committee-grid { grid-template-columns: 1fr; }
-    }
   </style>
 </head>
 
@@ -710,6 +654,7 @@
 
   <main id="main-content">
 
+    <!-- HOME PANEL -->
     <section class="page-panel active" id="panel-home">
       <section class="hero-section" id="hero">
         <div class="container hero-content">
@@ -757,6 +702,7 @@
       </section>
     </section>
 
+    <!-- TEAMS PANEL -->
     <section class="page-panel" id="panel-teams">
       <div class="container teams-main-section">
         <span class="section-eyebrow">COMPETITION EVENT SQUADS</span>
@@ -780,6 +726,7 @@
       </div>
     </section>
 
+    <!-- FIXTURES PANEL -->
     <section class="page-panel" id="panel-fixtures">
       <section class="fixtures-hero">
         <div class="container">
@@ -799,6 +746,7 @@
       </section>
     </section>
 
+    <!-- MERCHANDISE PANEL -->
     <section class="page-panel" id="panel-merch">
       <section class="merch-hero">
         <div class="container">
@@ -849,6 +797,7 @@
       </section>
     </section>
 
+    <!-- CONTACT PANEL -->
     <section class="page-panel" id="panel-contact">
       <section class="contact-page-hero">
         <div class="container">
@@ -984,29 +933,29 @@
   </div>
 
   <script>
-    var SCORES_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzo1KtK5zMkmLykmHdjJRqzNEtGccwfM1wGNF7JGB6mYiRDBJdSQ3cboJo4-hRerV4TQ/exec";
-    var TEAMS_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFJsbdHQFZDAiFYWXyCIUvGbmbt0PxGqSGjm_FCEFvjSIC11CUEFyrhlcK30pzJ9fBg/exec";
+    const SCORES_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzo1KtK5zMkmLykmHdjJRqzNEtGccwfM1wGNF7JGB6mYiRDBJdSQ3cboJo4-hRerV4TQ/exec";
+    const TEAMS_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFJsbdHQFZDAiFYWXyCIUvGbmbt0PxGqSGjm_FCEFvjSIC11CUEFyrhlcK30pzJ9fBg/exec";
 
-    var globalNewsStore = [];
-    var globalMatchesStore = [];
-    var batchData = [
+    let globalNewsStore = [];
+    let globalMatchesStore = [];
+    let batchData = [
       { name: "E22", logo: "e22.png", score: 0, wins: 0, growth: "0%" },
       { name: "E23", logo: "e23.png", score: 0, wins: 0, growth: "0%" },
       { name: "E24", logo: "e24.png", score: 0, wins: 0, growth: "0%" },
       { name: "E25", logo: "e25.png", score: 0, wins: 0, growth: "0%" },
       { name: "Staff", logo: "staff.png", score: 0, wins: 0, growth: "0%" }
     ];
-    var logoMap = {
+    const logoMap = {
       "E22": "e22.png", "E23": "e23.png", "E24": "e24.png", "E25": "e25.png", "STAFF": "staff.png"
     };
 
-    var lastKnownMatchCount = -1;
-    var rotatingHistoryInterval = null;
-    var currentRotateIndex = 0;
-    var rosterCache = {};
+    let lastKnownMatchCount = -1;
+    let rotatingHistoryInterval = null;
+    let currentRotateIndex = 0;
+    let rosterCache = {};
 
-    document.addEventListener("DOMContentLoaded", function() {
-      var savedTheme = localStorage.getItem('eweek_theme') || 'dark';
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem('eweek_theme') || 'dark';
       setTheme(savedTheme);
 
       initNavigation();
@@ -1017,31 +966,31 @@
       initBatchTabs();
       initSequentialReveal();
 
-      loadAppData();
-      setInterval(function() {
-        loadAppData();
-      }, 15000);
+      fetchLiveData(false);
+      setInterval(() => {
+        fetchLiveData(true);
+      }, 12000);
     });
 
     function formatDriveImage(url) {
       if (!url) return '';
-      var match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
+      let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
       if (match && match[1]) {
-        return 'https://lh3.googleusercontent.com/d/' + match[1] + '=s1000';
+        return `https://lh3.googleusercontent.com/d/${match[1]}=s1000`;
       }
       return url;
     }
 
     function toggleTheme() {
-      var current = document.documentElement.getAttribute('data-theme');
-      var next = current === 'dark' ? 'light' : 'dark';
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
       setTheme(next);
       localStorage.setItem('eweek_theme', next);
     }
 
     function setTheme(theme) {
       document.documentElement.setAttribute('data-theme', theme);
-      var icon = document.getElementById('themeIcon');
+      const icon = document.getElementById('themeIcon');
       if (icon) {
         if (theme === 'light') {
           icon.innerHTML = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
@@ -1052,153 +1001,173 @@
     }
 
     function switchTab(tabId) {
-      var panels = document.querySelectorAll('.page-panel');
-      for (var i = 0; i < panels.length; i++) {
-        panels[i].classList.remove('active');
-      }
-      var targetPanel = document.getElementById('panel-'.concat(tabId));
+      document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+      const targetPanel = document.getElementById('panel-' + tabId);
       if (targetPanel) {
         targetPanel.classList.add('active');
       }
 
-      var navItems = document.querySelectorAll('[data-target]');
-      for (var j = 0; j < navItems.length; j++) {
-        var matches = navItems[j].getAttribute('data-target') === tabId;
-        if (matches) {
-          navItems[j].classList.add('active');
-        } else {
-          navItems[j].classList.remove('active');
-        }
-      }
+      document.querySelectorAll('[data-target]').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-target') === tabId);
+      });
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function initNavigation() {
-      var navItems = document.querySelectorAll('[data-target]');
-      for (var i = 0; i < navItems.length; i++) {
-        (function(btn) {
-          btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            var target = btn.getAttribute('data-target');
-            switchTab(target);
-          });
-          btn.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            var target = btn.getAttribute('data-target');
-            switchTab(target);
-          });
-        })(navItems[i]);
-      }
+      document.querySelectorAll('[data-target]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = btn.getAttribute('data-target');
+          switchTab(target);
+        });
+      });
     }
 
     function initParticleEngine() {
-      var canvas = document.getElementById('particle-canvas');
+      const canvas = document.getElementById('particle-canvas');
       if (!canvas) return;
-      var ctx = canvas.getContext('2d');
-      var width = canvas.width = window.innerWidth;
-      var height = canvas.height = window.innerHeight;
-      window.addEventListener('resize', function() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      });
-      var particles = [];
-      for (var i = 0; i < 40; i++) {
-        particles.push({
-          x: Math.random() * width, y: Math.random() * height,
-          radius: Math.random() * 2 + 0.5,
-          color: Math.random() > 0.4 ? 'rgba(245, 158, 11, ' : 'rgba(100, 116, 139, ',
-          alpha: Math.random() * 0.5 + 0.2, vy: -(Math.random() * 0.5 + 0.2), vx: (Math.random() - 0.5) * 0.3
-        });
-      }
+      const ctx = canvas.getContext('2d');
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+      window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
+      const particles = Array.from({ length: 50 }, () => ({
+        x: Math.random() * width, y: Math.random() * height,
+        radius: Math.random() * 2 + 0.5,
+        color: Math.random() > 0.4 ? 'rgba(245, 158, 11, ' : 'rgba(100, 116, 139, ',
+        alpha: Math.random() * 0.5 + 0.2, vy: -(Math.random() * 0.5 + 0.2), vx: (Math.random() - 0.5) * 0.3
+      }));
       function animate() {
         ctx.clearRect(0, 0, width, height);
-        for (var i = 0; i < particles.length; i++) {
-          var p = particles[i];
+        particles.forEach(p => {
           p.y += p.vy; p.x += p.vx;
           if (p.y < 0) { p.y = height + 10; p.x = Math.random() * width; }
           ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
           ctx.fillStyle = p.color + p.alpha + ')'; ctx.fill();
-        }
+        });
         requestAnimationFrame(animate);
       }
       animate();
     }
 
-    // JSONP loader for App Inventor Android WebViews (bypasses CORS entirely)
-    function loadJSONP(url, callbackName, onSuccess) {
-      window[callbackName] = function(res) {
-        delete window[callbackName];
-        if (scriptElem && scriptElem.parentNode) {
-          scriptElem.parentNode.removeChild(scriptElem);
-        }
-        if (onSuccess) onSuccess(res);
-      };
-      var scriptElem = document.createElement('script');
-      scriptElem.src = url + (url.indexOf('?') > -1 ? '&' : '?') + 'callback=' + callbackName;
-      scriptElem.onerror = function() {
-        if (window[callbackName]) delete window[callbackName];
-        if (scriptElem && scriptElem.parentNode) {
-          scriptElem.parentNode.removeChild(scriptElem);
-        }
-      };
-      document.body.appendChild(scriptElem);
+    async function fetchAPI(url) {
+      try {
+        let response = await fetch(url);
+        let data = await response.json();
+        return data;
+      } catch (err) {
+        console.error("API Fetch Error:", err);
+        return null;
+      }
     }
 
-    function loadAppData() {
-      // Load Scores
-      loadJSONP(SCORES_APPS_SCRIPT_URL + '?action=getScores', 'cb_scores_' + Math.floor(Math.random() * 100000), function(res) {
-        handleScoresResponse(res);
-      });
-      // Load News
-      loadJSONP(SCORES_APPS_SCRIPT_URL + '?action=getNews', 'cb_news_' + Math.floor(Math.random() * 100000), function(res) {
-        renderNewsData(res, document.getElementById('topStoriesContainer'));
-      });
-      // Load Fixtures
-      loadJSONP(SCORES_APPS_SCRIPT_URL + '?action=getFixtures', 'cb_fixtures_' + Math.floor(Math.random() * 100000), function(res) {
-        renderFixturesData(res, document.getElementById('fixturesContainerMount'));
-      });
+    async function fetchLiveData(isPolling) {
+      const pulseDot = document.getElementById('fbtPulseIndicator');
+      if (isPolling && pulseDot) {
+        pulseDot.style.background = "var(--color-emerald)";
+        pulseDot.style.boxShadow = "0 0 8px var(--color-emerald)";
+      }
+
+      const [scoresRes, newsRes, fixturesRes] = await Promise.all([
+        fetchAPI(`${SCORES_APPS_SCRIPT_URL}?action=getScores`),
+        fetchAPI(`${SCORES_APPS_SCRIPT_URL}?action=getNews`),
+        fetchAPI(`${SCORES_APPS_SCRIPT_URL}?action=getFixtures`)
+      ]);
+
+      if (scoresRes) handleScoresResponse(scoresRes);
+      if (newsRes) renderNewsData(newsRes, document.getElementById('topStoriesContainer'));
+      if (fixturesRes) renderFixturesData(fixturesRes, document.getElementById('fixturesContainerMount'));
     }
 
     function renderNewsData(res, container) {
       if (!container) return;
-      var newsList = (res && res.news) ? res.news : [];
+      const newsList = (res && res.news) ? res.news : [];
       globalNewsStore = newsList;
 
       if (newsList.length === 0) {
-        container.innerHTML = '<div style="text-align: center; color: var(--color-stone-light); padding: 20px; grid-column: span 2;">No top stories published yet.</div>';
+        container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 20px; grid-column: span 2;">No top stories published yet.</div>`;
         return;
       }
 
-      var latestIndex = newsList.length - 1;
-      var latestStory = newsList[latestIndex];
-      var latestImgUrl = formatDriveImage(latestStory.imageUrl);
+      const latestIndex = newsList.length - 1;
+      const latestStory = newsList[latestIndex];
+      const subStories = newsList.slice(0, latestIndex).reverse();
+      const latestTimeStr = latestStory.timestamp ? new Date(latestStory.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
+      const latestImgUrl = formatDriveImage(latestStory.imageUrl);
 
-      var html = '<div class="featured-hero-story"><div class="fhs-img-wrap"><img src="' + latestImgUrl + '" alt="Story" class="fhs-img" onerror="this.style.display=\'none\';"/></div><div class="fhs-content"><div><span class="news-badge-tag">' + (latestStory.category || "LIVE UPDATE") + '</span><h3 class="news-title-text" style="font-size: 1.25rem; margin-top:6px;">' + latestStory.title + '</h3><p class="news-desc-text" style="margin-top:6px;">' + latestStory.description + '</p></div><button class="news-see-more-btn" onclick="openNewsModal(' + latestIndex + ')" type="button">Read Full Story &rarr;</button></div></div>';
-      
+      let html = `
+        <div class="featured-hero-story">
+          <div class="fhs-img-wrap">
+            <img src="${latestImgUrl}" alt="${latestStory.title}" class="fhs-img" onerror="this.style.display='none';" />
+          </div>
+          <div class="fhs-content">
+            <div>
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                <span class="news-badge-tag">${latestStory.category || "LIVE UPDATE"}</span>
+                <span class="news-time-stamp">${latestTimeStr}</span>
+              </div>
+              <h3 class="news-title-text" style="font-size: 1.25rem;">${latestStory.title}</h3>
+              <p class="news-desc-text" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 10px;">${latestStory.description}</p>
+            </div>
+            <button class="news-see-more-btn" onclick="openNewsModal(${latestIndex})" type="button">Read Full Story &rarr;</button>
+          </div>
+        </div>
+      `;
+
+      html += `<div class="news-grid-sub">`;
+      subStories.forEach((sub, subRevIdx) => {
+        const actualIdx = latestIndex - 1 - subRevIdx;
+        const subTimeStr = sub.timestamp ? new Date(sub.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
+        const subImgUrl = formatDriveImage(sub.imageUrl);
+        html += `
+          <div class="news-card-sub">
+            <div class="ncs-img-wrap"><img src="${subImgUrl}" alt="${sub.title}" class="ncs-img" /></div>
+            <div class="ncs-body">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:3px;">
+                <span class="news-badge-tag">${sub.category || "UPDATE"}</span>
+                <span class="news-time-stamp">${subTimeStr}</span>
+              </div>
+              <h4 class="news-title-text" style="font-size: 0.88rem; margin-bottom: 2px;">${sub.title}</h4>
+              <p class="news-desc-text" style="font-size: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 3px;">${sub.description}</p>
+              <button class="news-see-more-btn" onclick="openNewsModal(${actualIdx})" type="button">Explore &rarr;</button>
+            </div>
+          </div>
+        `;
+      });
+      html += `</div>`;
       container.innerHTML = html;
     }
 
     function renderFixturesData(res, mount) {
       if (!mount) return;
-      var fixtures = (res && res.fixtures) ? res.fixtures : [];
+      const fixtures = (res && res.fixtures) ? res.fixtures : [];
       if (fixtures.length === 0) {
-        mount.innerHTML = '<div style="text-align: center; color: var(--color-stone-light); padding: 40px;">No match fixtures scheduled yet.</div>';
+        mount.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 40px;">No match fixtures scheduled yet.</div>`;
         return;
       }
 
-      var html = "";
-      for (var i = 0; i < fixtures.length; i++) {
-        var f = fixtures[i];
-        html += '<div class="fixture-card"><div class="fixture-meta"><span class="fixture-date">' + f.date + ' &bull; ' + f.time + '</span><span class="fixture-sport">' + f.sport + '</span></div><div class="fixture-teams"><span>' + f.teamA + '</span><span class="vs-tag">VS</span><span>' + f.teamB + '</span></div><div class="fixture-venue-text">📍 ' + (f.venue || 'Faculty Ground') + '</div><div class="fixture-status">' + (f.status || 'Scheduled') + '</div></div>';
-      }
-      mount.innerHTML = html;
+      mount.innerHTML = fixtures.map(f => `
+        <div class="fixture-card">
+          <div class="fixture-meta">
+            <span class="fixture-date">${f.date} &bull; ${f.time}</span>
+            <span class="fixture-sport">${f.sport}</span>
+          </div>
+          <div class="fixture-teams">
+            <span>${f.teamA}</span>
+            <span class="vs-tag">VS</span>
+            <span>${f.teamB}</span>
+          </div>
+          <div class="fixture-venue-text">📍 ${f.venue || 'Faculty Ground'}</div>
+          <div class="fixture-status">${f.status || 'Scheduled'}</div>
+        </div>
+      `).join('');
     }
 
     function openNewsModal(index) {
-      var story = globalNewsStore[index];
+      const story = globalNewsStore[index];
       if (!story) return;
       document.getElementById('modalNewsTag').textContent = story.category || "LIVE UPDATE";
+      document.getElementById('modalNewsTime').textContent = story.timestamp ? new Date(story.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
       document.getElementById('modalNewsImg').src = formatDriveImage(story.imageUrl);
       document.getElementById('modalNewsTitle').textContent = story.title;
       document.getElementById('modalNewsDesc').textContent = story.description;
@@ -1206,79 +1175,138 @@
     }
 
     function initNewsModalListeners() {
-      var closeBtn = document.getElementById('newsModalCloseBtn');
-      var backdrop = document.getElementById('newsModalBackdrop');
+      const closeBtn = document.getElementById('newsModalCloseBtn');
+      const backdrop = document.getElementById('newsModalBackdrop');
       if (closeBtn && backdrop) {
-        closeBtn.addEventListener('click', function() { backdrop.classList.remove('open'); });
+        closeBtn.addEventListener('click', () => backdrop.classList.remove('open'));
+        backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.classList.remove('open'); });
       }
     }
 
     function openAllScoresModal() {
-      var backdrop = document.getElementById('scoresModalBackdrop');
-      var listContainer = document.getElementById('allScoresListContainer');
+      const backdrop = document.getElementById('scoresModalBackdrop');
+      const listContainer = document.getElementById('allScoresListContainer');
       if (!backdrop || !listContainer) return;
 
       if (globalMatchesStore.length === 0) {
-        listContainer.innerHTML = '<div style="text-align: center; color: var(--color-stone-light); padding: 20px;">No match scores available yet.</div>';
+        listContainer.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 20px;">No match scores available yet.</div>`;
       } else {
-        var html = "";
-        for (var i = globalMatchesStore.length - 1; i >= 0; i--) {
-          var m = globalMatchesStore[i];
-          var lA = logoMap[String(m.teamA).toUpperCase()] || "logo.png";
-          var lB = logoMap[String(m.teamB).toUpperCase()] || "logo.png";
-          html += '<div class="all-score-item"><div><span style="font-size:0.6rem; color:var(--color-gold); font-weight:700;">' + m.sport + ' (' + m.category + ')</span><div style="display:flex; align-items:center; gap:8px; margin-top:4px;"><span>' + m.teamA + ' (' + m.scoreA + ')</span><span>VS</span><span>' + m.teamB + ' (' + m.scoreB + ')</span></div></div><span style="font-size:0.65rem; color:var(--color-emerald); font-weight:700;">' + (m.status || 'Completed') + '</span></div>';
-        }
-        listContainer.innerHTML = html;
+        listContainer.innerHTML = [...globalMatchesStore].reverse().map(m => {
+          const lA = logoMap[String(m.teamA).toUpperCase()] || "logo.png";
+          const lB = logoMap[String(m.teamB).toUpperCase()] || "logo.png";
+          const sA = Number(m.scoreA) || 0;
+          const sB = Number(m.scoreB) || 0;
+          let statusStr = m.status || 'Completed';
+          if (statusStr === 'Completed') {
+            if (sA > sB) statusStr = `Winner: ${m.teamA}`;
+            else if (sB > sA) statusStr = `Winner: ${m.teamB}`;
+            else statusStr = 'Match Tied';
+          }
+          return `
+            <div class="all-score-item">
+              <div style="display:flex; flex-direction:column;">
+                <span style="font-size:0.6rem; color:var(--color-gold); font-weight:700; text-transform:uppercase;">${m.sport} (${m.category})</span>
+                <div style="display:flex; align-items:center; gap:10px; margin-top:4px;">
+                  <div style="display:flex; align-items:center; gap:4px;"><img src="${lA}" style="width:18px;height:18px;object-fit:contain;" /><span>${m.teamA} <strong>(${sA})</strong></span></div>
+                  <span style="color:var(--color-gold); font-size:0.75rem; font-weight:700;">VS</span>
+                  <div style="display:flex; align-items:center; gap:4px;"><img src="${lB}" style="width:18px;height:18px;object-fit:contain;" /><span>${m.teamB} <strong>(${sB})</strong></span></div>
+                </div>
+              </div>
+              <span style="font-size:0.65rem; color:var(--color-emerald); font-weight:700; text-transform:uppercase; text-align:right;">${statusStr}</span>
+            </div>
+          `;
+        }).join('');
       }
       backdrop.classList.add('open');
     }
 
     function initScoresModalListeners() {
-      var closeBtn = document.getElementById('scoresModalCloseBtn');
-      var backdrop = document.getElementById('scoresModalBackdrop');
+      const closeBtn = document.getElementById('scoresModalCloseBtn');
+      const backdrop = document.getElementById('scoresModalBackdrop');
       if (closeBtn && backdrop) {
-        closeBtn.addEventListener('click', function() { backdrop.classList.remove('open'); });
+        closeBtn.addEventListener('click', () => backdrop.classList.remove('open'));
+        backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.classList.remove('open'); });
       }
     }
 
     function handleScoresResponse(res) {
-      var matches = (res && res.matches) ? res.matches : [];
+      const matches = (res && res.matches) ? res.matches : [];
       globalMatchesStore = matches;
-      processScoresData(res);
+
+      if (lastKnownMatchCount !== -1 && matches.length > lastKnownMatchCount) {
+        showAwaitingTransition();
+      } else {
+        processScoresData(res);
+      }
+      lastKnownMatchCount = matches.length;
+    }
+
+    function showAwaitingTransition() {
+      const matchTitleEl = document.getElementById('fbtMatchTitle');
+      const scorecardEl = document.getElementById('fbtScorecard');
+      const rotatingContainer = document.getElementById('fbtRotatingContainer');
+
+      if (matchTitleEl) matchTitleEl.textContent = "NEW RESULT";
+      if (scorecardEl) scorecardEl.innerHTML = `<span style="font-size:0.6rem; color:var(--color-emerald);">Syncing...</span>`;
+
+      if (rotatingContainer) {
+        rotatingContainer.innerHTML = `
+          <div class="fbt-rotate-item active" style="justify-content: center; background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.4); width: 100%;">
+            <span class="awaiting-animation">Awaits new result...</span>
+          </div>
+        `;
+      }
     }
 
     function processScoresData(res) {
-      var matches = (res && res.matches) ? res.matches : [];
-      var matchTitleEl = document.getElementById('fbtMatchTitle');
-      var scorecardEl = document.getElementById('fbtScorecard');
+      const matches = (res && res.matches) ? res.matches : [];
+      const matchTitleEl = document.getElementById('fbtMatchTitle');
+      const scorecardEl = document.getElementById('fbtScorecard');
 
       if (matches.length === 0) {
-        if (matchTitleEl) matchTitleEl.textContent = "No matches yet.";
-        if (scorecardEl) scorecardEl.innerHTML = '<span style="font-size:0.6rem;">Awaiting fixtures...</span>';
+        if (matchTitleEl) matchTitleEl.textContent = "No match results published yet.";
+        if (scorecardEl) scorecardEl.innerHTML = `<span style="font-size:0.6rem; color:var(--color-stone-light);">Awaiting fixtures...</span>`;
         updateTop3Status({});
         return;
       }
 
-      var latest = matches[matches.length - 1];
-      var sA = Number(latest.scoreA) || 0;
-      var sB = Number(latest.scoreB) || 0;
-      var logoA = logoMap[String(latest.teamA).toUpperCase()] || "logo.png";
-      var logoB = logoMap[String(latest.teamB).toUpperCase()] || "logo.png";
+      const latest = matches[matches.length - 1];
+      const sA = Number(latest.scoreA) || 0;
+      const sB = Number(latest.scoreB) || 0;
+      const teamAName = String(latest.teamA).toUpperCase();
+      const teamBName = String(latest.teamB).toUpperCase();
+      const logoA = logoMap[teamAName] || "logo.png";
+      const logoB = logoMap[teamBName] || "logo.png";
 
-      if (matchTitleEl) matchTitleEl.textContent = latest.sport.toUpperCase() + " (" + latest.category + ")";
-      if (scorecardEl) {
-        scorecardEl.innerHTML = '<div class="fbt-team-item"><img src="' + logoA + '" class="fbt-emblem" /><span class="fbt-team-name">' + latest.teamA + '</span><span class="fbt-score">' + sA + '</span></div><span class="fbt-vs">VS</span><div class="fbt-team-item"><img src="' + logoB + '" class="fbt-emblem" /><span class="fbt-team-name">' + latest.teamB + '</span><span class="fbt-score">' + sB + '</span></div>';
+      let statusDisplay = latest.status;
+      if (latest.status === "Completed") {
+        if (sA > sB) statusDisplay = `Winner: ${latest.teamA}`;
+        else if (sB > sA) statusDisplay = `Winner: ${latest.teamB}`;
+        else statusDisplay = "Match Tied";
       }
 
-      var scoreMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
-      var winsMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
+      if (matchTitleEl) matchTitleEl.textContent = `${latest.sport.toUpperCase()} (${latest.category})`;
+      if (scorecardEl) {
+        scorecardEl.innerHTML = `
+          <div class="fbt-team-item"><img src="${logoA}" class="fbt-emblem" /><span class="fbt-team-name">${latest.teamA}</span><span class="fbt-score">${sA}</span></div>
+          <span class="fbt-vs">VS</span>
+          <div class="fbt-team-item"><img src="${logoB}" class="fbt-emblem" /><span class="fbt-team-name">${latest.teamB}</span><span class="fbt-score">${sB}</span></div>
+          <div style="border-left: 1px solid var(--color-card-border); padding-left: 6px; display:flex; flex-direction:column; text-align:right;">
+            <span class="fbt-winner">${statusDisplay}</span>
+          </div>
+        `;
+      }
 
-      for (var i = 0; i < matches.length; i++) {
-        var m = matches[i];
-        var tA = String(m.teamA).toUpperCase();
-        var tB = String(m.teamB).toUpperCase();
-        var scA = Number(m.scoreA) || 0;
-        var scB = Number(m.scoreB) || 0;
+      setupRotatingHistory([...matches].reverse().slice(1, 6));
+
+      let scoreMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
+      let winsMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
+
+      matches.forEach(m => {
+        const tA = String(m.teamA).toUpperCase();
+        const tB = String(m.teamB).toUpperCase();
+        const scA = Number(m.scoreA) || 0;
+        const scB = Number(m.scoreB) || 0;
 
         if (scoreMap[tA] !== undefined) scoreMap[tA] += scA;
         if (scoreMap[tB] !== undefined) scoreMap[tB] += scB;
@@ -1287,74 +1315,94 @@
           if (scA > scB && winsMap[tA] !== undefined) winsMap[tA]++;
           else if (scB > scA && winsMap[tB] !== undefined) winsMap[tB]++;
         }
-      }
+      });
 
-      for (var j = 0; j < batchData.length; j++) {
-        var b = batchData[j];
-        var key = b.name.toUpperCase();
+      batchData.forEach(b => {
+        const key = b.name.toUpperCase();
         if (scoreMap[key] !== undefined) {
           b.score = scoreMap[key];
           b.wins = winsMap[key] || 0;
         }
-      }
+      });
 
       updateTop3Status(scoreMap);
       renderLeaderboard(scoreMap);
     }
 
     function updateTop3Status(scoreMap) {
-      var statusContainer = document.getElementById('fbtStatusContainer');
+      const statusContainer = document.getElementById('fbtStatusContainer');
       if (!statusContainer) return;
-      
-      var sortedTeams = [];
-      var keys = Object.keys(scoreMap);
-      for (var i = 0; i < keys.length; i++) {
-        sortedTeams.push({ name: keys[i], score: scoreMap[keys[i]], logo: logoMap[keys[i]] || "logo.png" });
+      const sortedTeams = Object.keys(scoreMap).map(name => ({
+        name: name, score: scoreMap[name], logo: logoMap[name] || "logo.png"
+      })).sort((a, b) => b.score - a.score);
+
+      const t1 = sortedTeams[0] || { name: "E23", score: 0, logo: "e23.png" };
+      const t2 = sortedTeams[1] || { name: "E22", score: 0, logo: "e22.png" };
+      const t3 = sortedTeams[2] === undefined ? { name: "E24", score: 0, logo: "e24.png" } : sortedTeams[2];
+
+      statusContainer.innerHTML = `
+        <div class="fbt-status-podium">
+          <div class="fbt-podium-item p1"><img src="${t1.logo}" class="fbt-p-emblem" /><span class="p-rank">1:</span><span class="p-pts">${t1.score}</span></div>
+          <div class="fbt-podium-item"><img src="${t2.logo}" class="fbt-p-emblem" /><span class="p-rank">2:</span><span class="p-pts">${t2.score}</span></div>
+          <div class="fbt-podium-item"><img src="${t3.logo}" class="fbt-p-emblem" /><span class="p-rank">3:</span><span class="p-pts">${t3.score}</span></div>
+        </div>
+      `;
+    }
+
+    function setupRotatingHistory(historyList) {
+      const container = document.getElementById('fbtRotatingContainer');
+      if (!container) return;
+      if (historyList.length === 0) {
+        container.innerHTML = `<div class="fbt-rotate-item active" style="justify-content:center;"><span style="font-size:0.65rem; color:var(--color-stone-light);">Tap to view all scores</span></div>`;
+        return;
       }
-      sortedTeams.sort(function(a, b) { return b.score - a.score; });
+      container.innerHTML = historyList.map((m, idx) => `
+        <div class="fbt-rotate-item ${idx === 0 ? 'active' : ''}">
+          <span style="font-size:0.58rem; color:var(--color-gold); font-weight:700;">${m.sport.toUpperCase()}</span>
+          <span style="font-size:0.68rem; color:var(--color-silver-bright);">${m.teamA} (${m.scoreA}) : (${m.scoreB}) ${m.teamB}</span>
+        </div>
+      `).join('');
 
-      var t1 = sortedTeams[0] || { name: "E23", score: 0, logo: "e23.png" };
-      var t2 = sortedTeams[1] || { name: "E22", score: 0, logo: "e22.png" };
-      var t3 = sortedTeams[2] || { name: "E24", score: 0, logo: "e24.png" };
-
-      statusContainer.innerHTML = '<div class="fbt-status-podium"><div class="fbt-podium-item p1"><img src="' + t1.logo + '" class="fbt-p-emblem" /><span class="p-rank">1:</span><span class="p-pts">' + t1.score + '</span></div><div class="fbt-podium-item"><img src="' + t2.logo + '" class="fbt-p-emblem" /><span class="p-rank">2:</span><span class="p-pts">' + t2.score + '</span></div><div class="fbt-podium-item"><img src="' + t3.logo + '" class="fbt-p-emblem" /><span class="p-rank">3:</span><span class="p-pts">' + t3.score + '</span></div></div>';
+      if (rotatingHistoryInterval) clearInterval(rotatingHistoryInterval);
+      if (historyList.length > 1) {
+        currentRotateIndex = 0;
+        rotatingHistoryInterval = setInterval(() => {
+          const items = container.querySelectorAll('.fbt-rotate-item');
+          if (items.length === 0) return;
+          items[currentRotateIndex].classList.remove('active');
+          currentRotateIndex = (currentRotateIndex + 1) % items.length;
+          items[currentRotateIndex].classList.add('active');
+        }, 4000);
+      }
     }
 
     function renderLeaderboard(scoreMap) {
-      var container = document.getElementById("leaderboardContainer");
-      var awaitsBanner = document.getElementById("resultsAwaitBanner");
-      
-      var sorted = [];
-      for (var i = 0; i < batchData.length; i++) {
-        var item = { name: batchData[i].name, logo: batchData[i].logo, wins: batchData[i].wins, score: scoreMap[batchData[i].name.toUpperCase()] || 0 };
-        sorted.push(item);
-      }
-      sorted.sort(function(a, b) { return b.score - a.score; });
-
-      var hasScores = false;
-      for (var j = 0; j < sorted.length; j++) {
-        if (sorted[j].score > 0) hasScores = true;
-      }
+      const container = document.getElementById("leaderboardContainer");
+      const awaitsBanner = document.getElementById("resultsAwaitBanner");
+      const sorted = batchData.map(b => ({ ...b, score: scoreMap[b.name.toUpperCase()] || 0 })).sort((a, b) => b.score - a.score);
+      const hasScores = sorted.some(item => item.score > 0);
       if (awaitsBanner) awaitsBanner.style.display = hasScores ? "none" : "flex";
 
       if (container) {
-        var maxScore = 100;
-        for (var k = 0; k < sorted.length; k++) {
-          if (sorted[k].score > maxScore) maxScore = sorted[k].score;
-        }
-
-        var html = "";
-        for (var l = 0; l < sorted.length; l++) {
-          var team = sorted[l];
-          var rank = l + 1;
-          var percent = Math.min(100, Math.round((team.score / maxScore) * 100));
-          html += '<div class="leaderboard-card rank-' + rank + '"><div class="rank-badge">#' + rank + '</div><img src="' + team.logo + '" class="batch-emblem" /><div class="batch-title">' + team.name + '</div><div class="points-display">' + team.score.toLocaleString() + ' <span style="font-size:0.8rem; color:var(--color-stone-light);">PTS</span></div><div class="stats-row"><div class="stat-item"><span class="stat-val">' + team.wins + '</span><span class="stat-lbl">WON EVENTS</span></div></div><div class="progress-track-bar"><div class="progress-fill-bar" style="width: ' + percent + '%;"></div></div></div>';
-        }
-        container.innerHTML = html;
+        const maxScore = Math.max(...sorted.map(s => s.score), 100);
+        container.innerHTML = sorted.map((team, index) => {
+          const rank = index + 1;
+          const percent = Math.min(100, Math.round((team.score / maxScore) * 100));
+          return `
+            <div class="leaderboard-card rank-${rank}">
+              <div class="rank-badge">#${rank}</div>
+              <img src="${team.logo}" alt="${team.name}" class="batch-emblem" />
+              <div class="batch-title">${team.name}</div>
+              <div class="points-display">${team.score.toLocaleString()} <span style="font-size:0.8rem; color:var(--color-stone-light); font-family:var(--font-google-sans);">PTS</span></div>
+              <div class="stats-row"><div class="stat-item"><span class="stat-val">${team.wins}</span><span class="stat-lbl">WON EVENTS</span></div></div>
+              <div class="progress-track-bar"><div class="progress-fill-bar" style="width: ${percent}%;"></div></div>
+            </div>
+          `;
+        }).join("");
       }
     }
 
-    var SPORTS_CONFIG = [
+    const SPORTS_CONFIG = [
       { id: "cricket", name: "Cricket", categories: ["MEN", "WOMEN"] },
       { id: "football", name: "Football", categories: ["MEN", "WOMEN"] },
       { id: "volleyball", name: "Volleyball", categories: ["MEN", "WOMEN"] },
@@ -1366,130 +1414,116 @@
       { id: "basketball", name: "Basketball", categories: ["MEN"] },
       { id: "netball", name: "Netball", categories: ["WOMEN"] },
       { id: "debate", name: "Debate", categories: ["MEN"], hideBadge: true },
-      { id: "espeaker", name: "E Speaker", categories: ["MEN"], hideBadge: true }
+      { id: "espeaker", name: "E Speaker", categories: ["MEN"], hideBadge: true },
+      { id: "100m", name: "100m Athletics", categories: ["MEN"], hideBadge: true },
+      { id: "200m", name: "200m Athletics", categories: ["MEN"], hideBadge: true },
+      { id: "400m", name: "400m Athletics", categories: ["MEN"], hideBadge: true },
+      { id: "800m", name: "800m Athletics", categories: ["MEN"], hideBadge: true },
+      { id: "1500m", name: "1500m Athletics", categories: ["MEN"], hideBadge: true },
+      { id: "marathon", name: "Marathon", categories: ["MEN"], hideBadge: true },
+      { id: "100m_hurdles", name: "100m Hurdles", categories: ["MEN"], hideBadge: true },
+      { id: "4x100", name: "4x100m Relay", categories: ["MEN"], hideBadge: true },
+      { id: "4x400", name: "4x400m Relay", categories: ["MEN"], hideBadge: true },
+      { id: "high_jump", name: "High Jump", categories: ["MEN"], hideBadge: true },
+      { id: "longjump", name: "Long Jump", categories: ["MEN"], hideBadge: true },
+      { id: "shotput", name: "Shot Put", categories: ["MEN"], hideBadge: true },
+      { id: "discuss_throw", name: "Discuss Throw", categories: ["MEN"], hideBadge: true },
+      { id: "javelin_throw", name: "Javelin Throw", categories: ["MEN"], hideBadge: true }
     ];
 
     function initBatchTabs() {
-      var buttons = document.querySelectorAll('.batch-tab-btn');
-      for (var i = 0; i < buttons.length; i++) {
-        (function(btn) {
-          btn.addEventListener('click', function(e) {
-            for (var j = 0; j < buttons.length; j++) buttons[j].classList.remove('active');
-            e.target.classList.add('active');
-            var batch = e.target.getAttribute('data-batch');
-            var logo = e.target.getAttribute('data-logo');
-            fetchAndRenderBatch(batch, logo);
-          });
-          btn.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            for (var j = 0; j < buttons.length; j++) buttons[j].classList.remove('active');
-            btn.classList.add('active');
-            var batch = btn.getAttribute('data-batch');
-            var logo = btn.getAttribute('data-logo');
-            fetchAndRenderBatch(batch, logo);
-          });
-        })(buttons[i]);
-      }
+      const buttons = document.querySelectorAll('.batch-tab-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          buttons.forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          const batch = e.target.getAttribute('data-batch');
+          const logo = e.target.getAttribute('data-logo');
+          fetchAndRenderBatch(batch, logo);
+        });
+      });
     }
 
-    function fetchAndRenderBatch(batch, logoSrc) {
-      var mount = document.getElementById('eventsMount');
+    async function fetchAndRenderBatch(batch, logoSrc) {
+      const mount = document.getElementById('eventsMount');
       if (!mount) return;
       if (rosterCache[batch]) {
         renderWithSpotlight(batch, logoSrc, rosterCache[batch]);
         return;
       }
-      mount.innerHTML = '<div class="loading-spinner">SYNCHRONIZING ROSTERS FOR ' + batch + '...</div>';
+      mount.innerHTML = `<div class="loading-spinner">SYNCHRONIZING ROSTERS FOR ${batch}...</div>`;
       
-      loadJSONP(TEAMS_APPS_SCRIPT_URL + '?batch=' + batch, 'cb_batch_' + batch + '_' + Math.floor(Math.random() * 100000), function(res) {
-        var batchRosters = (res && res.rosters) ? res.rosters : {};
+      const res = await fetchAPI(`${TEAMS_APPS_SCRIPT_URL}?batch=${batch}`);
+      if (res) {
+        let batchRosters = res.rosters || {};
         rosterCache[batch] = batchRosters;
         renderWithSpotlight(batch, logoSrc, batchRosters);
-      });
+      } else {
+        mount.innerHTML = `<div class="loading-spinner" style="color:var(--color-crimson-red);">Failed to load rosters.</div>`;
+      }
     }
 
     function renderWithSpotlight(batch, logoSrc, batchRosters) {
-      var mount = document.getElementById('eventsMount');
-      var eventMap = {};
-      for (var i = 0; i < SPORTS_CONFIG.length; i++) {
-        var s = SPORTS_CONFIG[i];
-        for (var c = 0; c < s.categories.length; c++) {
-          var cat = s.categories[c];
-          eventMap[s.id + '_' + cat] = { sportName: s.name, category: cat, hideBadge: !!s.hideBadge, players: [] };
-        }
-      }
-
-      var keys = Object.keys(batchRosters);
-      for (var k = 0; k < keys.length; k++) {
-        var sheetKey = keys[k];
-        var players = batchRosters[sheetKey];
-        var parts = sheetKey.split('_');
+      const mount = document.getElementById('eventsMount');
+      let eventMap = {};
+      SPORTS_CONFIG.forEach(s => {
+        s.categories.forEach(cat => {
+          eventMap[`${s.id}_${cat}`] = { sportName: s.name, category: cat, hideBadge: !!s.hideBadge, players: [] };
+        });
+      });
+      Object.keys(batchRosters).forEach(sheetKey => {
+        const players = batchRosters[sheetKey];
+        const parts = sheetKey.split('_');
         if (parts.length >= 2) {
-          var cat = parts[0].toUpperCase();
-          var sportId = parts.slice(1).join('_').toLowerCase();
-          var mapKey = sportId + '_' + cat;
+          const cat = parts[0].toUpperCase();
+          const sportId = parts.slice(1).join('_').toLowerCase();
+          const mapKey = `${sportId}_${cat}`;
           if (eventMap[mapKey]) {
-            var formattedPlayers = [];
-            for (var p = 0; p < players.length; p++) {
-              var pl = players[p];
-              formattedPlayers.push({
-                name: String(pl.name || pl.FullName || pl['Full Name'] || '').toUpperCase(),
-                isCaptain: pl.isCaptain === true || String(pl.isCaptain).toUpperCase() === 'TRUE'
-              });
-            }
-            eventMap[mapKey].players = formattedPlayers;
+            eventMap[mapKey].players = players.map(p => ({
+              name: (p.name || p.FullName || p['Full Name'] || '').toUpperCase(),
+              isCaptain: p.isCaptain === true || String(p.isCaptain).toUpperCase() === 'TRUE'
+            }));
           }
         }
-      }
-
-      var html = '<div class="batch-spotlight-container animate-in"><img src="' + logoSrc + '" class="spotlight-emblem" /><h2 class="spotlight-title">' + batch + ' SQUAD ROSTERS</h2></div><div class="events-grid">';
-      var mapKeys = Object.keys(eventMap);
-      for (var m = 0; m < mapKeys.length; m++) {
-        var ev = eventMap[mapKeys[m]];
-        html += '<div class="event-card"><div class="event-card-header"><h3 class="event-card-title">' + ev.sportName + '</h3>' + (!ev.hideBadge ? '<span class="event-category-badge">' + ev.category + '</span>' : '') + '</div><ul class="athletes-list">';
+      });
+      let html = `<div class="batch-spotlight-container animate-in"><img src="${logoSrc}" class="spotlight-emblem" /><h2 class="spotlight-title">${batch} SQUAD ROSTERS</h2></div><div class="events-grid">`;
+      Object.keys(eventMap).forEach(key => {
+        const ev = eventMap[key];
+        html += `<div class="event-card"><div class="event-card-header"><h3 class="event-card-title">${ev.sportName}</h3>${!ev.hideBadge ? `<span class="event-category-badge">${ev.category}</span>` : ''}</div><ul class="athletes-list">`;
         if (ev.players.length === 0) {
-          html += '<li style="color:var(--color-stone-light); font-size:0.85rem; padding:8px;">No team roster submitted yet.</li>';
+          html += `<li class="no-athletes-msg" style="color:var(--color-stone-light); font-size:0.85rem; padding:8px;">No team roster submitted yet.</li>`;
         } else {
-          for (var plIdx = 0; plIdx < ev.players.length; plIdx++) {
-            var player = ev.players[plIdx];
-            html += '<li class="athlete-item"><span class="athlete-name">' + player.name + '</span>' + (player.isCaptain ? '<span class="captain-tag">CAPTAIN</span>' : '') + '</li>';
-          }
+          ev.players.forEach(p => {
+            html += `<li class="athlete-item"><span class="athlete-name">${p.name}</span>${p.isCaptain ? '<span class="captain-tag">CAPTAIN</span>' : ''}</li>`;
+          });
         }
-        html += '</ul></div>';
-      }
-      html += '</div>';
+        html += `</ul></div>`;
+      });
+      html += `</div>`;
       mount.innerHTML = html;
     }
 
     function initOrderModals() {
-      var modal = document.getElementById("routeModal");
-      var orderBtns = document.querySelectorAll(".order-btn");
-      for (var i = 0; i < orderBtns.length; i++) {
-        orderBtns[i].addEventListener("click", function(e) {
-          e.preventDefault();
-          modal.classList.add("open");
-        });
-      }
-      document.getElementById("closeModalBtn").addEventListener("click", function() {
-        modal.classList.remove("open");
+      const modal = document.getElementById("routeModal");
+      document.querySelectorAll(".order-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => { e.preventDefault(); modal.classList.add("open"); });
       });
+      document.getElementById("closeModalBtn").addEventListener("click", () => modal.classList.remove("open"));
     }
     function closeRouteModal() { document.getElementById("routeModal").classList.remove("open"); }
 
     function initSequentialReveal() {
-      var cards = document.querySelectorAll('.member-card, .email-card');
+      const cards = document.querySelectorAll('.member-card, .email-card');
       if (cards.length === 0) return;
-      var observer = new IntersectionObserver(function(entries) {
-        for (var i = 0; i < entries.length; i++) {
-          if (entries[i].isIntersecting) {
-            entries[i].target.classList.add('reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal');
           }
-        }
+        });
       }, { threshold: 0.15 });
 
-      for (var j = 0; j < cards.length; j++) {
-        observer.observe(cards[j]);
-      }
+      cards.forEach(card => observer.observe(card));
     }
   </script>
 </body>
