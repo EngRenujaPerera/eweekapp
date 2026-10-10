@@ -1,1530 +1,932 @@
-<!-- ==========================================================================
-     FILE: index.html (Unified E-WEEK 2026 Portal - Desktop Layout Preserved on Mobile)
-     ========================================================================== -->
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>E-WEEK 2026 | Faculty of Engineering</title>
-  <meta name="description" content="E-WEEK 2026 — Official inter-batch competition and tournament at the Faculty of Engineering, University of Jaffna." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Week 2026 | Team Registration & Team Card</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Google+Sans:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Docxtemplater & FileSaver -->
+  <script src="https://unpkg.com/pizzip@3.1.6/dist/pizzip.min.js"></script>
+  <script src="https://unpkg.com/docxtemplater@3.45.0/build/docxtemplater.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
   <style>
-    :root[data-theme="dark"] {
-      --color-obsidian: #07090f;
-      --color-charcoal: #0d111a;
-      --color-graphite: #131824;
-      --color-steel-dark: #1b2230;
-      --color-steel-aged: #273145;
-      --color-gunmetal: #3b465c;
-      --color-stone: #59657d;
-      --color-stone-light: #8a98b3;
-      --color-silver-pure: #ffffff;
-      --color-silver-bright: #e2e8f0;
-      --color-silver-mid: #cbd5e1;
-      --color-silver-dark: #94a3b8;
-      --color-card-bg: rgba(16, 21, 33, 0.88);
-      --color-card-border: rgba(197, 160, 89, 0.28);
-      --color-header-bg: rgba(13, 17, 26, 0.92);
-      --color-ticker-bg: rgba(10, 13, 20, 0.96);
-      --color-glass-box: rgba(13, 17, 26, 0.6);
-      --color-input-bg: rgba(6, 8, 13, 0.7);
-      --color-gold: #f59e0b;
-      --color-gold-light: #fbbf24;
-      --color-crimson-red: #f43f5e;
-      --color-emerald: #10b981;
-    }
-
-    :root[data-theme="light"] {
-      --color-obsidian: #f1f5f9;
-      --color-charcoal: #ffffff;
-      --color-graphite: #e2e8f0;
-      --color-steel-dark: #cbd5e1;
-      --color-steel-aged: #94a3b8;
-      --color-gunmetal: #64748b;
-      --color-stone: #475569;
-      --color-stone-light: #334155;
-      --color-silver-pure: #0f172a;
-      --color-silver-bright: #1e293b;
-      --color-silver-mid: #334155;
-      --color-silver-dark: #475569;
-      --color-card-bg: rgba(255, 255, 255, 0.92);
-      --color-card-border: rgba(197, 160, 89, 0.35);
-      --color-header-bg: rgba(255, 255, 255, 0.92);
-      --color-ticker-bg: rgba(241, 245, 249, 0.96);
-      --color-glass-box: rgba(255, 255, 255, 0.75);
-      --color-input-bg: rgba(241, 245, 249, 0.9);
-      --color-gold: #d97706;
-      --color-gold-light: #b45309;
-      --color-crimson-red: #e11d48;
-      --color-emerald: #059669;
-    }
-
-    :root {
-      --font-display: 'Cinzel', Georgia, serif;
-      --font-heading: 'Cinzel', serif;
-      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-google-sans: 'Google Sans', 'Roboto', -apple-system, sans-serif;
-      --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-    html {
-      scroll-behavior: smooth;
-      background-color: var(--color-obsidian);
-      color: var(--color-silver-bright);
-      font-family: var(--font-body);
-      touch-action: manipulation;
-      -webkit-text-size-adjust: 100%;
-    }
-
     body {
-      position: relative;
-      min-height: 100vh;
-      line-height: 1.5;
-      background-color: var(--color-obsidian);
-      padding-bottom: 150px;
-      touch-action: pan-y;
-      -webkit-user-select: none;
-      user-select: none;
+      font-family: 'Inter', sans-serif;
+      background-color: #030305;
+      color: #e2e8f0;
       overflow-x: hidden;
     }
 
-    input, textarea, select { -webkit-user-select: text; user-select: text; }
+    .font-cinzel { font-family: 'Cinzel', serif; }
 
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--color-obsidian); }
-    ::-webkit-scrollbar-thumb { background: rgba(197, 160, 89, 0.4); border-radius: 2px; }
-
-    a { color: inherit; text-decoration: none; cursor: pointer; pointer-events: auto !important; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; pointer-events: auto !important; }
-    button:active { transform: scale(0.96); }
-    img { max-width: 100%; height: auto; display: block; }
-
-    .container { width: 92%; max-width: 1200px; margin: 0 auto; position: relative; z-index: 10; }
-
-    #bg-image-container {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: 1; pointer-events: none; overflow: hidden;
-    }
-    #bg-image {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: contrast(1.15) brightness(0.42) saturate(0.85);
-      transform: scale(1.02);
-    }
-    :root[data-theme="light"] #bg-image {
-      filter: contrast(1.05) brightness(0.85) saturate(0.9);
-      opacity: 0.18;
-    }
-    #particle-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2; pointer-events: none; }
-    .cinematic-lens-overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 3; pointer-events: none;
-      background: radial-gradient(circle at 50% 45%, rgba(4, 6, 12, 0.05) 30%, var(--color-obsidian) 95%);
-    }
-
-    .theme-toggle-widget {
-      position: fixed; bottom: 135px; right: 16px; z-index: 1001;
-      background: var(--color-card-bg); border: 1px solid var(--color-card-border);
-      border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
-      color: var(--color-silver-bright); cursor: pointer; backdrop-filter: blur(12px); box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    }
-    .theme-toggle-widget svg { width: 20px; height: 20px; fill: currentColor; }
-
-    .fixed-bottom-ticker {
-      position: fixed; bottom: 60px; left: 0; width: 100vw; z-index: 1000;
-      background: var(--color-ticker-bg);
-      border-top: 1px solid var(--color-card-border);
-      backdrop-filter: blur(16px);
-      padding: 6px 12px;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr 1fr;
-      gap: 8px;
-      align-items: center;
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.25);
-      cursor: pointer;
-    }
-
-    .fbt-col-latest {
-      display: flex; align-items: center; justify-content: space-between;
-      border-right: 1px solid var(--color-card-border);
-      padding-right: 6px; overflow: hidden;
-    }
-    .fbt-left { display: flex; align-items: center; gap: 6px; min-width: 0; }
-    .fbt-badge-wrap { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
-    .fbt-tag {
-      font-family: var(--font-heading); font-size: 0.52rem; letter-spacing: 0.12em; color: #fff; font-weight: 800; text-transform: uppercase;
-      background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%); padding: 2px 5px; border-radius: 4px;
-    }
-    .fbt-pulse { width: 5px; height: 5px; background: var(--color-emerald); border-radius: 50%; box-shadow: 0 0 8px var(--color-emerald); animation: pulseGlow 1.5s infinite; }
-    @keyframes pulseGlow { 0% { transform: scale(0.9); opacity: 0.7; } 50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 12px var(--color-emerald); } 100% { transform: scale(0.9); opacity: 0.7; } }
-
-    .fbt-match-info { font-family: var(--font-google-sans); font-size: 0.65rem; color: var(--color-silver-bright); font-weight: 600; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .fbt-scorecard-mini { display: flex; align-items: center; gap: 5px; background: var(--color-graphite); border: 1px solid var(--color-card-border); padding: 3px 6px; border-radius: 8px; flex-shrink: 0; }
-    .fbt-team-item { display: flex; align-items: center; gap: 3px; }
-    .fbt-emblem { width: 16px; height: 16px; object-fit: contain; }
-    .fbt-team-name { font-family: var(--font-google-sans); font-size: 0.58rem; font-weight: 600; color: var(--color-silver-mid); }
-    .fbt-score { font-family: var(--font-google-sans); font-size: 0.72rem; font-weight: 700; color: var(--color-crimson-red); }
-    .fbt-vs { font-family: var(--font-google-sans); font-size: 0.52rem; color: var(--color-gold); font-weight: 700; }
-    .fbt-winner { color: var(--color-emerald); font-family: var(--font-google-sans); font-size: 0.52rem; font-weight: 700; text-transform: uppercase; }
-
-    .fbt-col-history {
-      display: flex; align-items: center; justify-content: center; padding: 0 4px; border-right: 1px solid var(--color-card-border); overflow: hidden; position: relative; height: 26px;
-    }
-    .fbt-rotating-container { flex: 1; position: relative; height: 26px; overflow: hidden; display: flex; align-items: center; width: 100%; }
-    .fbt-rotate-item {
-      position: absolute; width: 100%; display: flex; align-items: center; justify-content: space-between;
-      background: var(--color-graphite); border: 1px solid var(--color-card-border); padding: 2px 8px; border-radius: 6px;
-      opacity: 0; transform: translateY(10px); transition: all 0.4s ease; font-family: var(--font-google-sans); font-size: 0.6rem;
-    }
-    .fbt-rotate-item.active { opacity: 1; transform: translateY(0); }
-
-    .fbt-col-status { display: flex; align-items: center; justify-content: space-around; padding-left: 4px; overflow: hidden; }
-    .fbt-status-podium { display: flex; align-items: center; gap: 6px; background: var(--color-graphite); border: 1px solid var(--color-card-border); padding: 3px 6px; border-radius: 8px; }
-    .fbt-podium-item { display: flex; align-items: center; gap: 3px; }
-    .fbt-podium-item.p1 .fbt-p-emblem { width: 18px; height: 18px; }
-    .fbt-podium-item.p1 .p-rank { color: var(--color-gold); font-size: 0.55rem; font-weight: 700; }
-    .fbt-podium-item.p1 .p-pts { color: var(--color-silver-bright); font-size: 0.58rem; font-weight: 700; font-family: var(--font-google-sans); }
-
-    .fbt-p-emblem { width: 15px; height: 15px; object-fit: contain; }
-    .p-rank { font-family: var(--font-google-sans); font-size: 0.5rem; color: var(--color-silver-dark); font-weight: 600; }
-    .p-pts { font-family: var(--font-google-sans); font-size: 0.52rem; color: var(--color-silver-mid); font-weight: 600; }
-
-    .scores-modal-backdrop {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(4, 5, 8, 0.85);
-      backdrop-filter: blur(16px); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 16px; opacity: 0; pointer-events: none; transition: var(--transition-smooth);
-    }
-    .scores-modal-backdrop.open { opacity: 1; pointer-events: auto; }
-    .scores-modal-box {
-      max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto;
-      background: var(--color-card-bg); border: 1px solid var(--color-card-border);
-      border-radius: 24px; padding: 28px; position: relative; box-shadow: 0 30px 70px rgba(0,0,0,0.4);
-    }
-    .scores-modal-close {
-      position: absolute; top: 16px; right: 18px; width: 36px; height: 36px;
-      background: var(--color-graphite); border: 1px solid var(--color-card-border); color: var(--color-silver-bright); display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; font-size: 1.2rem;
-    }
-    .all-scores-list { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-    .all-score-item {
-      background: var(--color-graphite); border: 1px solid var(--color-card-border); border-radius: 14px;
-      padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    }
-
-    .mobile-bottom-bar {
-      display: flex;
+    /* Login Background Video Layer */
+    .bg-video-container {
       position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: 60px;
-      background: var(--color-ticker-bg);
-      backdrop-filter: blur(20px);
-      border-top: 1px solid var(--color-card-border);
-      z-index: 1002;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0 4px;
-      box-shadow: 0 -10px 25px rgba(0,0,0,0.15);
-    }
-    .mob-nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      height: 100%;
-      background: transparent;
-      border: none;
-      color: var(--color-stone-light);
-      cursor: pointer;
-      padding: 4px 0;
-      pointer-events: auto !important;
-    }
-    .mob-nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; pointer-events: none; }
-    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; pointer-events: none; }
-    .mob-nav-item.active { color: var(--color-gold); }
-
-    .silver-divider {
-      display: flex; align-items: center; justify-content: center; gap: 12px; margin: 12px auto 20px; opacity: 0.75;
-    }
-    .silver-divider::before, .silver-divider::after {
-      content: ''; height: 1px; width: 50px; max-width: 90px;
-      background: linear-gradient(90deg, transparent, var(--color-silver-dark), transparent);
-    }
-    .silver-divider .divider-node {
-      width: 6px; height: 6px; background: var(--color-gold); transform: rotate(45deg);
-      box-shadow: 0 0 10px var(--color-gold); border: 1px solid var(--color-silver-pure);
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      background-color: #030305;
     }
 
-    .section-eyebrow {
-      font-family: var(--font-google-sans); font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--color-gold); text-align: center; margin-bottom: 4px; display: block; font-weight: 700;
-    }
-    .section-title {
-      font-family: var(--font-display); font-size: clamp(1.7rem, 3.5vw, 2.6rem); color: var(--color-silver-bright); text-align: center;
-      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px;
-    }
-    .section-subtitle {
-      font-family: var(--font-google-sans); font-size: clamp(0.95rem, 1.4vw, 1.15rem); color: var(--color-stone-light);
-      text-align: center; max-width: 720px; margin: 0 auto; line-height: 1.5; font-weight: 400;
-    }
-
-    .btn-silver {
-      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 12px;
-      padding: 14px 28px; font-family: var(--font-google-sans); font-size: 0.85rem; font-weight: 700;
-      letter-spacing: 0.15em; text-transform: uppercase; color: #0b0d12;
-      background: linear-gradient(135deg, var(--color-gold) 0%, #d97706 100%);
-      border: 1px solid var(--color-gold-light); border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.25); z-index: 10; text-decoration: none; cursor: pointer;
-    }
-    .btn-silver-secondary {
-      background: var(--color-steel-dark);
-      color: var(--color-silver-bright); border: 1px solid var(--color-card-border);
-      border-radius: 12px;
+    .bg-video-container video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      filter: brightness(0.65) contrast(1.15);
     }
 
-    .site-header {
-      position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 12px 0;
-      background: var(--color-header-bg); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--color-card-border);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    }
-    .nav-wrapper { display: flex; align-items: center; justify-content: space-between; width: 92%; max-width: 1240px; margin: 0 auto; }
-    .brand-identity { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
-    .brand-logo-img { height: 36px; width: auto; object-fit: contain; }
-    .brand-title { font-family: var(--font-google-sans); font-size: 1.05rem; font-weight: 700; letter-spacing: 0.1em; color: var(--color-silver-bright); }
-    .brand-subtitle { font-size: 0.52rem; letter-spacing: 0.12em; color: var(--color-gold); text-transform: uppercase; font-family: var(--font-google-sans); font-weight: 700; }
-
-    .desktop-nav-menu { display: flex; align-items: center; list-style: none; gap: 18px; }
-    .desktop-nav-menu .nav-item-link {
-      font-family: var(--font-google-sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--color-silver-mid); cursor: pointer; padding: 8px 12px; border-radius: 8px;
-    }
-    .desktop-nav-menu .nav-item-link:hover, .desktop-nav-menu .nav-item-link.active { color: var(--color-gold); background: rgba(245, 158, 11, 0.1); font-weight: 700; }
-
-    .page-panel { display: none; }
-    .page-panel.active { display: block; animation: fadeInPanel 0.35s ease; }
-    @keyframes fadeInPanel {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .bg-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(3, 3, 5, 0.65) 0%, rgba(3, 3, 5, 0.88) 60%, #030305 100%);
     }
 
-    .hero-section {
-      position: relative; min-height: 70vh; display: flex; align-items: center; justify-content: center;
-      padding: 90px 0 35px; z-index: 5;
-    }
-    .hero-content { position: relative; z-index: 10; text-align: center; max-width: 860px; margin: 0 auto; padding: 0 16px; }
-    .hero-logo2-img { max-height: 150px; width: auto; margin: 0 auto 16px; filter: drop-shadow(0 15px 35px rgba(0,0,0,0.3)); }
-    .hero-tagline {
-      font-family: var(--font-google-sans); font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 700;
-      letter-spacing: 0.25em; color: var(--color-gold); text-transform: uppercase; margin-bottom: 10px;
-    }
-    .hero-subtag { font-family: var(--font-google-sans); font-size: clamp(0.95rem, 1.4vw, 1.15rem); color: var(--color-silver-mid); margin-bottom: 22px; font-weight: 400; }
-    .hero-subtag span { color: var(--color-silver-bright); font-weight: 600; }
-
-    .hero-intro-badge-box {
-      background: var(--color-glass-box); border: 1px solid var(--color-card-border);
-      border-radius: 20px; padding: 20px 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-      backdrop-filter: blur(18px); max-width: 580px; margin: 0 auto;
-    }
-    .hero-intro-text {
-      font-family: var(--font-google-sans); font-size: 0.9rem; line-height: 1.6; color: var(--color-silver-bright); font-weight: 400;
-    }
-    .hero-intro-text strong { color: var(--color-gold); font-weight: 700; }
-
-    .results-section { padding: 60px 0; position: relative; z-index: 5; }
-    .leaderboard-container {
-      max-width: 1100px; margin: 30px auto 0;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
-    }
-    .leaderboard-card {
-      background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 22px; padding: 28px 20px 22px;
-      position: relative; overflow: hidden; box-shadow: 0 20px 45px rgba(0,0,0,0.12); display: flex; flex-direction: column; align-items: center; text-align: center; backdrop-filter: blur(14px);
-    }
-    .leaderboard-card.rank-1 {
-      border-color: var(--color-gold); background: linear-gradient(160deg, var(--color-card-bg) 0%, rgba(245, 158, 11, 0.05) 100%);
-    }
-    .rank-badge {
-      position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%;
-      background: var(--color-graphite); border: 1px solid var(--color-card-border);
-      display: flex; align-items: center; justify-content: center; font-family: var(--font-google-sans); font-size: 0.8rem; font-weight: 700; color: var(--color-silver-bright);
-    }
-    .rank-1 .rank-badge { background: linear-gradient(135deg, #fbbf24, #d97706); color: #fff; border-color: #fff; }
-    .rank-2 .rank-badge { background: linear-gradient(135deg, #cbd5e1, #64748b); color: #fff; }
-    .rank-3 .rank-badge { background: linear-gradient(135deg, #f97316, #c2410c); color: #fff; }
-    .batch-emblem { width: 70px; height: 70px; object-fit: contain; margin-top: 6px; margin-bottom: 12px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2)); }
-
-    .batch-title { font-family: var(--font-google-sans); font-size: 1.5rem; font-weight: 700; color: var(--color-silver-bright); margin-bottom: 4px; }
-    .points-display { font-family: var(--font-google-sans); font-size: 2.3rem; font-weight: 700; color: var(--color-gold); margin-bottom: 14px; line-height: 1; }
-    .stats-row {
-      width: 100%; display: flex; justify-content: space-around; align-items: center;
-      border-top: 1px solid var(--color-card-border); border-bottom: 1px solid var(--color-card-border);
-      padding: 8px 0; margin-bottom: 14px; background: var(--color-graphite); border-radius: 8px;
-    }
-    .stat-val { font-family: var(--font-google-sans); font-size: 1.1rem; font-weight: 700; color: var(--color-silver-bright); }
-    .stat-lbl { font-family: var(--font-google-sans); font-size: 0.6rem; letter-spacing: 0.15em; color: var(--color-silver-dark); text-transform: uppercase; margin-top: 2px; font-weight: 600; }
-    .progress-track-bar { width: 100%; height: 6px; background: rgba(100, 116, 139, 0.2); border-radius: 3px; overflow: hidden; position: relative; }
-    .progress-fill-bar { height: 100%; background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light)); border-radius: 3px; width: 0%; transition: width 1.5s ease; }
-    .results-await-banner {
-      padding: 20px; background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 12px;
-      text-align: center; font-family: var(--font-google-sans); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--color-silver-bright);
-      text-transform: uppercase; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 12px; max-width: 580px; margin: 0 auto;
+    /* Portal Static Background Image Layer */
+    .portal-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #030305;
     }
 
-    .featured-news-section { padding: 60px 0; position: relative; z-index: 5; display: block; }
-    .top-stories-container { max-width: 1200px; margin: 30px auto 0; display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px; align-items: stretch; }
-    .featured-hero-story {
-      background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 22px; overflow: hidden;
-      display: flex; flex-direction: column; box-shadow: 0 22px 55px rgba(0,0,0,0.12); backdrop-filter: blur(16px); position: relative;
-    }
-    .fhs-img-wrap { width: 100%; height: 260px; overflow: hidden; background: #000; position: relative; }
-    .fhs-img { width: 100%; height: 100%; object-fit: cover; }
-    .fhs-content { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
-
-    .news-grid-sub { display: flex; flex-direction: column; gap: 14px; height: 100%; }
-    .news-card-sub {
-      background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 18px; overflow: hidden;
-      display: grid; grid-template-columns: 110px 1fr; box-shadow: 0 10px 30px rgba(0,0,0,0.08); backdrop-filter: blur(12px); align-items: center; flex-grow: 1;
-    }
-    .ncs-img-wrap { width: 110px; height: 100%; min-height: 105px; overflow: hidden; background: #000; }
-    .ncs-img { width: 100%; height: 100%; object-fit: cover; }
-    .ncs-body { padding: 12px 16px; display: flex; flex-direction: column; justify-content: center; }
-
-    .news-badge-tag {
-      font-family: var(--font-google-sans); font-size: 0.55rem; background: var(--color-gold); color: #fff;
-      font-weight: 700; padding: 2px 7px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.08em; display: inline-block; width: fit-content;
-    }
-    .news-time-stamp { font-size: 0.68rem; color: var(--color-stone-light); font-family: var(--font-google-sans); }
-    .news-title-text { font-family: var(--font-google-sans); color: var(--color-silver-bright); font-weight: 700; letter-spacing: 0.02em; margin-bottom: 4px; line-height: 1.3; }
-    .news-desc-text { font-family: var(--font-google-sans); font-size: 0.78rem; color: var(--color-silver-mid); line-height: 1.4; font-weight: 400; }
-
-    .news-see-more-btn {
-      font-family: var(--font-google-sans); font-size: 0.7rem; font-weight: 700; color: var(--color-gold);
-      background: none; border: none; cursor: pointer; padding: 0; margin-top: 6px; letter-spacing: 0.08em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 5px;
+    .portal-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(3, 3, 5, 0.78) 0%, rgba(3, 3, 5, 0.92) 80%, #030305 100%);
     }
 
-    .news-modal-backdrop, .silver-modal-backdrop {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 5, 8, 0.75);
-      backdrop-filter: blur(14px); z-index: 2500; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: var(--transition-smooth);
-    }
-    .news-modal-backdrop.open, .silver-modal-backdrop.open { opacity: 1; pointer-events: auto; }
-    .news-modal-box {
-      max-width: 600px; width: 100%; max-height: 88vh; overflow-y: auto; background: var(--color-card-bg);
-      border: 1px solid var(--color-card-border); border-radius: 22px; padding: 32px; position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-    }
-    .news-modal-close, .modal-close-btn {
-      position: absolute; top: 16px; right: 18px; width: 34px; height: 34px; background: var(--color-graphite); border: 1px solid var(--color-card-border); color: var(--color-silver-bright); display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer;
-    }
-    .news-modal-img { width: 100%; height: 240px; object-fit: cover; border-radius: 14px; margin-bottom: 18px; }
-    .news-modal-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-    .news-modal-title { font-family: var(--font-google-sans); font-size: 1.4rem; color: var(--color-silver-bright); font-weight: 700; margin-bottom: 12px; line-height: 1.35; }
-    .news-modal-desc { font-family: var(--font-google-sans); font-size: 0.92rem; color: var(--color-silver-bright); line-height: 1.65; font-weight: 400; }
-
-    .silver-modal {
-      max-width: 500px; width: 100%; background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 20px; padding: 36px 28px; position: relative; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    #emberCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    .teams-main-section { padding: 110px 0 70px; text-align: center; }
-    .batch-tabs-grid { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 26px; }
-    .batch-tab-btn {
-      font-family: var(--font-google-sans); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em;
-      padding: 10px 22px; background: var(--color-card-bg); border: 1px solid var(--color-card-border);
-      color: var(--color-silver-bright); border-radius: 12px; cursor: pointer; text-transform: uppercase;
-      pointer-events: auto !important;
+    /* Valyrian Shield & Panels */
+    .valyrian-shield {
+      background: linear-gradient(160deg, rgba(14, 15, 20, 0.90) 0%, rgba(6, 7, 10, 0.97) 100%);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(203, 213, 225, 0.35);
+      box-shadow:
+        0 35px 70px rgba(0, 0, 0, 0.95),
+        0 0 40px rgba(148, 163, 184, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        inset 0 0 35px rgba(148, 163, 184, 0.04);
     }
-    .batch-tab-btn.active { background: linear-gradient(135deg, var(--color-gold) 0%, #d97706 100%); color: #fff; font-weight: 700; }
-    .initial-placeholder { padding: 60px 20px; text-align: center; background: var(--color-card-bg); border: 1px dashed var(--color-card-border); border-radius: 22px; }
-    .batch-spotlight-container { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 30px; opacity: 0; transform: scale(0.9) translateY(15px); transition: all 0.7s ease; }
-    .batch-spotlight-container.animate-in { opacity: 1; transform: scale(1) translateY(0); }
-    .spotlight-emblem { width: 90px; height: 90px; object-fit: contain; margin-bottom: 10px; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); }
-    .spotlight-title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 900; letter-spacing: 0.18em; color: var(--color-silver-bright); }
-    .events-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; text-align: left; }
-    .event-card { background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 18px; padding: 22px; box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
-    .event-card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-card-border); padding-bottom: 10px; margin-bottom: 12px; }
-    .event-card-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; color: var(--color-silver-bright); }
-    .event-category-badge { font-family: var(--font-google-sans); font-size: 0.6rem; letter-spacing: 0.12em; padding: 3px 8px; background: var(--color-graphite); border: 1px solid var(--color-card-border); border-radius: 20px; color: var(--color-silver-bright); text-transform: uppercase; font-weight: 600; }
-    .athletes-list { list-style: none; display: flex; flex-direction: column; gap: 8px; max-height: 190px; overflow-y: auto; padding-right: 4px; }
-    .athlete-item { display: flex; justify-content: space-between; align-items: center; background: var(--color-graphite); border: 1px solid var(--color-card-border); padding: 8px 12px; border-radius: 10px; }
-    .athlete-name { font-size: 0.85rem; font-weight: 500; color: var(--color-silver-bright); text-transform: uppercase; font-family: var(--font-google-sans); }
-    .captain-tag { font-family: var(--font-google-sans); font-size: 0.55rem; color: var(--color-gold); border: 1px solid var(--color-gold); padding: 2px 6px; border-radius: 6px; background: rgba(245, 158, 11, 0.1); font-weight: 700; }
-    .loading-spinner { text-align: center; padding: 40px; font-family: var(--font-google-sans); letter-spacing: 0.15em; color: var(--color-gold); font-weight: 700; text-transform: uppercase; }
 
-    .fixtures-hero { padding: 110px 0 25px; text-align: center; }
-    .fixtures-section { padding: 10px 0 80px; }
-    .fixtures-container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
-    .fixture-card {
-      background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 18px; padding: 18px 22px;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+    .sigil-glow {
+      border: 2px solid rgba(203, 213, 225, 0.8);
+      box-shadow: 0 0 35px rgba(148, 163, 184, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.9);
     }
-    .fixture-meta { display: flex; flex-direction: column; min-width: 120px; }
-    .fixture-date { font-family: var(--font-google-sans); font-size: 0.72rem; color: var(--color-stone-light); margin-bottom: 2px; }
-    .fixture-sport { font-family: var(--font-google-sans); font-size: 0.95rem; font-weight: 700; color: var(--color-silver-bright); text-transform: uppercase; }
-    .fixture-teams { display: flex; align-items: center; gap: 12px; font-family: var(--font-google-sans); font-size: 1.1rem; font-weight: 700; color: var(--color-silver-bright); }
-    .vs-tag { font-size: 0.7rem; color: var(--color-gold); font-family: var(--font-google-sans); font-weight: 700; }
-    .fixture-status { padding: 4px 10px; border-radius: 8px; font-family: var(--font-google-sans); font-size: 0.65rem; text-transform: uppercase; background: var(--color-graphite); border: 1px solid var(--color-card-border); color: var(--color-silver-mid); font-weight: 700; }
-    .fixture-venue-text { width: 100%; font-family: var(--font-google-sans); font-size: 0.7rem; color: var(--color-stone-light); margin-top: -4px; }
 
-    .merch-hero { padding: 110px 0 30px; text-align: center; }
-    .merch-grid-section { padding: 15px 0 80px; }
-    .merch-container { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-    .merch-card { background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
-    .merch-image-wrap { position: relative; width: 100%; height: 240px; overflow: hidden; background: #080a0f; display: flex; align-items: center; justify-content: center; }
-    .merch-img { width: 100%; height: 100%; object-fit: cover; }
-    .merch-content { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; text-align: left; }
-    .merch-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; color: var(--color-silver-bright); margin-bottom: 6px; }
-    .merch-desc { font-size: 0.85rem; color: var(--color-stone-light); line-height: 1.5; margin-bottom: 16px; flex-grow: 1; font-family: var(--font-google-sans); }
-    .merch-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-card-border); padding-top: 14px; }
-    .merch-price { font-family: var(--font-google-sans); font-size: 1.15rem; font-weight: 700; color: var(--color-gold); }
+    /* GOT Iron-Bar Nav Bar */
+    .valyrian-nav-bar {
+      background: linear-gradient(90deg, rgba(10, 11, 15, 0.94) 0%, rgba(22, 24, 32, 0.96) 50%, rgba(10, 11, 15, 0.94) 100%);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(203, 213, 225, 0.3);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
 
-    .contact-page-hero { padding: 110px 0 20px; text-align: center; }
-    .contact-main-section { padding: 15px 0 80px; }
-    .contact-grid-layout { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.35fr 1fr; gap: 26px; align-items: start; }
-    .glass-box { background: var(--color-card-bg); backdrop-filter: blur(22px); border: 1px solid var(--color-card-border); border-radius: 22px; padding: 28px 24px; box-shadow: 0 25px 55px rgba(0, 0, 0, 0.1); position: relative; overflow: hidden; }
-    .committee-header-area { text-align: center; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--color-card-border); }
-    .committee-header-titles h3 { font-family: var(--font-display); font-size: 1.35rem; color: var(--color-silver-bright); margin-bottom: 4px; }
-    .committee-header-titles p { font-size: 0.72rem; color: var(--color-gold); font-family: var(--font-google-sans); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 700; }
-    .hierarchy-tier { margin-bottom: 20px; }
-    .tier-title { font-family: var(--font-google-sans); font-size: 0.65rem; letter-spacing: 0.22em; color: var(--color-gold); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
-    .tier-title::after { content: ''; flex: 1; height: 1px; background: var(--color-card-border); }
-    .committee-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .member-card {
-      background: var(--color-graphite); border: 1px solid var(--color-card-border); border-radius: 16px;
-      padding: 14px 16px; display: flex; align-items: center; gap: 14px; text-decoration: none; opacity: 0; transform: translateY(12px); transition: all 0.4s ease;
+    /* Cinematic Spinner */
+    .valyrian-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(148, 163, 184, 0.2);
+      border-top: 3px solid rgba(245, 158, 11, 0.9);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
-    .member-card.reveal { opacity: 1; transform: translateY(0); }
-    .member-avatar { width: 62px; height: 62px; border-radius: 50%; object-fit: cover; border: 2.5px solid var(--color-gold); background: #151821; flex-shrink: 0; }
-    .member-info { flex: 1; min-width: 0; }
-    .member-role { font-family: var(--font-google-sans); font-size: 0.58rem; color: var(--color-stone-light); text-transform: uppercase; margin-bottom: 2px; font-weight: 600; }
-    .member-name { font-family: var(--font-google-sans); font-size: 0.88rem; font-weight: 700; color: var(--color-silver-bright); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 3px; }
-    .member-phone { display: inline-flex; align-items: center; gap: 4px; font-size: 0.7rem; color: var(--color-silver-mid); background: var(--color-charcoal); padding: 2px 7px; border-radius: 6px; font-family: var(--font-google-sans); font-weight: 600; }
 
-    .email-card {
-      background: var(--color-graphite); border: 1px solid var(--color-card-border); border-radius: 16px;
-      padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; text-decoration: none; opacity: 0; transform: translateY(12px); transition: all 0.4s ease;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    .email-card.reveal { opacity: 1; transform: translateY(0); }
-    .email-card-content { display: flex; align-items: center; gap: 12px; }
-    .email-icon-box { width: 38px; height: 38px; border-radius: 50%; background: var(--color-card-bg); border: 1px solid var(--color-card-border); display: flex; align-items: center; justify-content: center; color: var(--color-gold); font-size: 0.9rem; font-weight: 700; }
-    .message-form-box {
-      background: var(--color-card-bg); backdrop-filter: blur(22px); border: 1px solid var(--color-card-border);
-      border-radius: 22px; padding: 28px 24px; box-shadow: 0 25px 55px rgba(0, 0, 0, 0.1); position: relative;
-    }
-    .form-title { font-family: var(--font-display); font-size: 1.3rem; color: var(--color-silver-bright); margin-bottom: 4px; }
-    .form-subtitle { font-size: 0.8rem; color: var(--color-stone-light); margin-bottom: 20px; font-family: var(--font-google-sans); }
-    .form-group { margin-bottom: 14px; text-align: left; }
-    .form-label { display: block; font-family: var(--font-google-sans); font-size: 0.68rem; letter-spacing: 0.16em; color: var(--color-silver-mid); margin-bottom: 4px; font-weight: 700; text-transform: uppercase; }
-    .form-input, .form-textarea {
-      width: 100%; padding: 10px 12px; background: var(--color-input-bg); border: 1px solid var(--color-card-border);
-      border-radius: 10px; color: var(--color-silver-bright); font-family: var(--font-body); font-size: 0.9rem;
-    }
-    .form-input:focus, .form-textarea:focus { border-color: var(--color-gold); outline: none; }
-    .form-textarea { resize: vertical; min-height: 95px; }
 
-    .site-footer {
-      padding: 40px 0 140px; border-top: 1px solid var(--color-card-border); background: var(--color-charcoal); position: relative; z-index: 10;
+    ::-webkit-scrollbar { width: 7px; }
+    ::-webkit-scrollbar-track { background: #050406; }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+      border: 1px solid #475569;
     }
-    .footer-top { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 20px; }
-    .footer-logo-img { height: 42px; margin-bottom: 10px; }
-    .footer-nav-list { display: flex; align-items: center; justify-content: center; gap: 16px; list-style: none; flex-wrap: wrap; margin: 12px 0; }
-    .footer-nav-link { font-family: var(--font-google-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; color: var(--color-silver-mid); text-transform: uppercase; cursor: pointer; }
-    .footer-bottom { border-top: 1px solid var(--color-card-border); padding-top: 14px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 0.75rem; color: var(--color-stone); font-family: var(--font-google-sans); }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
   </style>
 </head>
+<body class="selection:bg-slate-800 selection:text-slate-200">
 
-<body>
-
-  <div id="bg-image-container" aria-hidden="true">
-    <img id="bg-image" src="bg.jpeg" alt="Background" onerror="this.style.display='none';" />
+  <!-- Background Video Container (Active ONLY during Login) -->
+  <div id="loginBgContainer" class="bg-video-container">
+    <video id="bgVideo" autoplay muted loop playsinline>
+      <source src="bg.mp4" type="video/mp4">
+    </video>
+    <div class="bg-video-overlay"></div>
   </div>
 
-  <canvas id="particle-canvas" aria-hidden="true"></canvas>
-  <div class="cinematic-lens-overlay" aria-hidden="true"></div>
+  <!-- Static Background Image Container (Active during Portal) -->
+  <div id="portalBgContainer" class="hidden portal-bg">
+    <div class="portal-bg-overlay"></div>
+  </div>
 
-  <button class="theme-toggle-widget" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Theme" type="button">
-    <svg id="themeIcon" viewBox="0 0 24 24">
-      <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
-    </svg>
-  </button>
+  <!-- Realistic Ember Canvas Particle Engine -->
+  <canvas id="emberCanvas"></canvas>
 
-  <div class="fixed-bottom-ticker" id="floatingResultsWidget" onclick="openAllScoresModal()" title="Tap to view all scores">
-    <div class="fbt-col-latest">
-      <div class="fbt-left">
-        <div class="fbt-badge-wrap">
-          <div class="fbt-pulse" id="fbtPulseIndicator"></div>
-          <span class="fbt-tag" id="fbtTagTitle">LATEST</span>
-        </div>
-        <div class="fbt-match-info" id="fbtMatchTitle">Syncing...</div>
-      </div>
-      <div class="fbt-scorecard-mini" id="fbtScorecard">
-        <div style="font-size:0.65rem; color:var(--color-stone-light);">Loading...</div>
-      </div>
+  <!-- Background Soundtrack -->
+  <audio id="bgAudio" src="track.mp3" loop preload="auto"></audio>
+
+  <!-- ================= GOT THEME LOADING BUFFER ================= -->
+  <div id="loadingOverlay" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center space-y-4">
+    <div class="valyrian-spinner"></div>
+    <div class="text-center space-y-1">
+      <p class="text-xs font-cinzel font-bold text-amber-400 tracking-[0.3em] uppercase">Consulting the Citadel Archives</p>
+      <p class="text-[10px] font-cinzel text-slate-400 tracking-wider">Synchronizing realm data...</p>
     </div>
+  </div>
 
-    <div class="fbt-col-history">
-      <div class="fbt-rotating-container" id="fbtRotatingContainer">
-        <div class="fbt-rotate-item active" style="justify-content:center;">
-          <span style="font-size:0.65rem; color:var(--color-stone-light);">Tap to view all scores</span>
+  <!-- ================= INSTRUCTION MANUAL PDF MODAL ================= -->
+  <div id="pdfModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6">
+    <div class="valyrian-shield max-w-4xl w-full h-[85vh] rounded-2xl flex flex-col overflow-hidden border border-slate-600/50 shadow-2xl">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-stone-950/80">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+          <h3 class="text-xs sm:text-sm font-cinzel font-bold text-amber-300 tracking-[0.2em] uppercase">Instruction Manual - Citadel Scroll</h3>
         </div>
+        <button id="closePdfModal" class="bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 border border-rose-800/60 rounded-full px-3 py-1 text-[11px] font-cinzel tracking-wider uppercase transition-all cursor-pointer">
+          Close Scroll
+        </button>
       </div>
-    </div>
-
-    <div class="fbt-col-status" id="fbtStatusContainer">
-      <div class="fbt-status-podium">
-        <div class="fbt-podium-item p1">
-          <img src="e23.png" alt="1st" class="fbt-p-emblem" />
-          <span class="p-rank">1st:</span>
-          <span class="p-pts">0</span>
-        </div>
-        <div class="fbt-podium-item">
-          <img src="e22.png" alt="2nd" class="fbt-p-emblem" />
-          <span class="p-rank">2nd:</span>
-          <span class="p-pts">0</span>
-        </div>
-        <div class="fbt-podium-item">
-          <img src="e24.png" alt="3rd" class="fbt-p-emblem" />
-          <span class="p-rank">3rd:</span>
-          <span class="p-pts">0</span>
-        </div>
+      <div class="flex-1 bg-black/50 p-2">
+        <iframe src="Instruction Manuel.pdf" class="w-full h-full rounded-xl border border-slate-800" title="Instruction Manual"></iframe>
       </div>
     </div>
   </div>
 
-  <div class="scores-modal-backdrop" id="scoresModalBackdrop" role="dialog" aria-hidden="true">
-    <div class="scores-modal-box">
-      <button class="scores-modal-close" id="scoresModalCloseBtn" type="button">&times;</button>
-      <span class="section-eyebrow">TOURNAMENT FEED</span>
-      <h3 class="section-title" style="font-size: 1.4rem; margin-bottom: 4px;">ALL RELEASED RESULTS</h3>
-      <p class="section-subtitle" style="font-size: 0.85rem; margin-bottom: 10px;">Complete chronological match history & live score updates.</p>
-      <div class="silver-divider"><span class="divider-node"></span></div>
-      <div class="all-scores-list" id="allScoresListContainer">
-        <div style="text-align: center; color: var(--color-stone-light); padding: 20px;">Loading full scoreboard history...</div>
+  <!-- ================= 1. LOGIN SCREEN ================= -->
+  <div id="loginScreen" class="relative z-30 min-h-screen flex items-center justify-center px-4 py-8">
+    <div class="valyrian-shield max-w-md w-full p-6 sm:p-8 rounded-2xl relative">
+      <div class="text-center space-y-2 mb-5">
+        <div class="w-20 h-20 mx-auto rounded-full overflow-hidden sigil-glow bg-black flex items-center justify-center">
+          <img src="logo.png" onerror="this.src='https://lh3.googleusercontent.com/a/ACg8ocKVCZ3dwhUxDnuDbv2TfiSLT54QDnjOOAb-ke-HPQSY0R6qt4o=s360-c-no';" alt="Insignia" class="w-full h-full object-cover" />
+        </div>
+        <h2 class="text-xl font-bold font-cinzel text-slate-200 tracking-wider">LOGIN</h2>
+        <p class="text-[11px] text-slate-400 font-cinzel">Verify credentials (Rep or Admin) to unlock team portal</p>
       </div>
+
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-[11px] uppercase tracking-widest text-slate-300 font-cinzel font-bold mb-1">Username</label>
+          <input type="text" id="usernameInput" required class="w-full bg-[#0d0c11] border border-slate-800 focus:border-slate-400 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-400 transition-all font-mono" placeholder="" />
+        </div>
+
+        <div>
+          <label class="block text-[11px] uppercase tracking-widest text-slate-300 font-cinzel font-bold mb-1">Passkey</label>
+          <input type="password" id="passwordInput" required class="w-full bg-[#0d0c11] border border-slate-800 focus:border-slate-400 rounded-lg p-2.5 text-sm text-slate-200 focus:outline-none focus:ring-1 focus:ring-slate-400 transition-all" />
+        </div>
+
+        <div id="loginError" class="hidden text-xs text-rose-400 font-cinzel bg-rose-950/40 border border-rose-900/60 p-2 rounded-lg text-center">
+          Invalid representative or admin credentials.
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-slate-900 via-slate-800 to-zinc-900 hover:from-slate-800 hover:to-zinc-800 text-slate-100 font-cinzel font-bold tracking-[0.2em] text-xs uppercase py-3 px-6 rounded-xl border border-slate-500/50 shadow-[0_0_20px_rgba(148,163,184,0.2)] transition-all">
+          Authorize Access
+        </button>
+
+        <div class="text-center pt-2">
+          <button type="button" id="openLoginPdfBtn" class="text-[11px] font-cinzel text-amber-400/80 hover:text-amber-300 underline tracking-wider uppercase cursor-pointer">
+            View Instruction Manual (PDF)
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <nav class="mobile-bottom-bar" aria-label="Mobile Bottom App Bar">
-    <button class="mob-nav-item active" data-target="home" type="button">
-      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-      <span>Home</span>
-    </button>
-    <button class="mob-nav-item" data-target="teams" type="button">
-      <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-      <span>Teams</span>
-    </button>
-    <button class="mob-nav-item" data-target="fixtures" type="button">
-      <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
-      <span>Fixtures</span>
-    </button>
-    <button class="mob-nav-item" data-target="merch" type="button">
-      <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4zm10 16H4V8h16v12z"/></svg>
-      <span>Merch</span>
-    </button>
-    <button class="mob-nav-item" data-target="contact" type="button">
-      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-      <span>Contact</span>
-    </button>
-  </nav>
+  <!-- ================= 2. REGISTRATION PORTAL ================= -->
+  <div id="portalScreen" class="hidden relative z-10 max-w-7xl mx-auto py-6 px-4 sm:px-8 space-y-6">
 
-  <header class="site-header" id="siteHeader">
-    <div class="nav-wrapper">
-      <div class="brand-identity" onclick="switchTab('home')" aria-label="E-WEEK 2026 Home">
-        <img src="logo.png" alt="E-WEEK Official Logo" class="brand-logo-img" onerror="this.style.display='none';" />
-        <div class="brand-text-group">
-          <span class="brand-title">E-WEEK 2026</span>
-          <span class="brand-subtitle"></span>
+    <!-- Creative GOT Iron-Bar Nav -->
+    <nav class="valyrian-nav-bar rounded-2xl px-5 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-2xl">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-full border border-amber-500/50 bg-black flex items-center justify-center shadow-[0_0_10px_rgba(245,158,11,0.3)]">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-ping"></span>
         </div>
+        <span id="repBadge" class="text-xs font-cinzel font-bold text-amber-200 tracking-wider uppercase">
+          Authorized: Representative E23
+        </span>
       </div>
 
-      <nav aria-label="Primary Navigation">
-        <ul class="desktop-nav-menu">
-          <li><a class="nav-item-link active" data-target="home">Home</a></li>
-          <li><a class="nav-item-link" data-target="teams">Teams</a></li>
-          <li><a class="nav-item-link" data-target="fixtures">Fixtures</a></li>
-          <li><a class="nav-item-link" data-target="merch">Merchandise</a></li>
-          <li><a class="nav-item-link" data-target="contact">Contact Us</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+      <div class="flex items-center space-x-3">
+        <!-- Instruction Manual Trigger -->
+        <button id="openPortalPdfBtn" type="button" class="bg-amber-950/40 hover:bg-amber-900/60 text-amber-300 border border-amber-700/60 rounded-full px-3.5 py-1.5 text-[11px] font-cinzel tracking-wider flex items-center space-x-1.5 transition-all cursor-pointer">
+          <span>Manual</span>
+        </button>
 
-  <main id="main-content">
+        <!-- Audio Control Toggle -->
+        <button id="audioToggleBtn" type="button" class="bg-black/60 hover:bg-black text-slate-300 border border-slate-600/60 rounded-full px-3.5 py-1.5 text-[11px] font-cinzel tracking-wider flex items-center space-x-2 transition-all cursor-pointer">
+          <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse" id="audioIndicatorDot"></span>
+          <span id="audioStatusText">Soundtrack: On</span>
+        </button>
 
-    <!-- HOME PANEL -->
-    <section class="page-panel active" id="panel-home">
-      <section class="hero-section" id="hero">
-        <div class="container hero-content">
-          <div class="hero-logo-container">
-            <img src="logo.png" alt="E-WEEK 2026" class="hero-logo2-img" />
-          </div>
-          <div class="silver-divider"><span class="divider-node"></span></div>
-          <p class="hero-tagline">WHERE SKILL MEETS COMPETITION</p>
-          <p class="hero-subtag">Faculty of Engineering &bull; <span>University of Jaffna</span></p>
-
-          <div class="hero-intro-badge-box">
-            <p class="hero-intro-text">
-              Welcome to <strong>E-WEEK 2026</strong> — the premier inter-batch championship hosted by the Faculty of Engineering, University of Jaffna. Experience high-octane sports, technical hackathons, and unwavering batch camaraderie.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section class="results-section" id="results">
-        <div class="container">
-          <span class="section-eyebrow">CHAMPIONSHIP STANDINGS</span>
-          <h2 class="section-title">STANDINGS</h2>
-          <p class="section-subtitle">Official cumulative tournament standings</p>
-          <div class="silver-divider"><span class="divider-node"></span></div>
-
-          <div class="results-await-banner" id="resultsAwaitBanner" style="display: none;">
-            <span>RESULTS WILL BE UPDATED HERE</span>
-          </div>
-
-          <div class="leaderboard-container" id="leaderboardContainer"></div>
-        </div>
-      </section>
-
-      <section class="featured-news-section" id="featuredNewsSection">
-        <div class="container">
-          <span class="section-eyebrow">LIVE FEED</span>
-          <h2 class="section-title">TOP STORIES</h2>
-          <div class="silver-divider"><span class="divider-node"></span></div>
-          <div class="top-stories-container" id="topStoriesContainer">
-            <div style="text-align: center; color: var(--color-stone-light); padding: 20px; grid-column: span 2;">
-              Loading top story broadcasts...
-            </div>
-          </div>
-        </div>
-      </section>
-    </section>
-
-    <!-- TEAMS PANEL -->
-    <section class="page-panel" id="panel-teams">
-      <div class="container teams-main-section">
-        <span class="section-eyebrow">COMPETITION EVENT SQUADS</span>
-        <h1 class="section-title">TEAMS & EVENTS</h1>
-        <p class="section-subtitle">Select any batch below to synchronize and inspect participant rosters event by event.</p>
-
-        <div class="batch-tabs-grid" id="batchTabsContainer">
-          <button class="batch-tab-btn" data-batch="E23" data-logo="e23.png" type="button">E23</button>
-          <button class="batch-tab-btn" data-batch="E22" data-logo="e22.png" type="button">E22</button>
-          <button class="batch-tab-btn" data-batch="E24" data-logo="e24.png" type="button">E24</button>
-          <button class="batch-tab-btn" data-batch="E25" data-logo="e25.png" type="button">E25</button>
-          <button class="batch-tab-btn" data-batch="STAFF" data-logo="staff.png" type="button">STAFF</button>
-        </div>
-
-        <div id="eventsMount">
-          <div class="initial-placeholder">
-            <h3>SELECT A BATCH TO BEGIN</h3>
-            <p>Click any batch tab above to load and animate squad rosters.</p>
-          </div>
-        </div>
+        <!-- Bend the Knee / Sign Out Button -->
+        <button id="logoutBtn" class="bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 border border-rose-800/60 rounded-full px-4 py-1.5 text-[11px] font-cinzel font-bold tracking-widest uppercase transition-all shadow-md cursor-pointer">
+          Bend the Knee (Sign Out)
+        </button>
       </div>
-    </section>
+    </nav>
 
-    <!-- FIXTURES PANEL -->
-    <section class="page-panel" id="panel-fixtures">
-      <section class="fixtures-hero">
-        <div class="container">
-          <span class="section-eyebrow">TOURNAMENT SCHEDULE</span>
-          <h2 class="section-title">MATCH FIXTURES</h2>
-          <p class="section-subtitle">Explore upcoming competitive fixtures, timings, and matchups across all inter-batch events.</p>
-          <div class="silver-divider"><span class="divider-node"></span></div>
+    <!-- Clean Header -->
+    <header class="text-center py-4 px-4 space-y-3">
+      <div class="inline-block relative">
+        <div class="w-32 h-32 sm:w-40 sm:h-40 mx-auto rounded-full overflow-hidden sigil-glow bg-black flex items-center justify-center transform transition-transform duration-500 hover:scale-105">
+          <img src="logo.png" onerror="this.src='https://lh3.googleusercontent.com/a/ACg8ocKVCZ3dwhUxDnuDbv2TfiSLT54QDnjOOAb-ke-HPQSY0R6qt4o=s360-c-no';" alt="Official Insignia" class="w-full h-full object-cover filter contrast-125" />
         </div>
-      </section>
+        <p class="text-[11px] uppercase tracking-[0.4em] text-slate-300 font-cinzel font-bold mt-3">
+          Faculty of Engineering • University of Jaffna
+        </p>
+      </div>
 
-      <section class="fixtures-section">
-        <div class="container fixtures-container" id="fixturesContainerMount">
-          <div style="text-align: center; color: var(--color-stone-light); padding: 40px;">
-            Synchronizing fixtures from Google Sheets...
-          </div>
-        </div>
-      </section>
-    </section>
+      <div class="relative my-2 flex items-center justify-center">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-slate-500/15 to-transparent blur-xl pointer-events-none"></div>
+        <img src="eweek.png" alt="E-Week 2026" class="relative max-w-[240px] sm:max-w-[300px] md:max-w-[380px] w-full h-auto object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.95)]" />
+      </div>
+    </header>
 
-    <!-- MERCHANDISE PANEL -->
-    <section class="page-panel" id="panel-merch">
-      <section class="merch-hero">
-        <div class="container">
-          <span class="section-eyebrow">EXCLUSIVE ATTIRE & GEAR</span>
-          <h2 class="section-title">OFFICIAL MERCHANDISE</h2>
-          <p class="section-subtitle">Discover the official collection designed for E-WEEK 2026. Premium quality apparel and memorabilia.</p>
-          <div class="silver-divider"><span class="divider-node"></span></div>
-        </div>
-      </section>
+    <main class="valyrian-shield rounded-3xl p-6 sm:p-12 relative">
+      <div id="teamCardForm" class="space-y-8">
 
-      <section class="merch-grid-section">
-        <div class="container">
-          <div class="merch-container">
-            <div class="merch-card">
-              <div class="merch-image-wrap"><img src="merch1.jpeg" alt="T-Shirt" class="merch-img" /></div>
-              <div class="merch-content">
-                <h3 class="merch-title">T-Shirt</h3>
-                <p class="merch-desc">Official E-WEEK 2026 polo T-shirt crafted with a comfortable fit, custom button placket, and faculty graphics.</p>
-                <div class="merch-footer"><span class="merch-price">2000 LKR</span><button class="btn-silver btn-silver-secondary order-btn" style="padding: 10px 18px; font-size: 0.78rem;" onclick="openRouteModal()" type="button">Order Now</button></div>
-              </div>
-            </div>
-            <div class="merch-card">
-              <div class="merch-image-wrap"><img src="merch2.jpeg" alt="Jersey" class="merch-img" /></div>
-              <div class="merch-content">
-                <h3 class="merch-title">Jersey</h3>
-                <p class="merch-desc">High-performance athletic jersey designed for tournament fixtures with breathability and sharp cinematic styling.</p>
-                <div class="merch-footer"><span class="merch-price">1600 LKR</span><button class="btn-silver btn-silver-secondary order-btn" style="padding: 10px 18px; font-size: 0.78rem;" onclick="openRouteModal()" type="button">Order Now</button></div>
-              </div>
-            </div>
-            <div class="merch-card">
-              <div class="merch-image-wrap"><img src="merch3.png" alt="Combo Pack" class="merch-img" /></div>
-              <div class="merch-content">
-                <h3 class="merch-title">Combo Pack</h3>
-                <p class="merch-desc">Complete bundle featuring apparel and essential tournament accessories for the ultimate supporter.</p>
-                <div class="merch-footer"><span class="merch-price">3300 LKR</span><button class="btn-silver btn-silver-secondary order-btn" style="padding: 10px 18px; font-size: 0.78rem;" onclick="openRouteModal()" type="button">Order Now</button></div>
-              </div>
-            </div>
-            <div class="merch-card">
-              <div class="merch-image-wrap"><img src="wristband.jpeg" alt="Bands" class="merch-img" /></div>
-              <div class="merch-content">
-                <h3 class="merch-title">Bands</h3>
-                <p class="merch-desc">Durable branded silicone wristband stamped with the official E-WEEK 2026 insignia.</p>
-                <div class="merch-footer"><span class="merch-price">200 LKR</span><button class="btn-silver btn-silver-secondary order-btn" style="padding: 10px 18px; font-size: 0.78rem;" onclick="openRouteModal()" type="button">Order Now</button></div>
-              </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 bg-stone-950/70 p-6 rounded-2xl border border-slate-800/80 shadow-inner">
+          <div id="batchContainer">
+            <label class="block text-[11px] uppercase tracking-widest text-slate-300 font-cinzel font-bold mb-2">
+              Batch Realm <span id="batchRealmStatus" class="text-amber-400 lowercase text-[10px]">(locked)</span>
+            </label>
+            <div id="batchInputWrapper">
+              <input type="text" id="batchSelect" readonly class="w-full bg-[#0d0c11] border border-slate-500/40 text-slate-200 font-bold rounded-xl p-3 text-sm font-cinzel cursor-not-allowed focus:outline-none" />
             </div>
           </div>
+
+          <div>
+            <label class="block text-[11px] uppercase tracking-widest text-slate-300 font-cinzel font-bold mb-2">
+              Category
+            </label>
+            <select id="categorySelect" class="w-full bg-[#0d0c11] border border-slate-800 text-slate-200 rounded-xl p-3 text-sm font-cinzel focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all cursor-pointer">
+              <option value="MEN">MEN</option>
+              <option value="WOMEN">WOMEN</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-[11px] uppercase tracking-widest text-slate-300 font-cinzel font-bold mb-2">
+              The Sport / Event
+            </label>
+            <select id="sportSelect" class="w-full bg-[#0d0c11] border border-slate-800 text-slate-200 rounded-xl p-3 text-sm font-cinzel focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all cursor-pointer">
+              <option value="">-- Choose Event --</option>
+              <option value="cricket">Cricket</option>
+              <option value="football">Football</option>
+              <option value="basketball">Basketball</option>
+              <option value="volleyball">Volleyball</option>
+              <option value="netball">Netball</option>
+              <option value="elle">Elle</option>
+              <option value="debate">Debate</option>
+              <option value="badminton">Badminton</option>
+              <option value="table_tennis">Table Tennis</option>
+              <option value="carrom">Carrom</option>
+              <option value="marathon">Marathon</option>
+              <option value="chess">Chess</option>
+              <option value="espeaker">E Speaker</option>
+              <optgroup label="Athletics Events">
+                <option value="100m">100m</option>
+                <option value="200m">200m</option>
+                <option value="400m">400m</option>
+                <option value="800m">800m</option>
+                <option value="1500m">1500m</option>
+                <option value="4x100">4x100m Relay</option>
+                <option value="4x400">4x400m Relay</option>
+                <option value="100m_hurdles">100m Hurdles</option>
+                <option value="shotput">Shot Put</option>
+                <option value="longjump">Long Jump</option>
+                <option value="discuss_throw">Discuss Throw</option>
+                <option value="high_jump">High Jump</option>
+                <option value="javelin_throw">Javelin Throw</option>
+              </optgroup>
+            </select>
+          </div>
         </div>
-      </section>
-    </section>
 
-    <!-- CONTACT PANEL -->
-    <section class="page-panel" id="panel-contact">
-      <section class="contact-page-hero">
-        <div class="container">
-          <span class="section-eyebrow">GET IN TOUCH</span>
-          <h2 class="section-title">CONTACT COMMITTEE</h2>
-          <p class="section-subtitle">Connect directly with the E-WEEK 2026 organizing committee or send us an inquiry.</p>
-          <div class="silver-divider"><span class="divider-node"></span></div>
-        </div>
-      </section>
+        <!-- Dynamic Player Roster Slots -->
+        <div class="space-y-3">
+          <div class="flex flex-col sm:flex-row justify-between items-baseline gap-1">
+            <h2 class="text-sm sm:text-base font-bold font-cinzel tracking-wider text-slate-200 flex items-center gap-2">
+              <img src="logo.png" onerror="this.src='https://lh3.googleusercontent.com/a/ACg8ocKVCZ3dwhUxDnuDbv2TfiSLT54QDnjOOAb-ke-HPQSY0R6qt4o=s360-c-no';" class="w-5 h-5 rounded-full border border-slate-500/60 inline-block object-cover" alt="icon" />
+              <span id="rosterTitle">Squad Roster, Roles & Captain Designation</span>
+            </h2>
+          </div>
 
-      <section class="contact-main-section">
-        <div class="container">
-          <div class="contact-grid-layout">
-            <div class="glass-box">
-              <div class="committee-header-area">
-                <div class="committee-header-titles">
-                  <h3>E-WEEK 2026 Committee</h3>
-                  <p>Faculty of Engineering &bull; Univ. of Jaffna</p>
-                </div>
-              </div>
-
-              <div class="hierarchy-tier">
-                <div class="tier-title">Executive Leadership</div>
-                <div class="committee-grid">
-                  <a href="tel:0703071770" class="member-card">
-                    <img src="president.jpeg" alt="De Silva" class="member-avatar" />
-                    <div class="member-info"><div class="member-role">President</div><div class="member-name">De Silva L.H.L.N.</div><span class="member-phone">070 307 1770</span></div>
-                  </a>
-                  <a href="tel:0713695945" class="member-card">
-                    <img src="secretary.jpeg" alt="Wickramasinghe" class="member-avatar" />
-                    <div class="member-info"><div class="member-role">Secretary</div><div class="member-name">Wickramasinghe K.C.B.</div><span class="member-phone">071 369 5945</span></div>
-                  </a>
-                </div>
-              </div>
-
-              <div class="hierarchy-tier">
-                <div class="tier-title">Deputies & Finance</div>
-                <div class="committee-grid">
-                  <a href="tel:0704927356" class="member-card">
-                    <img src="vice_president.jpeg" alt="Hatlee" class="member-avatar" />
-                    <div class="member-info"><div class="member-role">Vice President</div><div class="member-name">Hatlee M.</div><span class="member-phone">070 492 7356</span></div>
-                  </a>
-                  <a href="tel:0784177007" class="member-card">
-                    <img src="vice_secretary.jpeg" alt="Ahmadh" class="member-avatar" />
-                    <div class="member-info"><div class="member-role">Vice Secretary</div><div class="member-name">Ahmadh H.A.</div><span class="member-phone">078 417 7007</span></div>
-                  </a>
-                  <a href="tel:0760755593" class="member-card">
-                    <img src="treasurer.jpeg" alt="Aniruththish" class="member-avatar" />
-                    <div class="member-info"><div class="member-role">Treasurer</div><div class="member-name">Aniruththish T.</div><span class="member-phone">076 075 5593</span></div>
-                  </a>
-                </div>
-              </div>
-
-              <div class="hierarchy-tier">
-                <div class="tier-title">Editorial Board</div>
-                <div class="committee-grid">
-                  <a href="tel:0701601718" class="member-card">
-                    <img src="editor1.jpeg" alt="Prianjana" class="member-avatar" />
-                    <div class="member-info"><div class="member-role">Editor</div><div class="member-name">Prianjana W.K.D.N.</div><span class="member-phone">070 160 1718</span></div>
-                  </a>
-                  <a href="tel:0757093260" class="member-card">
-                    <img src="editor2.jpeg" alt="Alaxan" class="member-avatar" />
-                    <div class="member-info"><div class="member-role">Editor</div><div class="member-name">Alaxan S.</div><span class="member-phone">075 709 3260</span></div>
-                  </a>
-                </div>
-              </div>
-
-              <a href="mailto:eweek2026@gmail.com" class="email-card">
-                <div class="email-card-content"><div class="email-icon-box">@</div><div><div style="font-size:0.68rem; color:var(--color-stone-light); text-transform:uppercase;">Inquiries & Support</div><div style="font-weight:700; color:var(--color-silver-bright);">eweek2026@gmail.com</div></div></div>
-              </a>
+          <div class="border border-slate-800 rounded-2xl overflow-hidden bg-black/70 shadow-2xl">
+            <!-- Table Header -->
+            <div id="tableHeader" class="grid grid-cols-12 bg-slate-950/90 px-4 py-3 font-cinzel text-xs text-slate-300 font-bold uppercase tracking-widest border-b border-slate-800">
+              <div class="col-span-1 text-center text-slate-500">Rank</div>
+              <div class="col-span-5 px-3">Player Full Name</div>
+              <div class="col-span-3 px-3">Reg. No.</div>
+              <div id="roleHeaderCol" class="hidden col-span-3 px-3">Cricket Role</div>
+              <div class="col-span-3 px-3 text-center">Captain?</div>
             </div>
 
-            <div class="message-form-box">
-              <h3 class="form-title">SEND MESSAGE</h3>
-              <p class="form-subtitle">Have a question or query regarding E-WEEK 2026? Drop us a note below.</p>
-              <form id="contactForm" action="mailto:eweek2026@gmail.com" method="POST" enctype="text/plain">
-                <div class="form-group"><label class="form-label">Your Name</label><input type="text" name="Name" class="form-input" placeholder="Enter your full name" required /></div>
-                <div class="form-group"><label class="form-label">Your Email</label><input type="email" name="Email" class="form-input" placeholder="Enter your email address" required /></div>
-                <div class="form-group"><label class="form-label">Subject</label><input type="text" name="Subject" class="form-input" placeholder="Inquiry subject" required /></div>
-                <div class="form-group"><label class="form-label">Message</label><textarea name="Message" class="form-textarea" placeholder="Type your message here..." required></textarea></div>
-                <button type="submit" class="btn-silver" style="width: 100%;">SEND MESSAGE</button>
-              </form>
+            <div id="playersContainer" class="divide-y divide-slate-900/80">
+              <!-- Rendered via JS -->
             </div>
           </div>
         </div>
-      </section>
-    </section>
 
-  </main>
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+          <button type="button" id="syncBtn" class="w-full bg-slate-900 hover:bg-slate-800 text-slate-200 font-cinzel font-bold tracking-[0.2em] text-xs uppercase py-4 px-4 rounded-xl border border-slate-600/40 shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer">
+            <span>Sync Sheet</span>
+          </button>
 
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-top">
-        <img src="logo.png" alt="E-WEEK Logo" class="footer-logo-img" onerror="this.style.display='none';" />
-        <h4 style="font-family: var(--font-display); letter-spacing: 0.18em; color: var(--color-silver-bright); font-size: 1.25rem;">E-WEEK 2026</h4>
-        <p style="font-size: 0.85rem; color: var(--color-stone-light); margin-top: 4px;">Faculty of Engineering &bull; University of Jaffna &bull; Organized by E23</p>
-        <div style="font-size: 0.8rem; color: var(--color-gold); margin-top: 8px; font-family: var(--font-heading); letter-spacing: 0.1em; font-weight: 700;">Frontend Developer: Renuja Perera</div>
-        <ul class="footer-nav-list">
-          <li><a class="footer-nav-link" data-target="home">Home</a></li>
-          <li><a class="footer-nav-link" data-target="teams">Teams</a></li>
-          <li><a class="footer-nav-link" data-target="fixtures">Fixtures</a></li>
-          <li><a class="footer-nav-link" data-target="merch">Merchandise</a></li>
-          <li><a class="footer-nav-link" data-target="contact">Contact Us</a></li>
-        </ul>
+          <button type="button" id="finalizeBtn" class="w-full bg-gradient-to-r from-slate-900 via-slate-800 to-zinc-900 hover:from-slate-800 hover:to-zinc-800 text-slate-100 font-cinzel font-bold tracking-[0.2em] text-xs uppercase py-4 px-4 rounded-xl border border-slate-400/50 shadow-[0_0_20px_rgba(148,163,184,0.25)] transition-all flex items-center justify-center space-x-2 cursor-pointer">
+            <span>Finalize & Download Team Card</span>
+          </button>
+        </div>
+
       </div>
-      <div class="footer-bottom">
-        <div>&copy; 2026 E-WEEK. All Rights Reserved. Faculty of Engineering, University of Jaffna. Organized by E23.</div>
-        <div>OFFICIAL APP</div>
-      </div>
-    </div>
-  </footer>
+    </main>
 
-  <div class="silver-modal-backdrop" id="routeModal" role="dialog" aria-hidden="true">
-    <div class="silver-modal">
-      <button class="modal-close-btn" id="closeModalBtn" type="button">&times;</button>
-      <h3 class="section-title" id="modalTitle" style="font-size: 1.5rem; margin-bottom: 12px;">NOTICE</h3>
-      <p id="modalDescription" style="font-size: 1rem; color: var(--color-silver-bright); margin-bottom: 24px;">Online ordering/actions are currently restricted.</p>
-      <button class="btn-silver" onclick="closeRouteModal()" type="button">CONFIRM</button>
-    </div>
-  </div>
-
-  <div class="news-modal-backdrop" id="newsModalBackdrop" role="dialog" aria-hidden="true">
-    <div class="news-modal-box">
-      <button class="news-modal-close" id="newsModalCloseBtn" type="button">&times;</button>
-      <div class="news-modal-meta">
-        <span class="news-badge-tag" id="modalNewsTag">LIVE UPDATE</span>
-        <span class="news-time-stamp" id="modalNewsTime">08:40 AM</span>
-      </div>
-      <img src="" alt="News Image" class="news-modal-img" id="modalNewsImg" />
-      <h3 class="news-modal-title" id="modalNewsTitle">News Title</h3>
-      <p class="news-modal-desc" id="modalNewsDesc">Full description goes here...</p>
-    </div>
+    <footer class="text-center text-slate-500 text-[11px] font-cinzel tracking-[0.3em] uppercase py-3">
+      Faculty of Engineering • University of Jaffna • Valar Morghulis
+    </footer>
   </div>
 
   <script>
-    const SCORES_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzo1KtK5zMkmLykmHdjJRqzNEtGccwfM1wGNF7JGB6mYiRDBJdSQ3cboJo4-hRerV4TQ/exec";
-    const TEAMS_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFJsbdHQFZDAiFYWXyCIUvGbmbt0PxGqSGjm_FCEFvjSIC11CUEFyrhlcK30pzJ9fBg/exec";
+    /******************************************************************
+     * 0. PDF INSTRUCTION MANUAL MODAL CONTROLS
+     ******************************************************************/
+    const pdfModal = document.getElementById("pdfModal");
+    const openLoginPdfBtn = document.getElementById("openLoginPdfBtn");
+    const openPortalPdfBtn = document.getElementById("openPortalPdfBtn");
+    const closePdfModal = document.getElementById("closePdfModal");
 
-    let globalNewsStore = [];
-    let globalMatchesStore = [];
-    let batchData = [
-      { name: "E22", logo: "e22.png", score: 0, wins: 0, growth: "0%" },
-      { name: "E23", logo: "e23.png", score: 0, wins: 0, growth: "0%" },
-      { name: "E24", logo: "e24.png", score: 0, wins: 0, growth: "0%" },
-      { name: "E25", logo: "e25.png", score: 0, wins: 0, growth: "0%" },
-      { name: "Staff", logo: "staff.png", score: 0, wins: 0, growth: "0%" }
-    ];
-    const logoMap = {
-      "E22": "e22.png", "E23": "e23.png", "E24": "e24.png", "E25": "e25.png", "STAFF": "staff.png"
-    };
+    function showPdfModal() {
+      pdfModal.classList.remove("hidden");
+    }
 
-    let lastKnownMatchCount = -1;
-    let rotatingHistoryInterval = null;
-    let currentRotateIndex = 0;
-    let rosterCache = {};
+    function hidePdfModal() {
+      pdfModal.classList.add("hidden");
+    }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const savedTheme = localStorage.getItem('eweek_theme') || 'dark';
-      setTheme(savedTheme);
+    if (openLoginPdfBtn) openLoginPdfBtn.addEventListener("click", showPdfModal);
+    if (openPortalPdfBtn) openPortalPdfBtn.addEventListener("click", showPdfModal);
+    if (closePdfModal) closePdfModal.addEventListener("click", hidePdfModal);
 
-      initNavigation();
-      initParticleEngine();
-      initNewsModalListeners();
-      initScoresModalListeners();
-      initOrderModals();
-      initBatchTabs();
-      initSequentialReveal();
-
-      fetchLiveData(false);
-      setInterval(() => {
-        fetchLiveData(true);
-      }, 12000);
+    pdfModal.addEventListener("click", (e) => {
+      if (e.target === pdfModal) hidePdfModal();
     });
 
-    function formatDriveImage(url) {
-      if (!url) return '';
-      let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
-      if (match && match[1]) {
-        return `https://lh3.googleusercontent.com/d/${match[1]}=s1000`;
-      }
-      return url;
+    /******************************************************************
+     * 1. AUDIO ENGINE (`track.mp3`)
+     ******************************************************************/
+    const bgAudio = document.getElementById("bgAudio");
+    const audioBtn = document.getElementById("audioToggleBtn");
+    const audioStatusText = document.getElementById("audioStatusText");
+    const audioIndicatorDot = document.getElementById("audioIndicatorDot");
+    const bgVideo = document.getElementById("bgVideo");
+    const loginBgContainer = document.getElementById("loginBgContainer");
+    const portalBgContainer = document.getElementById("portalBgContainer");
+    const loadingOverlay = document.getElementById("loadingOverlay");
+
+    function setAudioUIPlaying() {
+      audioStatusText.innerText = "Soundtrack: On";
+      audioIndicatorDot.className = "inline-block w-2 h-2 rounded-full bg-amber-500 animate-pulse";
+      audioBtn.classList.add("border-slate-400", "text-slate-200", "shadow-[0_0_15px_rgba(148,163,184,0.3)]");
     }
 
-    function toggleTheme() {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
-      setTheme(next);
-      localStorage.setItem('eweek_theme', next);
+    function setAudioUIPaused() {
+      audioStatusText.innerText = "Soundtrack: Off";
+      audioIndicatorDot.className = "inline-block w-2 h-2 rounded-full bg-rose-500";
+      audioBtn.classList.remove("border-slate-400", "text-slate-200", "shadow-[0_0_15px_rgba(148,163,184,0.3)]");
     }
 
-    function setTheme(theme) {
-      document.documentElement.setAttribute('data-theme', theme);
-      const icon = document.getElementById('themeIcon');
-      if (icon) {
-        if (theme === 'light') {
-          icon.innerHTML = '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>';
-        } else {
-          icon.innerHTML = '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>';
-        }
-      }
-    }
-
-    function switchTab(tabId) {
-      document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
-      const targetPanel = document.getElementById('panel-' + tabId);
-      if (targetPanel) {
-        targetPanel.classList.add('active');
-      }
-
-      document.querySelectorAll('[data-target]').forEach(el => {
-        el.classList.toggle('active', el.getAttribute('data-target') === tabId);
-      });
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function initNavigation() {
-      document.querySelectorAll('[data-target]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const target = btn.getAttribute('data-target');
-          switchTab(target);
-        });
+    function playAudio() {
+      bgAudio.play().then(() => {
+        setAudioUIPlaying();
+      }).catch(err => {
+        console.warn("Audio playback error:", err);
       });
     }
 
-    function initParticleEngine() {
-      const canvas = document.getElementById('particle-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let width = canvas.width = window.innerWidth;
-      let height = canvas.height = window.innerHeight;
-      window.addEventListener('resize', () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; });
-      const particles = Array.from({ length: 50 }, () => ({
-        x: Math.random() * width, y: Math.random() * height,
-        radius: Math.random() * 2 + 0.5,
-        color: Math.random() > 0.4 ? 'rgba(245, 158, 11, ' : 'rgba(100, 116, 139, ',
-        alpha: Math.random() * 0.5 + 0.2, vy: -(Math.random() * 0.5 + 0.2), vx: (Math.random() - 0.5) * 0.3
-      }));
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
-        particles.forEach(p => {
-          p.y += p.vy; p.x += p.vx;
-          if (p.y < 0) { p.y = height + 10; p.x = Math.random() * width; }
-          ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = p.color + p.alpha + ')'; ctx.fill();
-        });
-        requestAnimationFrame(animate);
-      }
-      animate();
+    function pauseAudio() {
+      bgAudio.pause();
+      setAudioUIPaused();
     }
 
-    async function fetchAPI(url) {
-      try {
-        let response = await fetch(url);
-        let data = await response.json();
-        return data;
-      } catch (err) {
-        console.error("API Fetch Error:", err);
-        return null;
-      }
-    }
-
-    async function fetchLiveData(isPolling) {
-      const pulseDot = document.getElementById('fbtPulseIndicator');
-      if (isPolling && pulseDot) {
-        pulseDot.style.background = "var(--color-emerald)";
-        pulseDot.style.boxShadow = "0 0 8px var(--color-emerald)";
-      }
-
-      const [scoresRes, newsRes, fixturesRes] = await Promise.all([
-        fetchAPI(`${SCORES_APPS_SCRIPT_URL}?action=getScores`),
-        fetchAPI(`${SCORES_APPS_SCRIPT_URL}?action=getNews`),
-        fetchAPI(`${SCORES_APPS_SCRIPT_URL}?action=getFixtures`)
-      ]);
-
-      if (scoresRes) handleScoresResponse(scoresRes);
-      if (newsRes) renderNewsData(newsRes, document.getElementById('topStoriesContainer'));
-      if (fixturesRes) renderFixturesData(fixturesRes, document.getElementById('fixturesContainerMount'));
-    }
-
-    function renderNewsData(res, container) {
-      if (!container) return;
-      const newsList = (res && res.news) ? res.news : [];
-      globalNewsStore = newsList;
-
-      if (newsList.length === 0) {
-        container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 20px; grid-column: span 2;">No top stories published yet.</div>`;
-        return;
-      }
-
-      const latestIndex = newsList.length - 1;
-      const latestStory = newsList[latestIndex];
-      const subStories = newsList.slice(0, latestIndex).reverse();
-      const latestTimeStr = latestStory.timestamp ? new Date(latestStory.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
-      const latestImgUrl = formatDriveImage(latestStory.imageUrl);
-
-      let html = `
-        <div class="featured-hero-story">
-          <div class="fhs-img-wrap">
-            <img src="${latestImgUrl}" alt="${latestStory.title}" class="fhs-img" onerror="this.style.display='none';" />
-          </div>
-          <div class="fhs-content">
-            <div>
-              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
-                <span class="news-badge-tag">${latestStory.category || "LIVE UPDATE"}</span>
-                <span class="news-time-stamp">${latestTimeStr}</span>
-              </div>
-              <h3 class="news-title-text" style="font-size: 1.25rem;">${latestStory.title}</h3>
-              <p class="news-desc-text" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 10px;">${latestStory.description}</p>
-            </div>
-            <button class="news-see-more-btn" onclick="openNewsModal(${latestIndex})" type="button">Read Full Story &rarr;</button>
-          </div>
-        </div>
-      `;
-
-      html += `<div class="news-grid-sub">`;
-      subStories.forEach((sub, subRevIdx) => {
-        const actualIdx = latestIndex - 1 - subRevIdx;
-        const subTimeStr = sub.timestamp ? new Date(sub.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
-        const subImgUrl = formatDriveImage(sub.imageUrl);
-        html += `
-          <div class="news-card-sub">
-            <div class="ncs-img-wrap"><img src="${subImgUrl}" alt="${sub.title}" class="ncs-img" /></div>
-            <div class="ncs-body">
-              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:3px;">
-                <span class="news-badge-tag">${sub.category || "UPDATE"}</span>
-                <span class="news-time-stamp">${subTimeStr}</span>
-              </div>
-              <h4 class="news-title-text" style="font-size: 0.88rem; margin-bottom: 2px;">${sub.title}</h4>
-              <p class="news-desc-text" style="font-size: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 3px;">${sub.description}</p>
-              <button class="news-see-more-btn" onclick="openNewsModal(${actualIdx})" type="button">Explore &rarr;</button>
-            </div>
-          </div>
-        `;
-      });
-      html += `</div>`;
-      container.innerHTML = html;
-    }
-
-    function renderFixturesData(res, mount) {
-      if (!mount) return;
-      const fixtures = (res && res.fixtures) ? res.fixtures : [];
-      if (fixtures.length === 0) {
-        mount.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 40px;">No match fixtures scheduled yet.</div>`;
-        return;
-      }
-
-      mount.innerHTML = fixtures.map(f => `
-        <div class="fixture-card">
-          <div class="fixture-meta">
-            <span class="fixture-date">${f.date} &bull; ${f.time}</span>
-            <span class="fixture-sport">${f.sport}</span>
-          </div>
-          <div class="fixture-teams">
-            <span>${f.teamA}</span>
-            <span class="vs-tag">VS</span>
-            <span>${f.teamB}</span>
-          </div>
-          <div class="fixture-venue-text">📍 ${f.venue || 'Faculty Ground'}</div>
-          <div class="fixture-status">${f.status || 'Scheduled'}</div>
-        </div>
-      `).join('');
-    }
-
-    function openNewsModal(index) {
-      const story = globalNewsStore[index];
-      if (!story) return;
-      document.getElementById('modalNewsTag').textContent = story.category || "LIVE UPDATE";
-      document.getElementById('modalNewsTime').textContent = story.timestamp ? new Date(story.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
-      document.getElementById('modalNewsImg').src = formatDriveImage(story.imageUrl);
-      document.getElementById('modalNewsTitle').textContent = story.title;
-      document.getElementById('modalNewsDesc').textContent = story.description;
-      document.getElementById('newsModalBackdrop').classList.add('open');
-    }
-
-    function initNewsModalListeners() {
-      const closeBtn = document.getElementById('newsModalCloseBtn');
-      const backdrop = document.getElementById('newsModalBackdrop');
-      if (closeBtn && backdrop) {
-        closeBtn.addEventListener('click', () => backdrop.classList.remove('open'));
-        backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.classList.remove('open'); });
-      }
-    }
-
-    function openAllScoresModal() {
-      const backdrop = document.getElementById('scoresModalBackdrop');
-      const listContainer = document.getElementById('allScoresListContainer');
-      if (!backdrop || !listContainer) return;
-
-      if (globalMatchesStore.length === 0) {
-        listContainer.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 20px;">No match scores available yet.</div>`;
+    audioBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (bgAudio.paused) {
+        playAudio();
       } else {
-        listContainer.innerHTML = [...globalMatchesStore].reverse().map(m => {
-          const lA = logoMap[String(m.teamA).toUpperCase()] || "logo.png";
-          const lB = logoMap[String(m.teamB).toUpperCase()] || "logo.png";
-          const sA = Number(m.scoreA) || 0;
-          const sB = Number(m.scoreB) || 0;
-          let statusStr = m.status || 'Completed';
-          if (statusStr === 'Completed') {
-            if (sA > sB) statusStr = `Winner: ${m.teamA}`;
-            else if (sB > sA) statusStr = `Winner: ${m.teamB}`;
-            else statusStr = 'Match Tied';
-          }
-          return `
-            <div class="all-score-item">
-              <div style="display:flex; flex-direction:column;">
-                <span style="font-size:0.6rem; color:var(--color-gold); font-weight:700; text-transform:uppercase;">${m.sport} (${m.category})</span>
-                <div style="display:flex; align-items:center; gap:10px; margin-top:4px;">
-                  <div style="display:flex; align-items:center; gap:4px;"><img src="${lA}" style="width:18px;height:18px;object-fit:contain;" /><span>${m.teamA} <strong>(${sA})</strong></span></div>
-                  <span style="color:var(--color-gold); font-size:0.75rem; font-weight:700;">VS</span>
-                  <div style="display:flex; align-items:center; gap:4px;"><img src="${lB}" style="width:18px;height:18px;object-fit:contain;" /><span>${m.teamB} <strong>(${sB})</strong></span></div>
-                </div>
-              </div>
-              <span style="font-size:0.65rem; color:var(--color-emerald); font-weight:700; text-transform:uppercase; text-align:right;">${statusStr}</span>
-            </div>
+        pauseAudio();
+      }
+    });
+
+    /******************************************************************
+     * 2. REPRESENTATIVE & MASTER ADMIN AUTHENTICATION
+     ******************************************************************/
+    const BATCH_ACCOUNTS = {
+      "rep_e22": { pass: "e22@ewik26", batch: "E22" },
+      "rep_e23": { pass: "e23@ewik26", batch: "E23" },
+      "rep_e24": { pass: "e24@ewik26", batch: "E24" },
+      "rep_e25": { pass: "e25@ewik26", batch: "E25" },
+      "admin":   { pass: "ewik26@admin", isAdmin: true }
+    };
+
+    let authenticatedBatch = null;
+    let isAdmin = false;
+
+    const loginScreen = document.getElementById("loginScreen");
+    const portalScreen = document.getElementById("portalScreen");
+    const loginForm = document.getElementById("loginForm");
+    const loginError = document.getElementById("loginError");
+    const batchInputWrapper = document.getElementById("batchInputWrapper");
+    const batchRealmStatus = document.getElementById("batchRealmStatus");
+    const repBadge = document.getElementById("repBadge");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const user = document.getElementById("usernameInput").value.trim().toLowerCase();
+      const pass = document.getElementById("passwordInput").value.trim();
+
+      if (BATCH_ACCOUNTS[user] && BATCH_ACCOUNTS[user].pass === pass) {
+        loginError.classList.add("hidden");
+        loginScreen.classList.add("hidden");
+        portalScreen.classList.remove("hidden");
+
+        bgVideo.pause();
+        loginBgContainer.classList.add("hidden");
+        portalBgContainer.classList.remove("hidden");
+
+        playAudio();
+
+        if (BATCH_ACCOUNTS[user].isAdmin) {
+          isAdmin = true;
+          repBadge.innerText = "Authorized: Master Admin";
+          batchRealmStatus.innerText = "(admin mode - select any batch)";
+
+          batchInputWrapper.innerHTML = `
+            <select id="batchSelect" class="w-full bg-[#0d0c11] border border-slate-800 text-slate-200 rounded-xl p-3 text-sm font-cinzel focus:outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 transition-all cursor-pointer">
+              <option value="E22">E22</option>
+              <option value="E23" selected>E23</option>
+              <option value="E24">E24</option>
+              <option value="E25">E25</option>
+            </select>
           `;
-        }).join('');
-      }
-      backdrop.classList.add('open');
-    }
+          authenticatedBatch = "E23";
 
-    function initScoresModalListeners() {
-      const closeBtn = document.getElementById('scoresModalCloseBtn');
-      const backdrop = document.getElementById('scoresModalBackdrop');
-      if (closeBtn && backdrop) {
-        closeBtn.addEventListener('click', () => backdrop.classList.remove('open'));
-        backdrop.addEventListener('click', (e) => { if (e.target === backdrop) backdrop.classList.remove('open'); });
-      }
-    }
-
-    function handleScoresResponse(res) {
-      const matches = (res && res.matches) ? res.matches : [];
-      globalMatchesStore = matches;
-
-      if (lastKnownMatchCount !== -1 && matches.length > lastKnownMatchCount) {
-        showAwaitingTransition();
-      } else {
-        processScoresData(res);
-      }
-      lastKnownMatchCount = matches.length;
-    }
-
-    function showAwaitingTransition() {
-      const matchTitleEl = document.getElementById('fbtMatchTitle');
-      const scorecardEl = document.getElementById('fbtScorecard');
-      const rotatingContainer = document.getElementById('fbtRotatingContainer');
-
-      if (matchTitleEl) matchTitleEl.textContent = "NEW RESULT";
-      if (scorecardEl) scorecardEl.innerHTML = `<span style="font-size:0.6rem; color:var(--color-emerald);">Syncing...</span>`;
-
-      if (rotatingContainer) {
-        rotatingContainer.innerHTML = `
-          <div class="fbt-rotate-item active" style="justify-content: center; background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.4); width: 100%;">
-            <span class="awaiting-animation">Awaits new result...</span>
-          </div>
-        `;
-      }
-    }
-
-    function processScoresData(res) {
-      const matches = (res && res.matches) ? res.matches : [];
-      const matchTitleEl = document.getElementById('fbtMatchTitle');
-      const scorecardEl = document.getElementById('fbtScorecard');
-
-      if (matches.length === 0) {
-        if (matchTitleEl) matchTitleEl.textContent = "No match results published yet.";
-        if (scorecardEl) scorecardEl.innerHTML = `<span style="font-size:0.6rem; color:var(--color-stone-light);">Awaiting fixtures...</span>`;
-        updateTop3Status({});
-        return;
-      }
-
-      const latest = matches[matches.length - 1];
-      const sA = Number(latest.scoreA) || 0;
-      const sB = Number(latest.scoreB) || 0;
-      const teamAName = String(latest.teamA).toUpperCase();
-      const teamBName = String(latest.teamB).toUpperCase();
-      const logoA = logoMap[teamAName] || "logo.png";
-      const logoB = logoMap[teamBName] || "logo.png";
-
-      let statusDisplay = latest.status;
-      if (latest.status === "Completed") {
-        if (sA > sB) statusDisplay = `Winner: ${latest.teamA}`;
-        else if (sB > sA) statusDisplay = `Winner: ${latest.teamB}`;
-        else statusDisplay = "Match Tied";
-      }
-
-      if (matchTitleEl) matchTitleEl.textContent = `${latest.sport.toUpperCase()} (${latest.category})`;
-      if (scorecardEl) {
-        scorecardEl.innerHTML = `
-          <div class="fbt-team-item"><img src="${logoA}" class="fbt-emblem" /><span class="fbt-team-name">${latest.teamA}</span><span class="fbt-score">${sA}</span></div>
-          <span class="fbt-vs">VS</span>
-          <div class="fbt-team-item"><img src="${logoB}" class="fbt-emblem" /><span class="fbt-team-name">${latest.teamB}</span><span class="fbt-score">${sB}</span></div>
-          <div style="border-left: 1px solid var(--color-card-border); padding-left: 6px; display:flex; flex-direction:column; text-align:right;">
-            <span class="fbt-winner">${statusDisplay}</span>
-          </div>
-        `;
-      }
-
-      setupRotatingHistory([...matches].reverse().slice(1, 6));
-
-      let scoreMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
-      let winsMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
-
-      matches.forEach(m => {
-        const tA = String(m.teamA).toUpperCase();
-        const tB = String(m.teamB).toUpperCase();
-        const scA = Number(m.scoreA) || 0;
-        const scB = Number(m.scoreB) || 0;
-
-        if (scoreMap[tA] !== undefined) scoreMap[tA] += scA;
-        if (scoreMap[tB] !== undefined) scoreMap[tB] += scB;
-
-        if (m.status === "Completed") {
-          if (scA > scB && winsMap[tA] !== undefined) winsMap[tA]++;
-          else if (scB > scA && winsMap[tB] !== undefined) winsMap[tB]++;
-        }
-      });
-
-      batchData.forEach(b => {
-        const key = b.name.toUpperCase();
-        if (scoreMap[key] !== undefined) {
-          b.score = scoreMap[key];
-          b.wins = winsMap[key] || 0;
-        }
-      });
-
-      updateTop3Status(scoreMap);
-      renderLeaderboard(scoreMap);
-    }
-
-    function updateTop3Status(scoreMap) {
-      const statusContainer = document.getElementById('fbtStatusContainer');
-      if (!statusContainer) return;
-      const sortedTeams = Object.keys(scoreMap).map(name => ({
-        name: name, score: scoreMap[name], logo: logoMap[name] || "logo.png"
-      })).sort((a, b) => b.score - a.score);
-
-      const t1 = sortedTeams[0] || { name: "E23", score: 0, logo: "e23.png" };
-      const t2 = sortedTeams[1] || { name: "E22", score: 0, logo: "e22.png" };
-      const t3 = sortedTeams[2] === undefined ? { name: "E24", score: 0, logo: "e24.png" } : sortedTeams[2];
-
-      statusContainer.innerHTML = `
-        <div class="fbt-status-podium">
-          <div class="fbt-podium-item p1"><img src="${t1.logo}" class="fbt-p-emblem" /><span class="p-rank">1:</span><span class="p-pts">${t1.score}</span></div>
-          <div class="fbt-podium-item"><img src="${t2.logo}" class="fbt-p-emblem" /><span class="p-rank">2:</span><span class="p-pts">${t2.score}</span></div>
-          <div class="fbt-podium-item"><img src="${t3.logo}" class="fbt-p-emblem" /><span class="p-rank">3:</span><span class="p-pts">${t3.score}</span></div>
-        </div>
-      `;
-    }
-
-    function setupRotatingHistory(historyList) {
-      const container = document.getElementById('fbtRotatingContainer');
-      if (!container) return;
-      if (historyList.length === 0) {
-        container.innerHTML = `<div class="fbt-rotate-item active" style="justify-content:center;"><span style="font-size:0.65rem; color:var(--color-stone-light);">Tap to view all scores</span></div>`;
-        return;
-      }
-      container.innerHTML = historyList.map((m, idx) => `
-        <div class="fbt-rotate-item ${idx === 0 ? 'active' : ''}">
-          <span style="font-size:0.58rem; color:var(--color-gold); font-weight:700;">${m.sport.toUpperCase()}</span>
-          <span style="font-size:0.68rem; color:var(--color-silver-bright);">${m.teamA} (${m.scoreA}) : (${m.scoreB}) ${m.teamB}</span>
-        </div>
-      `).join('');
-
-      if (rotatingHistoryInterval) clearInterval(rotatingHistoryInterval);
-      if (historyList.length > 1) {
-        currentRotateIndex = 0;
-        rotatingHistoryInterval = setInterval(() => {
-          const items = container.querySelectorAll('.fbt-rotate-item');
-          if (items.length === 0) return;
-          items[currentRotateIndex].classList.remove('active');
-          currentRotateIndex = (currentRotateIndex + 1) % items.length;
-          items[currentRotateIndex].classList.add('active');
-        }, 4000);
-      }
-    }
-
-    function renderLeaderboard(scoreMap) {
-      const container = document.getElementById("leaderboardContainer");
-      const awaitsBanner = document.getElementById("resultsAwaitBanner");
-      const sorted = batchData.map(b => ({ ...b, score: scoreMap[b.name.toUpperCase()] || 0 })).sort((a, b) => b.score - a.score);
-      const hasScores = sorted.some(item => item.score > 0);
-      if (awaitsBanner) awaitsBanner.style.display = hasScores ? "none" : "flex";
-
-      if (container) {
-        const maxScore = Math.max(...sorted.map(s => s.score), 100);
-        container.innerHTML = sorted.map((team, index) => {
-          const rank = index + 1;
-          const percent = Math.min(100, Math.round((team.score / maxScore) * 100));
-          return `
-            <div class="leaderboard-card rank-${rank}">
-              <div class="rank-badge">#${rank}</div>
-              <img src="${team.logo}" alt="${team.name}" class="batch-emblem" />
-              <div class="batch-title">${team.name}</div>
-              <div class="points-display">${team.score.toLocaleString()} <span style="font-size:0.8rem; color:var(--color-stone-light); font-family:var(--font-google-sans);">PTS</span></div>
-              <div class="stats-row"><div class="stat-item"><span class="stat-val">${team.wins}</span><span class="stat-lbl">WON EVENTS</span></div></div>
-              <div class="progress-track-bar"><div class="progress-fill-bar" style="width: ${percent}%;"></div></div>
-            </div>
-          `;
-        }).join("");
-      }
-    }
-
-    const SPORTS_CONFIG = [
-      { id: "cricket", name: "Cricket", categories: ["MEN", "WOMEN"] },
-      { id: "football", name: "Football", categories: ["MEN", "WOMEN"] },
-      { id: "volleyball", name: "Volleyball", categories: ["MEN", "WOMEN"] },
-      { id: "elle", name: "Elle", categories: ["MEN", "WOMEN"] },
-      { id: "badminton", name: "Badminton", categories: ["MEN", "WOMEN"] },
-      { id: "tabletennis", name: "Table Tennis", categories: ["MEN", "WOMEN"] },
-      { id: "carrom", name: "Carrom", categories: ["MEN", "WOMEN"] },
-      { id: "chess", name: "Chess", categories: ["MEN", "WOMEN"] },
-      { id: "basketball", name: "Basketball", categories: ["MEN"] },
-      { id: "netball", name: "Netball", categories: ["WOMEN"] },
-      { id: "debate", name: "Debate", categories: ["MEN"], hideBadge: true },
-      { id: "espeaker", name: "E Speaker", categories: ["MEN"], hideBadge: true },
-      { id: "100m", name: "100m Athletics", categories: ["MEN"], hideBadge: true },
-      { id: "200m", name: "200m Athletics", categories: ["MEN"], hideBadge: true },
-      { id: "400m", name: "400m Athletics", categories: ["MEN"], hideBadge: true },
-      { id: "800m", name: "800m Athletics", categories: ["MEN"], hideBadge: true },
-      { id: "1500m", name: "1500m Athletics", categories: ["MEN"], hideBadge: true },
-      { id: "marathon", name: "Marathon", categories: ["MEN"], hideBadge: true },
-      { id: "100m_hurdles", name: "100m Hurdles", categories: ["MEN"], hideBadge: true },
-      { id: "4x100", name: "4x100m Relay", categories: ["MEN"], hideBadge: true },
-      { id: "4x400", name: "4x400m Relay", categories: ["MEN"], hideBadge: true },
-      { id: "high_jump", name: "High Jump", categories: ["MEN"], hideBadge: true },
-      { id: "longjump", name: "Long Jump", categories: ["MEN"], hideBadge: true },
-      { id: "shotput", name: "Shot Put", categories: ["MEN"], hideBadge: true },
-      { id: "discuss_throw", name: "Discuss Throw", categories: ["MEN"], hideBadge: true },
-      { id: "javelin_throw", name: "Javelin Throw", categories: ["MEN"], hideBadge: true }
-    ];
-
-    function initBatchTabs() {
-      const buttons = document.querySelectorAll('.batch-tab-btn');
-      buttons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          buttons.forEach(b => b.classList.remove('active'));
-          e.target.classList.add('active');
-          const batch = e.target.getAttribute('data-batch');
-          const logo = e.target.getAttribute('data-logo');
-          fetchAndRenderBatch(batch, logo);
-        });
-      });
-    }
-
-    async function fetchAndRenderBatch(batch, logoSrc) {
-      const mount = document.getElementById('eventsMount');
-      if (!mount) return;
-      if (rosterCache[batch]) {
-        renderWithSpotlight(batch, logoSrc, rosterCache[batch]);
-        return;
-      }
-      mount.innerHTML = `<div class="loading-spinner">SYNCHRONIZING ROSTERS FOR ${batch}...</div>`;
-      
-      const res = await fetchAPI(`${TEAMS_APPS_SCRIPT_URL}?batch=${batch}`);
-      if (res) {
-        let batchRosters = res.rosters || {};
-        rosterCache[batch] = batchRosters;
-        renderWithSpotlight(batch, logoSrc, batchRosters);
-      } else {
-        mount.innerHTML = `<div class="loading-spinner" style="color:var(--color-crimson-red);">Failed to load rosters.</div>`;
-      }
-    }
-
-    function renderWithSpotlight(batch, logoSrc, batchRosters) {
-      const mount = document.getElementById('eventsMount');
-      let eventMap = {};
-      SPORTS_CONFIG.forEach(s => {
-        s.categories.forEach(cat => {
-          eventMap[`${s.id}_${cat}`] = { sportName: s.name, category: cat, hideBadge: !!s.hideBadge, players: [] };
-        });
-      });
-      Object.keys(batchRosters).forEach(sheetKey => {
-        const players = batchRosters[sheetKey];
-        const parts = sheetKey.split('_');
-        if (parts.length >= 2) {
-          const cat = parts[0].toUpperCase();
-          const sportId = parts.slice(1).join('_').toLowerCase();
-          const mapKey = `${sportId}_${cat}`;
-          if (eventMap[mapKey]) {
-            eventMap[mapKey].players = players.map(p => ({
-              name: (p.name || p.FullName || p['Full Name'] || '').toUpperCase(),
-              isCaptain: p.isCaptain === true || String(p.isCaptain).toUpperCase() === 'TRUE'
-            }));
-          }
-        }
-      });
-      let html = `<div class="batch-spotlight-container animate-in"><img src="${logoSrc}" class="spotlight-emblem" /><h2 class="spotlight-title">${batch} SQUAD ROSTERS</h2></div><div class="events-grid">`;
-      Object.keys(eventMap).forEach(key => {
-        const ev = eventMap[key];
-        html += `<div class="event-card"><div class="event-card-header"><h3 class="event-card-title">${ev.sportName}</h3>${!ev.hideBadge ? `<span class="event-category-badge">${ev.category}</span>` : ''}</div><ul class="athletes-list">`;
-        if (ev.players.length === 0) {
-          html += `<li class="no-athletes-msg" style="color:var(--color-stone-light); font-size:0.85rem; padding:8px;">No team roster submitted yet.</li>`;
+          document.getElementById("batchSelect").addEventListener("change", (ev) => {
+            authenticatedBatch = ev.target.value;
+            triggerDataFetch();
+          });
         } else {
-          ev.players.forEach(p => {
-            html += `<li class="athlete-item"><span class="athlete-name">${p.name}</span>${p.isCaptain ? '<span class="captain-tag">CAPTAIN</span>' : ''}</li>`;
+          isAdmin = false;
+          authenticatedBatch = BATCH_ACCOUNTS[user].batch;
+          repBadge.innerText = `Authorized: Representative ${authenticatedBatch}`;
+          batchRealmStatus.innerText = "(locked)";
+
+          batchInputWrapper.innerHTML = `
+            <input type="text" id="batchSelect" value="${authenticatedBatch}" readonly class="w-full bg-[#0d0c11] border border-slate-500/40 text-slate-200 font-bold rounded-xl p-3 text-sm font-cinzel cursor-not-allowed focus:outline-none" />
+          `;
+        }
+
+        sportSelect.value = "";
+        updatePlayerSlots(0);
+      } else {
+        loginError.classList.remove("hidden");
+      }
+    });
+
+    logoutBtn.addEventListener("click", () => {
+      authenticatedBatch = null;
+      isAdmin = false;
+      pauseAudio();
+      document.getElementById("loginForm").reset();
+      updatePlayerSlots(0);
+      portalScreen.classList.add("hidden");
+
+      portalBgContainer.classList.add("hidden");
+      loginBgContainer.classList.remove("hidden");
+      bgVideo.play().catch(e => console.warn(e));
+
+      loginScreen.classList.remove("hidden");
+    });
+
+    /******************************************************************
+     * 3. EVENT LIMITS & CONFIGURATION
+     ******************************************************************/
+    const EVENT_LIMITS = {
+      "cricket": 20,
+      "football": 20,
+      "basketball": 10,
+      "volleyball": 10,
+      "netball": 12,
+      "elle": 20,
+      "debate": 5,
+      "badminton": 6,
+      "table_tennis": 10,
+      "carrom": 10,
+      "marathon": 20,
+      "chess": 10,
+      "espeaker": 5,
+      "100m": 5,
+      "200m": 5,
+      "400m": 5,
+      "800m": 5,
+      "1500m": 5,
+      "4x100": 5,
+      "4x400": 5,
+      "100m_hurdles": 5,
+      "shotput": 5,
+      "longjump": 5,
+      "discuss_throw": 5,
+      "high_jump": 5,
+      "javelin_throw": 5
+    };
+
+    const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFJsbdHQFZDAiFYWXyCIUvGbmbt0PxGqSGjm_FCEFvjSIC11CUEFyrhlcK30pzJ9fBg/exec";
+
+    const playersContainer = document.getElementById("playersContainer");
+    const tableHeader = document.getElementById("tableHeader");
+    const roleHeaderCol = document.getElementById("roleHeaderCol");
+    const rosterTitle = document.getElementById("rosterTitle");
+    const sportSelect = document.getElementById("sportSelect");
+    const categorySelect = document.getElementById("categorySelect");
+
+    function updatePlayerSlots(limit) {
+      playersContainer.innerHTML = "";
+      if (limit <= 0) {
+        rosterTitle.innerText = "Squad Roster, Roles & Captain Designation";
+        return;
+      }
+      rosterTitle.innerText = `Squad Roster, Roles & Captain Designation (Up to ${limit} Players)`;
+
+      for (let i = 1; i <= limit; i++) {
+        const row = document.createElement("div");
+        row.className = "player-row grid grid-cols-12 px-4 py-2.5 items-center hover:bg-stone-900/40 transition-colors gap-3";
+        row.dataset.index = i;
+
+        row.innerHTML = `
+          <div class="col-span-1 text-center font-cinzel font-bold text-slate-400 text-sm">${i}</div>
+          <div class="col-span-5 px-2">
+            <input type="text" id="player_${i}_name" placeholder="Full Name"
+              class="w-full bg-[#08070b]/90 border border-slate-800 focus:border-slate-400 rounded-xl px-3.5 py-2 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-slate-400 font-light" />
+          </div>
+          <div class="col-span-3 px-2">
+            <input type="text" id="player_${i}_enum" placeholder="Reg. No."
+              class="w-full bg-[#08070b]/90 border border-slate-800 focus:border-slate-400 rounded-xl px-3.5 py-2 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-slate-400 font-mono uppercase" />
+          </div>
+          <div class="role-col hidden col-span-3 px-2">
+            <select id="player_${i}_role" class="w-full bg-[#08070b]/90 border border-slate-800 text-slate-200 rounded-xl px-2.5 py-2 text-xs font-cinzel focus:outline-none focus:border-slate-400">
+              <option value="General">Player</option>
+              <option value="Batsman">Batsman</option>
+              <option value="Bowler">Bowler</option>
+              <option value="All-Rounder">All-Rounder</option>
+              <option value="Wicket-Keeper">Wicket-Keeper (WK)</option>
+            </select>
+          </div>
+          <div class="col-span-3 px-2 text-center flex items-center justify-center space-x-2">
+            <input type="radio" name="teamCaptain" id="player_${i}_captain" value="${i}" class="accent-amber-500 cursor-pointer w-4 h-4" />
+            <label for="player_${i}_captain" class="text-[11px] font-cinzel text-amber-300 cursor-pointer">Captain</label>
+          </div>
+        `;
+        playersContainer.appendChild(row);
+      }
+
+      const sport = sportSelect.value;
+      const roleCols = document.querySelectorAll(".role-col");
+      if (sport === "cricket") {
+        roleHeaderCol.classList.remove("hidden");
+        roleCols.forEach(el => el.classList.remove("hidden"));
+      } else {
+        roleHeaderCol.classList.add("hidden");
+        roleCols.forEach(el => el.classList.add("hidden"));
+      }
+    }
+
+    function clearUIInputs(limit) {
+      for (let i = 1; i <= limit; i++) {
+        const nEl = document.getElementById(`player_${i}_name`);
+        const eEl = document.getElementById(`player_${i}_enum`);
+        const rEl = document.getElementById(`player_${i}_role`);
+        const cEl = document.getElementById(`player_${i}_captain`);
+        if (nEl) nEl.value = "";
+        if (eEl) eEl.value = "";
+        if (rEl) rEl.value = "General";
+        if (cEl) cEl.checked = false;
+      }
+    }
+
+    function triggerDataFetch() {
+      const sport = sportSelect.value;
+      const category = categorySelect.value;
+
+      if (sport === "basketball" && category !== "MEN") {
+        alert("Basketball is restricted to MEN only.");
+        sportSelect.value = "";
+        updatePlayerSlots(0);
+        return;
+      }
+      if (sport === "netball" && category !== "WOMEN") {
+        alert("Netball is restricted to WOMEN only.");
+        sportSelect.value = "";
+        updatePlayerSlots(0);
+        return;
+      }
+
+      const limit = EVENT_LIMITS[sport] || 0;
+      updatePlayerSlots(limit);
+      clearUIInputs(limit);
+
+      if (!sport || !authenticatedBatch) return;
+
+      loadingOverlay.classList.remove("hidden");
+
+      const callbackName = "jsonp_sync_" + Math.round(100000 * Math.random());
+      window[callbackName] = function(data) {
+        delete window[callbackName];
+        if (script.parentNode) document.body.removeChild(script);
+
+        loadingOverlay.classList.add("hidden");
+
+        if (data.players && data.players.length > 0) {
+          data.players.forEach((p) => {
+            const idx = p.rank;
+            if (idx <= limit) {
+              const nameInput = document.getElementById(`player_${idx}_name`);
+              const enumInput = document.getElementById(`player_${idx}_enum`);
+              const roleEl = document.getElementById(`player_${idx}_role`);
+              const captainEl = document.getElementById(`player_${idx}_captain`);
+
+              if (nameInput) nameInput.value = p.name || "";
+              if (enumInput) enumInput.value = p.enum || "";
+              if (roleEl) roleEl.value = p.role || "General";
+              if (captainEl && p.isCaptain) captainEl.checked = true;
+            }
           });
         }
-        html += `</ul></div>`;
-      });
-      html += `</div>`;
-      mount.innerHTML = html;
+      };
+
+      const script = document.createElement("script");
+      script.src = `${GOOGLE_APPS_SCRIPT_URL}?sport=${encodeURIComponent(sport)}&category=${encodeURIComponent(category)}&batch=${encodeURIComponent(authenticatedBatch)}&callback=${callbackName}`;
+
+      script.onerror = () => {
+        loadingOverlay.classList.add("hidden");
+        console.warn("Data retrieval network timeout.");
+      };
+
+      document.body.appendChild(script);
     }
 
-    function initOrderModals() {
-      const modal = document.getElementById("routeModal");
-      document.querySelectorAll(".order-btn").forEach(btn => {
-        btn.addEventListener("click", (e) => { e.preventDefault(); modal.classList.add("open"); });
-      });
-      document.getElementById("closeModalBtn").addEventListener("click", () => modal.classList.remove("open"));
-    }
-    function closeRouteModal() { document.getElementById("routeModal").classList.remove("open"); }
+    sportSelect.addEventListener("change", triggerDataFetch);
+    categorySelect.addEventListener("change", triggerDataFetch);
 
-    function initSequentialReveal() {
-      const cards = document.querySelectorAll('.member-card, .email-card');
-      if (cards.length === 0) return;
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('reveal');
-          }
+    function gatherPayloadPlayers(limit) {
+      const playersList = [];
+      for (let i = 1; i <= limit; i++) {
+        const nameVal = document.getElementById(`player_${i}_name`).value.trim();
+        const enumVal = document.getElementById(`player_${i}_enum`).value.trim();
+        const roleEl = document.getElementById(`player_${i}_role`);
+        const roleVal = roleEl ? roleEl.value : "General";
+        const isCap = document.getElementById(`player_${i}_captain`).checked;
+
+        if (nameVal || enumVal) {
+          playersList.push({
+            rank: i,
+            name: nameVal,
+            enum: enumVal,
+            role: roleVal,
+            isCaptain: isCap
+          });
+        }
+      }
+      return playersList;
+    }
+
+    /******************************************************************
+     * 4. SYNC TO GOOGLE SHEET
+     ******************************************************************/
+    document.getElementById("syncBtn").addEventListener("click", async () => {
+      const eventName = sportSelect.value;
+      const category = categorySelect.value;
+      if (!eventName) {
+        alert("Please select a sport/event first.");
+        return;
+      }
+
+      const limit = EVENT_LIMITS[eventName] || 20;
+      const playersList = gatherPayloadPlayers(limit);
+      if (playersList.length === 0) {
+        alert("Please enter at least one player before syncing.");
+        return;
+      }
+
+      loadingOverlay.classList.remove("hidden");
+
+      try {
+        await fetch(GOOGLE_APPS_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            batch: authenticatedBatch,
+            category: category,
+            sport: eventName,
+            players: playersList
+          })
         });
-      }, { threshold: 0.15 });
+        loadingOverlay.classList.add("hidden");
+        alert(`Successfully synced current roster for batch ${authenticatedBatch} (${category} - ${eventName})!`);
+      } catch (err) {
+        loadingOverlay.classList.add("hidden");
+        console.error(err);
+        alert("Sync Error: " + err.message);
+      }
+    });
 
-      cards.forEach(card => observer.observe(card));
+    /******************************************************************
+     * 5. FINALIZE TEAM & CONVERT TEMPLATE TO PDF VIA CONVERTAPI
+     ******************************************************************/
+    document.getElementById("finalizeBtn").addEventListener("click", async () => {
+      const eventName = sportSelect.value;
+      const category = categorySelect.value;
+      if (!eventName) {
+        alert("Please select a sport/event first.");
+        return;
+      }
+
+      const limit = EVENT_LIMITS[eventName] || 20;
+      const activePlayers = gatherPayloadPlayers(limit);
+      if (activePlayers.length === 0) {
+        alert("Please add at least one player to finalize the team card.");
+        return;
+      }
+
+      loadingOverlay.classList.remove("hidden");
+
+      const today = new Date().toLocaleDateString("en-GB");
+
+      let captainName = "Not Designated";
+      for (let i = 1; i <= limit; i++) {
+        const capRadio = document.getElementById(`player_${i}_captain`);
+        if (capRadio && capRadio.checked) {
+          captainName = document.getElementById(`player_${i}_name`).value.trim() || "Not Designated";
+          break;
+        }
+      }
+
+      const payload = {
+        batch: authenticatedBatch,
+        gender: category,
+        event: eventName,
+        captain: captainName,
+        date_submitted: today
+      };
+
+      for (let i = 1; i <= limit; i++) {
+        payload[`player_${i}_name`] = document.getElementById(`player_${i}_name`).value.trim();
+        payload[`player_${i}_enum`] = document.getElementById(`player_${i}_enum`).value.trim();
+      }
+
+      try {
+        // 1. Fetch template .docx file from local directory
+        const response = await fetch(`Team_Cards/${eventName}.docx`);
+        if (!response.ok) throw new Error(`Could not find 'Team_Cards/${eventName}.docx' in project directory.`);
+        const arrayBuffer = await response.arrayBuffer();
+
+        // 2. Populate template via docxtemplater
+        const zip = new PizZip(arrayBuffer);
+        const doc = new window.docxtemplater(zip, { paragraphLoop: true, linebreaks: true });
+        doc.render(payload);
+
+        const filledBlob = doc.getZip().generate({
+          type: "blob",
+          mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        });
+
+        // 3. Send populated .docx blob to ConvertAPI to convert directly to PDF
+        const formData = new FormData();
+        formData.append("File", filledBlob, `${authenticatedBatch}_${category}_${eventName}.docx`);
+        formData.append("StoreFile", "true");
+
+        const convertResponse = await fetch("https://v2.convertapi.com/convert/docx/to/pdf", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer I36Bfekzgdq8UfIoHy2BLMbdQ0CkzPTK"
+          },
+          body: formData
+        });
+
+        if (!convertResponse.ok) {
+          throw new Error("Failed to convert document to PDF via ConvertAPI.");
+        }
+
+        const resultJson = await convertResponse.json();
+        if (resultJson && resultJson.Files && resultJson.Files[0].Url) {
+          const pdfUrl = resultJson.Files[0].Url;
+
+          // Download converted PDF file
+          const pdfBlobRes = await fetch(pdfUrl);
+          const pdfBlob = await pdfBlobRes.blob();
+          saveAs(pdfBlob, `${authenticatedBatch}_${category}_${eventName}_TeamCard.pdf`);
+        } else {
+          throw new Error("Invalid response received from conversion service.");
+        }
+
+      } catch (err) {
+        console.error(err);
+        alert("Template Conversion Error: " + err.message);
+      }
+
+      // Sync data to sheet in background
+      try {
+        await fetch(GOOGLE_APPS_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            batch: authenticatedBatch,
+            category: category,
+            sport: eventName,
+            players: activePlayers
+          })
+        });
+      } catch(e) { console.warn("Background sync error", e); }
+
+      loadingOverlay.classList.add("hidden");
+    });
+
+    /******************************************************************
+     * 6. REALISTIC EMBERS CANVAS PARTICLE ENGINE
+     ******************************************************************/
+    const canvas = document.getElementById("emberCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = Array.from({ length: 55 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height + height,
+      size: Math.random() * 2.5 + 0.8,
+      speedY: Math.random() * 0.9 + 0.4,
+      speedX: (Math.random() - 0.5) * 0.4,
+      opacity: Math.random() * 0.75 + 0.25,
+      color: Math.random() > 0.3 ? "245, 130, 32" : (Math.random() > 0.5 ? "220, 38, 38" : "234, 179, 8")
+    }));
+
+    function animateEmbers() {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach((p) => {
+        p.y -= p.speedY;
+        p.x += p.speedX + Math.sin(p.y * 0.01) * 0.2;
+
+        if (p.y < -10) {
+          p.y = height + 10;
+          p.x = Math.random() * width;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color}, ${p.opacity})`;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = `rgba(${p.color}, 0.9)`;
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animateEmbers);
     }
+    animateEmbers();
   </script>
 </body>
 </html>
