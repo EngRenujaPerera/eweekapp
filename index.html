@@ -14,6 +14,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Google+Sans:wght@400;500;700;800&family=Inter:wght@300;400;500;600;700;800&family=Teko:wght@500;600;700&display=swap" rel="stylesheet" />
 
+  <!-- html2canvas for capturing DOM snapshot -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <style>
     /* OLYMPIC APP THEME VARIABLES */
     :root[data-theme="dark"] {
@@ -382,10 +385,10 @@
     .hero-intro-text strong { color: var(--color-gold); font-weight: 700; }
 
     /* ==========================================================================
-       BROADCAST CHAMPIONSHIP LEADERBOARD (CYBER GLITCH + FULL MOBILE COMPATIBLE)
+       BROADCAST CHAMPIONSHIP LEADERBOARD (GOLD/SILVER GLITCH + SHARE SNAP ACTION)
        ========================================================================== */
     .results-section { 
-      padding: 40px 0 70px; 
+      padding: 30px 0 70px; 
       position: relative; 
       z-index: 5; 
       scroll-margin-top: 75px;
@@ -393,47 +396,14 @@
     
     .broadcast-leaderboard-wrapper {
       max-width: 1060px;
-      margin: 15px auto 0;
+      margin: 10px auto 0;
       position: relative;
     }
 
-    /* Broadcast Top Eyebrow Header Bar */
-    .broadcast-header-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-      padding: 0 8px;
-    }
-
-    .live-badge-unit {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-family: var(--font-google-sans);
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-silver-bright);
-    }
-    .live-badge-unit .dot-pink {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #f43f5e; box-shadow: 0 0 12px #f43f5e;
-      animation: pulseDotPink 1.6s infinite;
-    }
-    .live-badge-unit .dot-cyan {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #38bdf8; box-shadow: 0 0 12px #38bdf8;
-      animation: pulseDotCyan 1.6s infinite;
-    }
-    @keyframes pulseDotPink { 0%, 100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
-    @keyframes pulseDotCyan { 0%, 100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
-
-    /* GLITCH TEXT FOR CHAMPIONSHIP LEADERBOARD */
+    /* GLITCH TEXT FOR CHAMPIONSHIP LEADERBOARD (GOLD & SILVER REPLACEMENTS) */
     .broadcast-main-title {
       font-family: var(--font-sport);
-      font-size: clamp(1.8rem, 6.5vw, 3.8rem);
+      font-size: clamp(2rem, 6.8vw, 3.8rem);
       font-weight: 700;
       letter-spacing: 0.08em;
       text-align: center;
@@ -461,14 +431,16 @@
       clip: rect(0, 0, 0, 0);
       pointer-events: none;
     }
+    /* Gold Glitch Layer */
     .broadcast-main-title::before {
       left: -2px;
-      text-shadow: 2px 0 #38bdf8;
+      text-shadow: 2px 0 #fbbf24;
       animation: glitchAnim1 4s infinite linear alternate-reverse;
     }
+    /* Silver Glitch Layer */
     .broadcast-main-title::after {
       left: 2px;
-      text-shadow: -2px 0 #f43f5e;
+      text-shadow: -2px 0 #e2e8f0;
       animation: glitchAnim2 3.5s infinite linear alternate-reverse;
     }
 
@@ -499,7 +471,43 @@
       color: var(--color-stone-light);
       text-transform: uppercase;
       margin-top: 4px;
-      margin-bottom: 22px;
+      margin-bottom: 12px;
+    }
+
+    /* SNAP / SHARE ACTION BAR */
+    .snap-action-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .btn-snap-share {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      background: var(--color-graphite);
+      border: 1px solid var(--color-card-border);
+      border-radius: 30px;
+      font-family: var(--font-google-sans);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-silver-bright);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px);
+      transition: all 0.25s ease;
+    }
+    .btn-snap-share:hover {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: var(--color-gold);
+      color: var(--color-gold-light);
+      transform: translateY(-2px);
+    }
+    .btn-snap-share svg {
+      width: 15px;
+      height: 15px;
+      fill: currentColor;
     }
 
     /* Stack of Team Cards */
@@ -608,8 +616,8 @@
 
     @keyframes rankGlitchShake {
       0%, 94% { transform: translate(0, 0); text-shadow: 0 0 14px rgba(251, 191, 36, 0.5); }
-      95% { transform: translate(-2px, 1px); text-shadow: -2px 0 #38bdf8, 2px 0 #f43f5e; }
-      96% { transform: translate(2px, -1px); text-shadow: 2px 0 #38bdf8, -2px 0 #f43f5e; }
+      95% { transform: translate(-2px, 1px); text-shadow: -2px 0 #e2e8f0, 2px 0 #fbbf24; }
+      96% { transform: translate(2px, -1px); text-shadow: 2px 0 #fbbf24, -2px 0 #e2e8f0; }
       97% { transform: translate(-1px, 2px); }
       98%, 100% { transform: translate(0, 0); text-shadow: 0 0 14px rgba(251, 191, 36, 0.5); }
     }
@@ -783,7 +791,7 @@
     }
 
     /* ==========================================================================
-       OPTIMIZED MOBILE RESPONSIVE LAYOUT (MATCHING INTENDED ESPORTS DESIGN)
+       OPTIMIZED MOBILE RESPONSIVE LAYOUT
        ========================================================================== */
     @media (max-width: 768px) {
       .results-section {
@@ -792,16 +800,8 @@
       .broadcast-leaderboard-wrapper {
         margin-top: 5px;
       }
-      .broadcast-header-bar {
-        margin-bottom: 8px;
-        padding: 0 4px;
-      }
-      .live-badge-unit {
-        font-size: 0.64rem;
-        letter-spacing: 0.08em;
-      }
       .broadcast-sub-title {
-        margin-bottom: 16px;
+        margin-bottom: 12px;
         letter-spacing: 0.15em;
         font-size: 0.68rem;
       }
@@ -885,6 +885,40 @@
       .stadium-track-line {
         height: 6px;
       }
+    }
+
+    /* SHARE DIALOG MODAL STYLING */
+    .share-modal-backdrop {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(4, 5, 8, 0.85);
+      backdrop-filter: blur(16px); z-index: 2600; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: var(--transition-smooth);
+    }
+    .share-modal-backdrop.open { opacity: 1; pointer-events: auto; }
+    .share-modal-box {
+      max-width: 480px; width: 100%; background: var(--color-card-bg); border: 1px solid var(--color-card-border);
+      border-radius: 24px; padding: 26px 22px; position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.4); text-align: center;
+    }
+    .share-modal-close {
+      position: absolute; top: 14px; right: 16px; width: 32px; height: 32px; background: var(--color-graphite);
+      border: 1px solid var(--color-card-border); color: var(--color-silver-bright); display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; font-size: 1.1rem;
+    }
+    .share-preview-canvas {
+      width: 100%; max-height: 240px; object-fit: contain; border-radius: 12px; border: 1px solid var(--color-card-border);
+      background: #000; margin: 14px 0 16px;
+    }
+    .share-buttons-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px;
+    }
+    .share-app-btn {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+      background: var(--color-graphite); border: 1px solid var(--color-card-border); border-radius: 14px;
+      padding: 10px 4px; color: var(--color-silver-bright); font-family: var(--font-google-sans); font-size: 0.65rem; font-weight: 700;
+      transition: all 0.2s ease; text-decoration: none; cursor: pointer;
+    }
+    .share-app-btn:hover {
+      border-color: var(--color-gold); transform: translateY(-2px); color: var(--color-gold-light);
+    }
+    .share-app-btn svg {
+      width: 24px; height: 24px; fill: currentColor;
     }
 
     /* TOP STORIES SECTION */
@@ -1511,12 +1545,47 @@
     </div>
   </div>
 
+  <!-- LEADERBOARD SNAP & SHARE MODAL -->
+  <div class="share-modal-backdrop" id="shareSnapModal" role="dialog" aria-hidden="true">
+    <div class="share-modal-box">
+      <button class="share-modal-close" id="shareModalCloseBtn" type="button">&times;</button>
+      <span class="section-eyebrow">STANDINGS SNAPSHOT</span>
+      <h3 class="section-title" style="font-size: 1.3rem; margin-bottom: 2px;">SHARE LEADERBOARD</h3>
+      <p style="font-size: 0.78rem; color: var(--color-stone-light);">Instant capture generated from real-time standings.</p>
+      
+      <img id="snapPreviewImage" class="share-preview-canvas" alt="Leaderboard Snapshot" />
+
+      <!-- Multi-Platform Share Grid -->
+      <div class="share-buttons-grid">
+        <button class="share-app-btn" onclick="triggerNativeShare()" type="button" title="Native System Share">
+          <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/></svg>
+          <span>Share</span>
+        </button>
+        <button class="share-app-btn" onclick="shareWhatsApp()" type="button" title="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M16.75 13.96c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5.05-1.33A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.1.81.83-3.02-.2-.31A8.2 8.2 0 1 1 12 20.2z"/></svg>
+          <span>WhatsApp</span>
+        </button>
+        <button class="share-app-btn" onclick="downloadLeaderboardSnap()" type="button" title="Download Image">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <span>Save Snap</span>
+        </button>
+        <button class="share-app-btn" onclick="copySnapLink()" type="button" title="Copy Link">
+          <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          <span id="copyBtnLabel">Copy Link</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const SCORES_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzo1KtK5zMkmLykmHdjJRqzNEtGccwfM1wGNF7JGB6mYiRDBJdSQ3cboJo4-hRerV4TQ/exec";
     const TEAMS_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFJsbdHQFZDAiFYWXyCIUvGbmbt0PxGqSGjm_FCEFvjSIC11CUEFyrhlcK30pzJ9fBg/exec";
 
     let globalNewsStore = [];
     let globalMatchesStore = [];
+    let currentSnapBlob = null;
+    let currentSnapDataUrl = null;
+
     let batchData = [
       { name: "E22", logo: "e22.png", score: 0, wins: 0, growth: "0%" },
       { name: "E23", logo: "e23.png", score: 0, wins: 0, growth: "0%" },
@@ -1545,6 +1614,7 @@
       initOrderModals();
       initBatchTabs();
       initSequentialReveal();
+      initShareModalListeners();
 
       fetchLiveScores(false);
       fetchFeaturedNews();
@@ -2010,24 +2080,19 @@
       const maxScore = Math.max(...sorted.map(s => s.score), 100);
 
       let html = `
-        <!-- Esports Broadcast Eyebrow Header -->
-        <div class="broadcast-header-bar">
-          <div class="live-badge-unit">
-            <span class="dot-pink"></span>
-            <span>LIVE</span>
-          </div>
-          <div></div>
-          <div class="live-badge-unit">
-            <span>STANDINGS</span>
-            <span class="dot-cyan"></span>
-          </div>
-        </div>
-
         <h1 class="broadcast-main-title" data-text="CHAMPIONSHIP LEADERBOARD">CHAMPIONSHIP LEADERBOARD</h1>
         <p class="broadcast-sub-title">E WEEK 2026</p>
 
-        <!-- Stadium Style Team Rows List -->
-        <div class="broadcast-rows-container">
+        <!-- Capture & Share Snapshot CTA -->
+        <div class="snap-action-bar">
+          <button class="btn-snap-share" onclick="openShareSnapModal()" type="button">
+            <svg viewBox="0 0 24 24"><path d="M12 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zm0 4.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm7-8.5h-3.17L14 3H10L8.17 5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 14H5V7h3.88l1.83-2h4.58l1.83 2H19v12z"/></svg>
+            <span>Share Snap</span>
+          </button>
+        </div>
+
+        <!-- Stadium Style Team Rows List (Capture Target) -->
+        <div class="broadcast-rows-container" id="leaderboardCaptureTarget">
           ${sorted.map((team, idx) => {
             const rank = idx + 1;
             const rankStr = rank < 10 ? `0${rank}` : `${rank}`;
@@ -2078,6 +2143,128 @@
       `;
 
       container.innerHTML = html;
+    }
+
+    /* ==========================================================================
+       SNAPSHOT CAPTURE & ALL SHARING METHODS
+       ========================================================================== */
+    function openShareSnapModal() {
+      const modal = document.getElementById('shareSnapModal');
+      const previewImg = document.getElementById('snapPreviewImage');
+      const captureNode = document.getElementById('leaderboardCaptureTarget');
+      if (!modal || !captureNode) return;
+
+      modal.classList.add('open');
+      previewImg.src = "";
+      previewImg.alt = "Generating snapshot...";
+
+      // html2canvas to capture leaderboard snapshot
+      html2canvas(captureNode, {
+        scale: 2,
+        backgroundColor: '#07090f',
+        useCORS: true,
+        logging: false
+      }).then(canvas => {
+        currentSnapDataUrl = canvas.toDataURL('image/png');
+        previewImg.src = currentSnapDataUrl;
+        previewImg.alt = "Leaderboard Snapshot";
+        
+        canvas.toBlob(blob => {
+          currentSnapBlob = blob;
+        }, 'image/png');
+      }).catch(err => {
+        previewImg.alt = "Could not render snapshot.";
+        console.error("Canvas capture error:", err);
+      });
+    }
+
+    function initShareModalListeners() {
+      const closeBtn = document.getElementById('shareModalCloseBtn');
+      const modal = document.getElementById('shareSnapModal');
+      if (closeBtn && modal) {
+        closeBtn.addEventListener('click', () => modal.classList.remove('open'));
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.classList.remove('open');
+        });
+      }
+    }
+
+    // 1. Native Web Share API (System share sheet supporting Instagram, Telegram, SMS, WhatsApp, etc.)
+    async function triggerNativeShare() {
+      const shareTitle = "E-WEEK 2026 Live Standings";
+      const shareText = "Check out the latest live standings at E-WEEK 2026, Faculty of Engineering!";
+      const shareUrl = window.location.href;
+
+      if (navigator.share) {
+        if (currentSnapBlob && navigator.canShare && navigator.canShare({ files: [new File([currentSnapBlob], 'eweek-standings.png', { type: 'image/png' })] })) {
+          try {
+            const file = new File([currentSnapBlob], 'eweek-standings.png', { type: 'image/png' });
+            await navigator.share({
+              files: [file],
+              title: shareTitle,
+              text: shareText
+            });
+            return;
+          } catch (e) {
+            if (e.name !== 'AbortError') console.warn('File share failed, falling back to URL share', e);
+          }
+        }
+        try {
+          await navigator.share({
+            title: shareTitle,
+            text: shareText,
+            url: shareUrl
+          });
+        } catch (e) {
+          if (e.name !== 'AbortError') downloadLeaderboardSnap();
+        }
+      } else {
+        downloadLeaderboardSnap();
+      }
+    }
+
+    // 2. WhatsApp Direct Share
+    function shareWhatsApp() {
+      const text = encodeURIComponent(`⚡ E-WEEK 2026 Championship Standings are live! Check current results here: ${window.location.href}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    // 3. Download/Save image snapshot to device
+    function downloadLeaderboardSnap() {
+      if (!currentSnapDataUrl) {
+        alert("Snapshot is still processing. Please try again in a moment.");
+        return;
+      }
+      const a = document.createElement('a');
+      a.href = currentSnapDataUrl;
+      a.download = `EWEEK-2026-Standings-${Date.now()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    // 4. Copy share link to clipboard
+    function copySnapLink() {
+      const label = document.getElementById('copyBtnLabel');
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          if (label) {
+            label.textContent = "Copied!";
+            setTimeout(() => label.textContent = "Copy Link", 2500);
+          }
+        });
+      } else {
+        const dummy = document.createElement("input");
+        document.body.appendChild(dummy);
+        dummy.value = window.location.href;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        if (label) {
+          label.textContent = "Copied!";
+          setTimeout(() => label.textContent = "Copy Link", 2500);
+        }
+      }
     }
 
     const SPORTS_CONFIG = [
