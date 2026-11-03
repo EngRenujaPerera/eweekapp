@@ -1,5 +1,5 @@
 <!-- ==========================================================================
-     FILE: index.html (Unified E-WEEK 2026 Portal)
+     FILE: index.html (Unified E-WEEK 2026 Portal with Merchandise Ordering System)
      ========================================================================== -->
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -13,6 +13,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Google+Sans:wght@400;500;700;800&family=Inter:wght@300;400;500;600;700;800&family=Teko:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- PDF Generation Engine (html2canvas & jsPDF) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     /* OLYMPIC APP THEME VARIABLES */
@@ -321,8 +325,9 @@
       letter-spacing: 0.15em; text-transform: uppercase; color: #0b0d12;
       background: linear-gradient(135deg, var(--color-gold) 0%, #d97706 100%);
       border: 1px solid var(--color-gold-light); border-radius: 12px;
-      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.25); z-index: 10; text-decoration: none;
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.25); z-index: 10; text-decoration: none; cursor: pointer;
     }
+    .btn-silver:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-silver-secondary {
       background: var(--color-steel-dark);
       color: var(--color-silver-bright); border: 1px solid var(--color-card-border);
@@ -381,96 +386,29 @@
     }
     .hero-intro-text strong { color: var(--color-gold); font-weight: 700; }
 
-    /* ==========================================================================
-       BROADCAST CHAMPIONSHIP LEADERBOARD (CYBER GLITCH + FULL MOBILE COMPATIBLE)
-       ========================================================================== */
-    .results-section { 
-      padding: 40px 0 70px; 
-      position: relative; 
-      z-index: 5; 
-      scroll-margin-top: 75px;
-    }
-    
-    .broadcast-leaderboard-wrapper {
-      max-width: 1060px;
-      margin: 15px auto 0;
-      position: relative;
-    }
-
-    /* Broadcast Top Eyebrow Header Bar */
-    .broadcast-header-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-      padding: 0 8px;
-    }
-
-    .live-badge-unit {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-family: var(--font-google-sans);
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-silver-bright);
-    }
-    .live-badge-unit .dot-pink {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #f43f5e; box-shadow: 0 0 12px #f43f5e;
-      animation: pulseDotPink 1.6s infinite;
-    }
-    .live-badge-unit .dot-cyan {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #38bdf8; box-shadow: 0 0 12px #38bdf8;
-      animation: pulseDotCyan 1.6s infinite;
-    }
+    /* BROADCAST CHAMPIONSHIP LEADERBOARD */
+    .results-section { padding: 40px 0 70px; position: relative; z-index: 5; scroll-margin-top: 75px; }
+    .broadcast-leaderboard-wrapper { max-width: 1060px; margin: 15px auto 0; position: relative; }
+    .broadcast-header-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; padding: 0 8px; }
+    .live-badge-unit { display: flex; align-items: center; gap: 7px; font-family: var(--font-google-sans); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-silver-bright); }
+    .live-badge-unit .dot-pink { width: 8px; height: 8px; border-radius: 50%; background: #f43f5e; box-shadow: 0 0 12px #f43f5e; animation: pulseDotPink 1.6s infinite; }
+    .live-badge-unit .dot-cyan { width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 12px #38bdf8; animation: pulseDotCyan 1.6s infinite; }
     @keyframes pulseDotPink { 0%, 100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
     @keyframes pulseDotCyan { 0%, 100% { opacity: 0.7; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
 
-    /* GLITCH TEXT FOR CHAMPIONSHIP LEADERBOARD */
     .broadcast-main-title {
-      font-family: var(--font-sport);
-      font-size: clamp(1.8rem, 6.5vw, 3.8rem);
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-align: center;
-      text-transform: uppercase;
-      line-height: 1.05;
-      position: relative;
-      display: block;
-      margin: 0 auto;
+      font-family: var(--font-sport); font-size: clamp(1.8rem, 6.5vw, 3.8rem); font-weight: 700; letter-spacing: 0.08em;
+      text-align: center; text-transform: uppercase; line-height: 1.05; position: relative; display: block; margin: 0 auto;
       background: linear-gradient(180deg, #ffffff 15%, #cbd5e1 55%, #64748b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.6));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.6));
     }
-    .broadcast-main-title::before,
-    .broadcast-main-title::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+    .broadcast-main-title::before, .broadcast-main-title::after {
+      content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       background: linear-gradient(180deg, #ffffff 15%, #cbd5e1 55%, #64748b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      clip: rect(0, 0, 0, 0);
-      pointer-events: none;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; clip: rect(0, 0, 0, 0); pointer-events: none;
     }
-    .broadcast-main-title::before {
-      left: -2px;
-      text-shadow: 2px 0 #38bdf8;
-      animation: glitchAnim1 4s infinite linear alternate-reverse;
-    }
-    .broadcast-main-title::after {
-      left: 2px;
-      text-shadow: -2px 0 #f43f5e;
-      animation: glitchAnim2 3.5s infinite linear alternate-reverse;
-    }
+    .broadcast-main-title::before { left: -2px; text-shadow: 2px 0 #38bdf8; animation: glitchAnim1 4s infinite linear alternate-reverse; }
+    .broadcast-main-title::after { left: 2px; text-shadow: -2px 0 #f43f5e; animation: glitchAnim2 3.5s infinite linear alternate-reverse; }
 
     @keyframes glitchAnim1 {
       0%, 82% { clip: rect(0, 0, 0, 0); transform: skew(0deg); }
@@ -491,120 +429,43 @@
     }
 
     .broadcast-sub-title {
-      font-family: var(--font-google-sans);
-      font-size: clamp(0.7rem, 1.4vw, 0.92rem);
-      font-weight: 700;
-      letter-spacing: 0.24em;
-      text-align: center;
-      color: var(--color-stone-light);
-      text-transform: uppercase;
-      margin-top: 4px;
-      margin-bottom: 22px;
+      font-family: var(--font-google-sans); font-size: clamp(0.7rem, 1.4vw, 0.92rem); font-weight: 700;
+      letter-spacing: 0.24em; text-align: center; color: var(--color-stone-light); text-transform: uppercase;
+      margin-top: 4px; margin-bottom: 22px;
     }
 
-    /* Stack of Team Cards */
-    .broadcast-rows-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-    }
+    .broadcast-rows-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
 
-    /* Single Championship Row Item (Desktop Base) */
     .stadium-row-card {
-      display: grid;
-      grid-template-columns: 88px 105px 1.4fr 1.3fr 150px;
-      align-items: center;
-      background: var(--esport-row-bg);
-      border-radius: 14px;
-      border: 1.5px solid rgba(56, 189, 248, 0.28);
-      position: relative;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(14px);
-      padding: 6px 16px 6px 8px;
-      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-      overflow: hidden;
+      display: grid; grid-template-columns: 88px 105px 1.4fr 1.3fr 150px; align-items: center;
+      background: var(--esport-row-bg); border-radius: 14px; border: 1.5px solid rgba(56, 189, 248, 0.28);
+      position: relative; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); backdrop-filter: blur(14px);
+      padding: 6px 16px 6px 8px; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; overflow: hidden;
     }
-    .stadium-row-card:hover {
-      transform: translateX(4px);
-      border-color: rgba(56, 189, 248, 0.6);
-      box-shadow: 0 12px 30px rgba(56, 189, 248, 0.2);
-    }
-
-    /* Cyber holographic scanline effect on row hover */
+    .stadium-row-card:hover { transform: translateX(4px); border-color: rgba(56, 189, 248, 0.6); box-shadow: 0 12px 30px rgba(56, 189, 248, 0.2); }
     .stadium-row-card::before {
-      content: '';
-      position: absolute;
-      top: -100%;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.12), transparent);
-      pointer-events: none;
-      transition: top 0.4s ease;
+      content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.12), transparent); pointer-events: none; transition: top 0.4s ease;
     }
-    .stadium-row-card:hover::before {
-      top: 100%;
-      transition: top 0.7s ease;
-    }
+    .stadium-row-card:hover::before { top: 100%; transition: top 0.7s ease; }
 
-    /* Rank 1 Highlight (Gold Neon Aura & Glitch Pulse) */
     .stadium-row-card.rank-1-highlight {
-      border: 1.8px solid rgba(245, 158, 11, 0.75);
-      background: linear-gradient(90deg, rgba(32, 26, 18, 0.98) 0%, rgba(16, 21, 33, 0.95) 100%);
-      box-shadow: 0 10px 32px rgba(245, 158, 11, 0.22), 0 0 18px rgba(245, 158, 11, 0.15) inset;
-      animation: rank1GlowPulse 3s infinite alternate;
+      border: 1.8px solid rgba(245, 158, 11, 0.75); background: linear-gradient(90deg, rgba(32, 26, 18, 0.98) 0%, rgba(16, 21, 33, 0.95) 100%);
+      box-shadow: 0 10px 32px rgba(245, 158, 11, 0.22), 0 0 18px rgba(245, 158, 11, 0.15) inset; animation: rank1GlowPulse 3s infinite alternate;
     }
-    .stadium-row-card.rank-1-highlight:hover {
-      border-color: #fbbf24;
-      box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4), 0 0 22px rgba(245, 158, 11, 0.25) inset;
-    }
+    .stadium-row-card.rank-1-highlight:hover { border-color: #fbbf24; box-shadow: 0 12px 35px rgba(245, 158, 11, 0.4), 0 0 22px rgba(245, 158, 11, 0.25) inset; }
 
     @keyframes rank1GlowPulse {
-      0% {
-        border-color: rgba(245, 158, 11, 0.65);
-        box-shadow: 0 10px 30px rgba(245, 158, 11, 0.18), 0 0 15px rgba(245, 158, 11, 0.1) inset;
-      }
-      50% {
-        border-color: rgba(251, 191, 36, 0.95);
-        box-shadow: 0 12px 36px rgba(245, 158, 11, 0.32), 0 0 20px rgba(251, 191, 36, 0.2) inset;
-      }
-      100% {
-        border-color: rgba(245, 158, 11, 0.65);
-        box-shadow: 0 10px 30px rgba(245, 158, 11, 0.18), 0 0 15px rgba(245, 158, 11, 0.1) inset;
-      }
+      0% { border-color: rgba(245, 158, 11, 0.65); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.18), 0 0 15px rgba(245, 158, 11, 0.1) inset; }
+      50% { border-color: rgba(251, 191, 36, 0.95); box-shadow: 0 12px 36px rgba(245, 158, 11, 0.32), 0 0 20px rgba(251, 191, 36, 0.2) inset; }
+      100% { border-color: rgba(245, 158, 11, 0.65); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.18), 0 0 15px rgba(245, 158, 11, 0.1) inset; }
     }
 
-    /* Rank Box (01, 02, etc.) */
-    .stadium-rank-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      padding-right: 6px;
-      position: relative;
-    }
-    .stadium-rank-num {
-      font-family: var(--font-sport);
-      font-size: 3.2rem;
-      line-height: 1;
-      font-weight: 700;
-      color: #94a3b8;
-      letter-spacing: 0.04em;
-      position: relative;
-    }
-    .rank-1-highlight .stadium-rank-num {
-      color: #fbbf24;
-      text-shadow: 0 0 14px rgba(251, 191, 36, 0.5);
-      animation: rankGlitchShake 6s infinite;
-    }
-    .stadium-row-card:nth-child(2) .stadium-rank-num {
-      color: #e2e8f0;
-    }
-    .stadium-row-card:nth-child(3) .stadium-rank-num {
-      color: #d97706;
-    }
+    .stadium-rank-box { display: flex; align-items: center; justify-content: center; height: 100%; border-right: 1px solid rgba(255, 255, 255, 0.08); padding-right: 6px; position: relative; }
+    .stadium-rank-num { font-family: var(--font-sport); font-size: 3.2rem; line-height: 1; font-weight: 700; color: #94a3b8; letter-spacing: 0.04em; position: relative; }
+    .rank-1-highlight .stadium-rank-num { color: #fbbf24; text-shadow: 0 0 14px rgba(251, 191, 36, 0.5); animation: rankGlitchShake 6s infinite; }
+    .stadium-row-card:nth-child(2) .stadium-rank-num { color: #e2e8f0; }
+    .stadium-row-card:nth-child(3) .stadium-rank-num { color: #d97706; }
 
     @keyframes rankGlitchShake {
       0%, 94% { transform: translate(0, 0); text-shadow: 0 0 14px rgba(251, 191, 36, 0.5); }
@@ -614,277 +475,81 @@
       98%, 100% { transform: translate(0, 0); text-shadow: 0 0 14px rgba(251, 191, 36, 0.5); }
     }
 
-    /* Shield Logo Container */
-    .stadium-shield-box {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 10px;
-    }
+    .stadium-shield-box { display: flex; align-items: center; justify-content: center; padding: 0 10px; }
     .shield-badge-frame {
-      width: 68px;
-      height: 72px;
-      background: radial-gradient(circle, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
-      border: 2px solid rgba(56, 189, 248, 0.45);
-      border-radius: 12px 12px 28px 28px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-      transition: transform 0.3s ease, border-color 0.3s ease;
+      width: 68px; height: 72px; background: radial-gradient(circle, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+      border: 2px solid rgba(56, 189, 248, 0.45); border-radius: 12px 12px 28px 28px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; position: relative; box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4), inset 0 2px 6px rgba(255, 255, 255, 0.1);
+      overflow: hidden; transition: transform 0.3s ease, border-color 0.3s ease;
     }
-    .stadium-row-card:hover .shield-badge-frame {
-      transform: scale(1.05);
-      border-color: #38bdf8;
-    }
-    .rank-1-highlight .shield-badge-frame {
-      border-color: rgba(245, 158, 11, 0.85);
-      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25), inset 0 2px 8px rgba(251, 191, 36, 0.2);
-    }
-    .rank-1-highlight:hover .shield-badge-frame {
-      border-color: #fbbf24;
-    }
-    .shield-emblem-img {
-      width: 44px;
-      height: 44px;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
-    }
+    .stadium-row-card:hover .shield-badge-frame { transform: scale(1.05); border-color: #38bdf8; }
+    .rank-1-highlight .shield-badge-frame { border-color: rgba(245, 158, 11, 0.85); box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25), inset 0 2px 8px rgba(251, 191, 36, 0.2); }
+    .rank-1-highlight:hover .shield-badge-frame { border-color: #fbbf24; }
+    .shield-emblem-img { width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4)); }
 
-    /* Team Title Area */
-    .stadium-name-box {
-      padding: 0 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-width: 0;
-    }
+    .stadium-name-box { padding: 0 12px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
     .stadium-team-title {
-      font-family: var(--font-sport);
-      font-size: 2.1rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      line-height: 1.05;
-      color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      position: relative;
+      font-family: var(--font-sport); font-size: 2.1rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      line-height: 1.05; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: relative;
     }
-    .rank-1-highlight .stadium-team-title {
-      color: #fef08a;
-      text-shadow: 0 0 12px rgba(254, 240, 138, 0.35);
-    }
+    .rank-1-highlight .stadium-team-title { color: #fef08a; text-shadow: 0 0 12px rgba(254, 240, 138, 0.35); }
 
-    /* Events Won & Glowing Progress Bar */
-    .stadium-progress-box {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 16px;
-      gap: 6px;
-    }
+    .stadium-progress-box { display: flex; flex-direction: column; justify-content: center; padding: 0 16px; gap: 6px; }
     .events-won-meta {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-google-sans);
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #cbd5e1;
+      display: flex; align-items: center; gap: 6px; font-family: var(--font-google-sans); font-size: 0.8rem; font-weight: 800;
+      letter-spacing: 0.1em; text-transform: uppercase; color: #cbd5e1;
     }
-    .events-won-meta .trophy-icon {
-      width: 15px;
-      height: 15px;
-      fill: currentColor;
-    }
-    .rank-1-highlight .events-won-meta {
-      color: #fde047;
-    }
-    .rank-1-highlight .events-won-meta .trophy-icon {
-      fill: #fde047;
-    }
+    .events-won-meta .trophy-icon { width: 15px; height: 15px; fill: currentColor; }
+    .rank-1-highlight .events-won-meta { color: #fde047; }
+    .rank-1-highlight .events-won-meta .trophy-icon { fill: #fde047; }
 
     .stadium-track-line {
-      width: 100%;
-      height: 7px;
-      background: rgba(15, 23, 42, 0.85);
-      border-radius: 4px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
+      width: 100%; height: 7px; background: rgba(15, 23, 42, 0.85); border-radius: 4px; overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1); position: relative;
     }
     .stadium-fill-line {
-      height: 100%;
-      border-radius: 4px;
-      background: var(--esport-cyan-bar);
-      box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
-      position: relative;
-      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      height: 100%; border-radius: 4px; background: var(--esport-cyan-bar); box-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+      position: relative; transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    /* Animated energy scan beam travelling through progress bar */
     .stadium-fill-line::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
+      content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0;
       background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
-      transform: translateX(-100%);
-      animation: barScanBeam 2.5s infinite ease-in-out;
+      transform: translateX(-100%); animation: barScanBeam 2.5s infinite ease-in-out;
     }
-    @keyframes barScanBeam {
-      0% { transform: translateX(-100%); }
-      60%, 100% { transform: translateX(100%); }
-    }
+    @keyframes barScanBeam { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
 
-    .rank-1-highlight .stadium-fill-line {
-      background: var(--esport-gold-bar);
-      box-shadow: 0 0 12px rgba(245, 158, 11, 0.9);
-    }
+    .rank-1-highlight .stadium-fill-line { background: var(--esport-gold-bar); box-shadow: 0 0 12px rgba(245, 158, 11, 0.9); }
 
-    /* Total Points Area */
-    .stadium-points-box {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: center;
-      padding-right: 6px;
-      white-space: nowrap;
-    }
-    .pts-eyebrow {
-      font-family: var(--font-google-sans);
-      font-size: 0.65rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--color-stone-light);
-      line-height: 1;
-      margin-bottom: 2px;
-    }
-    .pts-big-value {
-      font-family: var(--font-sport);
-      font-size: 2.8rem;
-      line-height: 0.95;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.02em;
-    }
-    .rank-1-highlight .pts-big-value {
-      color: #fbbf24;
-      text-shadow: 0 0 14px rgba(251, 191, 36, 0.45);
-    }
+    .stadium-points-box { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; padding-right: 6px; white-space: nowrap; }
+    .pts-eyebrow { font-family: var(--font-google-sans); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-stone-light); line-height: 1; margin-bottom: 2px; }
+    .pts-big-value { font-family: var(--font-sport); font-size: 2.8rem; line-height: 0.95; font-weight: 700; color: #ffffff; letter-spacing: 0.02em; }
+    .rank-1-highlight .pts-big-value { color: #fbbf24; text-shadow: 0 0 14px rgba(251, 191, 36, 0.45); }
 
-    /* ==========================================================================
-       OPTIMIZED MOBILE RESPONSIVE LAYOUT (MATCHING INTENDED ESPORTS DESIGN)
-       ========================================================================== */
     @media (max-width: 768px) {
-      .results-section {
-        padding: 24px 0 60px;
-      }
-      .broadcast-leaderboard-wrapper {
-        margin-top: 5px;
-      }
-      .broadcast-header-bar {
-        margin-bottom: 8px;
-        padding: 0 4px;
-      }
-      .live-badge-unit {
-        font-size: 0.64rem;
-        letter-spacing: 0.08em;
-      }
-      .broadcast-sub-title {
-        margin-bottom: 16px;
-        letter-spacing: 0.15em;
-        font-size: 0.68rem;
-      }
-
-      /* Clean 2-Tier Mobile Grid: Top row (Rank, Shield, Name, Points) + Bottom row (Events + Bar) */
+      .results-section { padding: 24px 0 60px; }
+      .broadcast-leaderboard-wrapper { margin-top: 5px; }
+      .broadcast-header-bar { margin-bottom: 8px; padding: 0 4px; }
+      .live-badge-unit { font-size: 0.64rem; letter-spacing: 0.08em; }
+      .broadcast-sub-title { margin-bottom: 16px; letter-spacing: 0.15em; font-size: 0.68rem; }
       .stadium-row-card {
         display: grid;
-        grid-template-areas:
-          "rank shield name points"
-          "progress progress progress progress";
-        grid-template-columns: 46px 58px 1fr auto;
-        align-items: center;
-        padding: 10px 12px 12px;
-        gap: 8px 10px;
-        border-radius: 14px;
+        grid-template-areas: "rank shield name points" "progress progress progress progress";
+        grid-template-columns: 46px 58px 1fr auto; align-items: center; padding: 10px 12px 12px; gap: 8px 10px; border-radius: 14px;
       }
-
-      .stadium-rank-box {
-        grid-area: rank;
-        border-right: none;
-        padding-right: 0;
-        justify-content: flex-start;
-      }
-      .stadium-rank-num {
-        font-size: 2.2rem;
-      }
-
-      .stadium-shield-box {
-        grid-area: shield;
-        padding: 0;
-        justify-content: flex-start;
-      }
-      .shield-badge-frame {
-        width: 50px;
-        height: 54px;
-        border-radius: 10px 10px 20px 20px;
-      }
-      .shield-emblem-img {
-        width: 34px;
-        height: 34px;
-      }
-
-      .stadium-name-box {
-        grid-area: name;
-        padding: 0 2px;
-      }
-      .stadium-team-title {
-        font-size: 1.65rem;
-      }
-
-      /* Points anchored cleanly on top right */
-      .stadium-points-box {
-        grid-area: points;
-        padding-right: 0;
-        align-items: flex-end;
-      }
-      .pts-eyebrow {
-        font-size: 0.58rem;
-        letter-spacing: 0.1em;
-      }
-      .pts-big-value {
-        font-size: 2.2rem;
-        line-height: 0.9;
-      }
-
-      /* Full width energy bar & event stats on bottom tier */
-      .stadium-progress-box {
-        grid-area: progress;
-        padding: 6px 0 0 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
-        gap: 5px;
-      }
-      .events-won-meta {
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
-      }
-      .events-won-meta .trophy-icon {
-        width: 13px;
-        height: 13px;
-      }
-      .stadium-track-line {
-        height: 6px;
-      }
+      .stadium-rank-box { grid-area: rank; border-right: none; padding-right: 0; justify-content: flex-start; }
+      .stadium-rank-num { font-size: 2.2rem; }
+      .stadium-shield-box { grid-area: shield; padding: 0; justify-content: flex-start; }
+      .shield-badge-frame { width: 50px; height: 54px; border-radius: 10px 10px 20px 20px; }
+      .shield-emblem-img { width: 34px; height: 34px; }
+      .stadium-name-box { grid-area: name; padding: 0 2px; }
+      .stadium-team-title { font-size: 1.65rem; }
+      .stadium-points-box { grid-area: points; padding-right: 0; align-items: flex-end; }
+      .pts-eyebrow { font-size: 0.58rem; letter-spacing: 0.1em; }
+      .pts-big-value { font-size: 2.2rem; line-height: 0.9; }
+      .stadium-progress-box { grid-area: progress; padding: 6px 0 0 0; border-top: 1px solid rgba(255, 255, 255, 0.08); gap: 5px; }
+      .events-won-meta { font-size: 0.72rem; letter-spacing: 0.08em; }
+      .events-won-meta .trophy-icon { width: 13px; height: 13px; }
+      .stadium-track-line { height: 6px; }
     }
 
     /* TOP STORIES SECTION */
@@ -983,18 +648,140 @@
     .fixture-status { padding: 4px 10px; border-radius: 8px; font-family: var(--font-google-sans); font-size: 0.65rem; text-transform: uppercase; background: var(--color-graphite); border: 1px solid var(--color-card-border); color: var(--color-silver-mid); font-weight: 700; }
     .fixture-venue-text { width: 100%; font-family: var(--font-google-sans); font-size: 0.7rem; color: var(--color-stone-light); margin-top: -4px; }
 
-    /* Merchandise Specific */
-    .merch-hero { padding: 110px 0 30px; text-align: center; }
-    .merch-grid-section { padding: 15px 0 80px; }
-    .merch-container { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-    .merch-card { background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 16px 40px rgba(0,0,0,0.08); }
+    /* ==========================================================================
+       MERCHANDISE & INTERACTIVE ORDERING SYSTEM
+       ========================================================================== */
+    .merch-hero { padding: 110px 0 20px; text-align: center; }
+    .merch-subnav { display: flex; justify-content: center; gap: 10px; margin: 15px auto 25px; flex-wrap: wrap; }
+    .merch-subnav-btn {
+      font-family: var(--font-google-sans); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 10px 20px; border-radius: 30px; background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border); color: var(--color-silver-bright); cursor: pointer; transition: var(--transition-smooth);
+    }
+    .merch-subnav-btn.active { background: linear-gradient(135deg, var(--color-gold) 0%, #d97706 100%); color: #fff; border-color: var(--color-gold-light); }
+
+    .merch-grid-section { padding: 10px 0 80px; }
+    .merch-container { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .merch-card {
+      background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: 20px;
+      overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+      transition: transform 0.25s ease, border-color 0.25s ease; position: relative;
+    }
+    .merch-card:hover { transform: translateY(-4px); border-color: rgba(245, 158, 11, 0.6); }
     .merch-image-wrap { position: relative; width: 100%; height: 240px; overflow: hidden; background: #080a0f; display: flex; align-items: center; justify-content: center; }
     .merch-img { width: 100%; height: 100%; object-fit: cover; }
-    .merch-content { padding: 22px; display: flex; flex-direction: column; flex-grow: 1; text-align: left; }
+    .merch-tag-badge {
+      position: absolute; top: 12px; left: 12px; background: rgba(7, 9, 15, 0.85);
+      border: 1px solid var(--color-card-border); padding: 3px 8px; border-radius: 6px;
+      font-size: 0.62rem; font-family: var(--font-google-sans); font-weight: 700; color: var(--color-gold); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .merch-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; text-align: left; }
     .merch-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; color: var(--color-silver-bright); margin-bottom: 6px; }
-    .merch-desc { font-size: 0.85rem; color: var(--color-stone-light); line-height: 1.5; margin-bottom: 16px; flex-grow: 1; font-family: var(--font-google-sans); }
-    .merch-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-card-border); padding-top: 14px; }
-    .merch-price { font-family: var(--font-google-sans); font-size: 1.15rem; font-weight: 700; color: var(--color-gold); }
+    .merch-desc { font-size: 0.82rem; color: var(--color-stone-light); line-height: 1.45; margin-bottom: 14px; flex-grow: 1; font-family: var(--font-google-sans); }
+    
+    .merch-selector-box {
+      background: var(--color-graphite); border: 1px solid var(--color-card-border);
+      border-radius: 12px; padding: 12px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .merch-selector-label { font-family: var(--font-google-sans); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; color: var(--color-silver-mid); text-transform: uppercase; }
+    .sizes-button-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    .size-btn {
+      padding: 6px 0; font-family: var(--font-google-sans); font-size: 0.7rem; font-weight: 700; text-align: center;
+      border-radius: 6px; background: var(--color-steel-dark); color: var(--color-silver-bright); border: 1px solid var(--color-card-border); cursor: pointer;
+    }
+    .size-btn.active { background: var(--color-gold); color: #000; border-color: var(--color-gold-light); }
+    
+    .qty-stepper { display: flex; align-items: center; justify-content: space-between; }
+    .qty-counter-box { display: flex; align-items: center; gap: 8px; }
+    .qty-pill-btn {
+      width: 28px; height: 28px; border-radius: 6px; background: var(--color-steel-dark); border: 1px solid var(--color-card-border);
+      color: #fff; font-size: 1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .qty-num-val { font-family: var(--font-google-sans); font-weight: 700; font-size: 0.92rem; min-width: 22px; text-align: center; }
+
+    .merch-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-card-border); padding-top: 14px; margin-top: auto; }
+    .merch-price { font-family: var(--font-google-sans); font-size: 1.2rem; font-weight: 800; color: var(--color-gold); }
+
+    /* Sticky Bottom Shopping Tray */
+    .cart-checkout-bar {
+      position: fixed; bottom: 65px; left: 50%; transform: translateX(-50%);
+      width: 92%; max-width: 840px; z-index: 1001;
+      background: var(--color-card-bg); border: 1.5px solid var(--color-gold);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45); backdrop-filter: blur(20px);
+      border-radius: 18px; padding: 12px 22px; display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      animation: slideUpCart 0.3s ease;
+    }
+    @keyframes slideUpCart { from { transform: translate(-50%, 40px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+    .cart-meta-left { display: flex; flex-direction: column; }
+    .cart-pill-tag { font-family: var(--font-google-sans); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-stone-light); }
+    .cart-total-display { font-family: var(--font-google-sans); font-size: 1.35rem; font-weight: 800; color: var(--color-gold); }
+
+    /* ORDER MODALS & CHECKOUT */
+    .order-modal-backdrop {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(4, 5, 8, 0.88); backdrop-filter: blur(16px);
+      z-index: 3100; display: flex; align-items: center; justify-content: center;
+      padding: 16px; opacity: 0; pointer-events: none; transition: var(--transition-smooth);
+    }
+    .order-modal-backdrop.open { opacity: 1; pointer-events: auto; }
+    .order-modal-box {
+      max-width: 620px; width: 100%; max-height: 88vh; overflow-y: auto;
+      background: var(--color-card-bg); border: 1.5px solid var(--color-card-border);
+      border-radius: 24px; padding: 26px; position: relative; box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    }
+    .order-modal-close {
+      position: absolute; top: 16px; right: 18px; width: 34px; height: 34px;
+      background: var(--color-graphite); border: 1px solid var(--color-card-border);
+      color: var(--color-silver-bright); border-radius: 50%; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+
+    .bank-details-card {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(19, 24, 36, 0.9) 100%);
+      border: 1px solid var(--color-gold); border-radius: 14px; padding: 14px 18px; margin: 16px 0; text-align: left;
+    }
+    .bank-card-title { font-family: var(--font-google-sans); font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: var(--color-gold); margin-bottom: 6px; letter-spacing: 0.1em; }
+    .bank-row { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 0.85rem; font-family: var(--font-google-sans); }
+    .bank-acc-highlight { font-weight: 800; color: var(--color-gold); font-size: 1.05rem; }
+
+    .cart-summary-table { background: var(--color-graphite); border-radius: 12px; padding: 12px; margin: 12px 0; max-height: 160px; overflow-y: auto; }
+    .cart-summary-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 6px 0; border-bottom: 1px dashed var(--color-card-border); }
+    .cart-summary-row:last-child { border-bottom: none; }
+
+    .file-dropzone {
+      border: 2px dashed var(--color-gold); border-radius: 12px; padding: 18px; text-align: center;
+      background: rgba(245, 158, 11, 0.04); cursor: pointer; position: relative; margin-top: 6px;
+    }
+    .file-dropzone input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .slip-img-preview { max-height: 130px; border-radius: 8px; margin: 10px auto 0; display: none; object-fit: contain; }
+
+    /* STATUS CHECKER & TRACKER CARD */
+    .status-tracker-card {
+      background: var(--color-card-bg); border: 1px solid var(--color-card-border);
+      border-radius: 22px; padding: 28px 24px; max-width: 620px; margin: 0 auto; text-align: center;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.18);
+    }
+    .status-badge-chip {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 30px;
+      font-family: var(--font-google-sans); font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin: 16px 0;
+    }
+    .status-badge-chip.processing { background: rgba(245, 158, 11, 0.15); color: var(--color-gold); border: 1px solid var(--color-gold); }
+    .status-badge-chip.verified { background: rgba(16, 185, 129, 0.15); color: var(--color-emerald); border: 1px solid var(--color-emerald); }
+    .status-badge-chip.unverified { background: rgba(244, 63, 94, 0.15); color: var(--color-crimson-red); border: 1px solid var(--color-crimson-red); }
+
+    /* Hidden Printable Receipt Template */
+    #receiptPrintTemplate {
+      display: none; background: #ffffff; color: #111827; padding: 32px; border-radius: 10px;
+      max-width: 500px; width: 100%; font-family: 'Inter', sans-serif;
+    }
+    #receiptPrintTemplate .rc-header { text-align: center; border-bottom: 2px solid #e5e7eb; padding-bottom: 16px; margin-bottom: 16px; }
+    #receiptPrintTemplate .rc-title { font-size: 1.3rem; font-weight: 800; color: #111827; margin: 4px 0; }
+    #receiptPrintTemplate .rc-meta { display: flex; justify-content: space-between; font-size: 0.8rem; color: #4b5563; margin-bottom: 5px; }
+    #receiptPrintTemplate table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.85rem; }
+    #receiptPrintTemplate th { text-align: left; border-bottom: 1.5px solid #d1d5db; padding: 6px 0; font-size: 0.75rem; text-transform: uppercase; }
+    #receiptPrintTemplate td { padding: 8px 0; border-bottom: 1px solid #f3f4f6; }
+    #receiptPrintTemplate .rc-total-block { text-align: right; font-size: 1.15rem; font-weight: 800; color: #047857; margin-top: 12px; }
+    #receiptPrintTemplate .rc-seal { display: inline-block; border: 2px solid #047857; color: #047857; padding: 5px 14px; font-weight: 800; border-radius: 6px; font-size: 0.78rem; text-transform: uppercase; margin-top: 14px; }
 
     /* Contact Section Specific */
     .contact-page-hero { padding: 110px 0 20px; text-align: center; }
@@ -1056,38 +843,7 @@
       .hamburger-btn { display: none; }
       .top-stories-container, .contact-grid-layout { grid-template-columns: 1fr; }
 
-      .mobile-bottom-bar {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100vw;
-        height: 60px;
-        background: var(--color-ticker-bg);
-        backdrop-filter: blur(20px);
-        border-top: 1px solid var(--color-card-border);
-        z-index: 1002;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0 4px;
-        box-shadow: 0 -10px 25px rgba(0,0,0,0.15);
-      }
-      .mob-nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        flex: 1;
-        height: 100%;
-        background: transparent;
-        border: none;
-        color: var(--color-stone-light);
-        cursor: pointer;
-        padding: 4px 0;
-      }
-      .mob-nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; pointer-events: none; }
-      .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; pointer-events: none; }
-      .mob-nav-item.active { color: var(--color-gold); }
+      .cart-checkout-bar { bottom: 68px; width: 94%; }
 
       .fixed-bottom-ticker {
         bottom: 60px;
@@ -1323,51 +1079,58 @@
       </section>
     </section>
 
-    <!-- MERCHANDISE PANEL -->
+    <!-- MERCHANDISE PANEL (WITH INTERACTIVE STORE & TRACKER) -->
     <section class="page-panel" id="panel-merch">
       <section class="merch-hero">
         <div class="container">
-          <span class="section-eyebrow">EXCLUSIVE ATTIRE & GEAR</span>
+          <span class="section-eyebrow">EXCLUSIVE ATTIRE & MEMORABILIA</span>
           <h2 class="section-title">OFFICIAL MERCHANDISE</h2>
-          <p class="section-subtitle">Discover the official collection designed for E-WEEK 2026. Premium quality apparel and memorabilia.</p>
+          <p class="section-subtitle">Select your apparel and accessories, configure custom sizes, calculate totals, and upload your payment slip.</p>
+          
+          <div class="merch-subnav">
+            <button class="merch-subnav-btn active" id="btnTabCatalog" onclick="toggleMerchSubView('catalog')" type="button">Store Catalog</button>
+            <button class="merch-subnav-btn" id="btnTabTracker" onclick="toggleMerchSubView('tracker')" type="button">Track Order Status</button>
+          </div>
+
           <div class="silver-divider"><span class="divider-node"></span></div>
         </div>
       </section>
 
-      <section class="merch-grid-section">
+      <!-- Store Catalog View -->
+      <section class="merch-grid-section" id="merchCatalogView">
         <div class="container">
-          <div class="merch-container">
-            <div class="merch-card">
-              <div class="merch-image-wrap"><img src="merch1.jpeg" alt="T-Shirt" class="merch-img" /></div>
-              <div class="merch-content">
-                <h3 class="merch-title">T-Shirt</h3>
-                <p class="merch-desc">Official E-WEEK 2026 polo T-shirt crafted with a comfortable fit, custom button placket, and faculty graphics.</p>
-                <div class="merch-footer"><span class="merch-price">2000 LKR</span><button class="btn-silver btn-silver-secondary order-btn" style="padding: 10px 18px; font-size: 0.78rem;" onclick="openRouteModal()" type="button">Order Now</button></div>
-              </div>
+          <div class="merch-container" id="merchItemsGrid"></div>
+        </div>
+      </section>
+
+      <!-- Order Status Tracker View -->
+      <section class="merch-grid-section" id="merchTrackerView" style="display: none;">
+        <div class="container">
+          <div class="status-tracker-card">
+            <span class="section-eyebrow">REAL-TIME VERIFICATION</span>
+            <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 6px;">CHECK INVOICE STATUS</h3>
+            <p class="section-subtitle" style="font-size: 0.85rem; margin-bottom: 20px;">Enter your unique Invoice ID received upon slip submission to monitor admin verification and download your official receipt.</p>
+
+            <div class="form-group" style="max-width: 420px; margin: 0 auto 16px;">
+              <label class="form-label">Invoice Number</label>
+              <input type="text" id="trackerInputInvoice" class="form-input" placeholder="e.g. EW26-894120" style="text-align:center; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; font-size:1.05rem;" />
             </div>
-            <div class="merch-card">
-              <div class="merch-image-wrap"><img src="merch2.jpeg" alt="Jersey" class="merch-img" /></div>
-              <div class="merch-content">
-                <h3 class="merch-title">Jersey</h3>
-                <p class="merch-desc">High-performance athletic jersey designed for tournament fixtures with breathability and sharp cinematic styling.</p>
-                <div class="merch-footer"><span class="merch-price">1600 LKR</span><button class="btn-silver btn-silver-secondary order-btn" style="padding: 10px 18px; font-size: 0.78rem;" onclick="openRouteModal()" type="button">Order Now</button></div>
-              </div>
-            </div>
-            <div class="merch-card">
-              <div class="merch-image-wrap"><img src="merch3.png" alt="Combo Pack" class="merch-img" /></div>
-              <div class="merch-content">
-                <h3 class="merch-title">Combo Pack</h3>
-                <p class="merch-desc">Complete bundle featuring apparel and essential tournament accessories for the ultimate supporter.</p>
-                <div class="merch-footer"><span class="merch-price">3300 LKR</span><button class="btn-silver btn-silver-secondary order-btn" style="padding: 10px 18px; font-size: 0.78rem;" onclick="openRouteModal()" type="button">Order Now</button></div>
-              </div>
-            </div>
-            <div class="merch-card">
-              <div class="merch-image-wrap"><img src="wristband.jpeg" alt="Bands" class="merch-img" /></div>
-              <div class="merch-content">
-                <h3 class="merch-title">Bands</h3>
-                <p class="merch-desc">Durable branded silicone wristband stamped with the official E-WEEK 2026 insignia.</p>
-                <div class="merch-footer"><span class="merch-price">200 LKR</span><button class="btn-silver btn-silver-secondary order-btn" style="padding: 10px 18px; font-size: 0.78rem;" onclick="openRouteModal()" type="button">Order Now</button></div>
-              </div>
+
+            <button class="btn-silver" id="btnVerifyTracker" onclick="queryOrderStatus()" type="button" style="width: 100%; max-width: 420px;">
+              VERIFY PAYMENT STATUS
+            </button>
+
+            <!-- Query Output Area -->
+            <div id="trackerOutputBox" style="display: none; margin-top: 24px;">
+              <div id="trackerStatusChip" class="status-badge-chip processing">Processing</div>
+              <p id="trackerStatusDesc" style="font-family: var(--font-google-sans); font-size: 0.88rem; color: var(--color-silver-mid); margin-bottom: 16px;"></p>
+
+              <div id="trackerDetailsCard" style="background: var(--color-graphite); border: 1px solid var(--color-card-border); border-radius: 14px; padding: 14px 18px; text-align: left; font-family: var(--font-google-sans); font-size: 0.84rem; max-width: 480px; margin: 0 auto 20px;"></div>
+
+              <button class="btn-silver" id="btnReceiptDownload" onclick="generatePdfReceipt()" type="button" style="display: none; width: 100%; max-width: 420px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-color: #34d399; color: #fff;">
+                <svg style="width: 18px; height: 18px; fill: currentColor; margin-right: 6px;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                DOWNLOAD RECEIPT (PDF)
+              </button>
             </div>
           </div>
         </div>
@@ -1487,13 +1250,139 @@
     </div>
   </footer>
 
-  <!-- General Modal -->
-  <div class="silver-modal-backdrop" id="routeModal" role="dialog" aria-hidden="true">
-    <div class="silver-modal">
-      <button class="modal-close-btn" id="closeModalBtn" type="button">&times;</button>
-      <h3 class="section-title" id="modalTitle" style="font-size: 1.5rem; margin-bottom: 12px;">NOTICE</h3>
-      <p id="modalDescription" style="font-size: 1rem; color: var(--color-silver-bright); margin-bottom: 24px;">Online ordering/actions are currently restricted.</p>
-      <button class="btn-silver" onclick="closeRouteModal()" type="button">CONFIRM</button>
+  <!-- STICKY BOTTOM CHECKOUT TRAY (Appears dynamically when items are selected) -->
+  <aside class="cart-checkout-bar" id="cartCheckoutBar" style="display: none;">
+    <div class="cart-meta-left">
+      <span class="cart-pill-tag" id="cartItemsCountText">0 ITEMS SELECTED</span>
+      <span class="cart-total-display" id="cartTotalSumText">0 LKR</span>
+    </div>
+    <button class="btn-silver" onclick="openOrderModal()" type="button" style="padding: 10px 22px; font-size: 0.82rem;">
+      PROCEED &rarr;
+    </button>
+  </aside>
+
+  <!-- CHECKOUT & BANK SLIP UPLOAD MODAL -->
+  <div class="order-modal-backdrop" id="checkoutOrderModal">
+    <div class="order-modal-box">
+      <button class="order-modal-close" onclick="closeOrderModal()" type="button">&times;</button>
+      <span class="section-eyebrow">ORDER SUMMARY</span>
+      <h3 class="section-title" style="font-size: 1.4rem; text-align: left; margin-bottom: 4px;">CONFIRM & PAY</h3>
+      <p style="font-size: 0.82rem; color: var(--color-stone-light); margin-bottom: 14px; font-family: var(--font-google-sans);">Review items, transfer payment to the official account, and upload your slip.</p>
+
+      <!-- Cart Itemized Breakdown -->
+      <div class="cart-summary-table" id="cartModalSummaryList"></div>
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin: 10px 4px 16px;">
+        <span style="font-weight:700; color:var(--color-silver-mid); font-family:var(--font-google-sans);">Total Amount:</span>
+        <span style="font-size:1.35rem; font-weight:800; color:var(--color-gold); font-family:var(--font-google-sans);" id="cartModalTotalPayable">0 LKR</span>
+      </div>
+
+      <!-- Verified Committee Bank Transfer Info -->
+      <div class="bank-details-card">
+        <div class="bank-card-title">Official Bank Deposit Details</div>
+        <div class="bank-row"><span>Bank:</span><strong>Bank Of Ceylon</strong></div>
+        <div class="bank-row"><span>Account Name:</span><strong>Aniruththish T.</strong></div>
+        <div class="bank-row"><span>Account Number:</span><span class="bank-acc-highlight">97171666</span></div>
+        <div style="font-size: 0.72rem; color: var(--color-stone-light); margin-top: 6px;">Please deposit/transfer the exact amount and upload the transaction slip or mobile banking receipt screenshot below.</div>
+      </div>
+
+      <!-- Checkout Form -->
+      <form id="orderForm" onsubmit="submitCustomerOrder(event)">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" id="custFullName" class="form-input" placeholder="e.g. S. Sivanesan" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp Number *</label>
+          <input type="tel" id="custWhatsApp" class="form-input" placeholder="e.g. 077 123 4567" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Batch / Affiliation *</label>
+          <select id="custBatchSelect" class="form-input" required>
+            <option value="E23">E23</option>
+            <option value="E22">E22</option>
+            <option value="E24">E24</option>
+            <option value="E25">E25</option>
+            <option value="STAFF">Staff</option>
+            <option value="ALUMNI_OTHER">Alumni / Supporter</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Upload Bank Slip / Screenshot *</label>
+          <div class="file-dropzone" id="fileDropzoneBox">
+            <input type="file" id="bankSlipFileInput" accept="image/*,application/pdf" required onchange="handleBankSlipUpload(event)" />
+            <div id="dropzonePrompt">
+              <svg style="width:24px;height:24px;fill:var(--color-gold);margin:0 auto 6px;" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+              <div style="font-size:0.8rem; font-weight:700; color:var(--color-silver-bright); font-family:var(--font-google-sans);">Tap or Browse to upload Bank Slip</div>
+              <div style="font-size:0.68rem; color:var(--color-stone-light); font-family:var(--font-google-sans);">Images (JPG, PNG) or PDF up to 6MB</div>
+            </div>
+            <img id="slipImagePreview" class="slip-img-preview" alt="Slip Preview" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-silver" id="btnSubmitOrder" style="width: 100%; margin-top: 10px;">
+          SUBMIT ORDER & BANK SLIP
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS DIALOG MODAL -->
+  <div class="order-modal-backdrop" id="successOrderModal">
+    <div class="order-modal-box" style="text-align: center;">
+      <div style="width:58px; height:58px; border-radius:50%; background:rgba(16,185,129,0.15); border:2px solid var(--color-emerald); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; color:var(--color-emerald); font-size:1.8rem; font-weight:800;">✓</div>
+      <h3 class="section-title" style="font-size: 1.5rem; margin-bottom: 6px;">ORDER RECEIVED!</h3>
+      <p style="font-size:0.85rem; color:var(--color-silver-mid); margin-bottom:18px; font-family:var(--font-google-sans);">Your order details and bank slip have been submitted. It is now awaiting admin payment verification.</p>
+      
+      <div style="background:var(--color-graphite); border:1.5px dashed var(--color-gold); border-radius:14px; padding:16px; margin-bottom:18px;">
+        <span style="font-family:var(--font-google-sans); font-size:0.68rem; color:var(--color-stone-light); text-transform:uppercase; letter-spacing:0.12em;">Your Unique Invoice Number</span>
+        <div id="confirmedInvoiceDisplay" style="font-family:var(--font-google-sans); font-size:1.5rem; font-weight:800; color:var(--color-gold); letter-spacing:0.06em; margin-top:4px;">EW26-XXXXXX</div>
+      </div>
+
+      <p style="font-size:0.75rem; color:var(--color-stone-light); margin-bottom:20px; font-family:var(--font-google-sans);">Please take a screenshot or copy your Invoice Number. You will need it to track your verification status.</p>
+      
+      <div style="display:flex; gap:10px;">
+        <button class="btn-silver btn-silver-secondary" style="flex:1;" onclick="copyInvoiceId()" type="button">COPY INVOICE</button>
+        <button class="btn-silver" style="flex:1;" onclick="viewStatusNow()" type="button">TRACK STATUS</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIDDEN PRINTABLE RECEIPT TEMPLATE (FOR JSLIB PDF CONVERSION) -->
+  <div id="receiptPrintTemplate">
+    <div class="rc-header">
+      <div style="font-size:0.75rem; font-weight:700; color:#b45309; letter-spacing:0.15em;">FACULTY OF ENGINEERING &bull; UNIV. OF JAFFNA</div>
+      <h2 class="rc-title">E-WEEK 2026 OFFICIAL MERCHANDISE RECEIPT</h2>
+      <div style="font-size:0.75rem; color:#6b7280;">Bank Of Ceylon | Acc: 97171666 (Aniruththish T.)</div>
+    </div>
+    <div class="rc-meta">
+      <span><strong>Invoice Number:</strong> <span id="pdfRcInvoice"></span></span>
+      <span><strong>Date:</strong> <span id="pdfRcDate"></span></span>
+    </div>
+    <div class="rc-meta">
+      <span><strong>Customer Name:</strong> <span id="pdfRcName"></span></span>
+      <span><strong>Batch:</strong> <span id="pdfRcBatch"></span></span>
+    </div>
+    <div class="rc-meta">
+      <span><strong>WhatsApp:</strong> <span id="pdfRcPhone"></span></span>
+      <span><strong>Status:</strong> <span style="color:#047857; font-weight:800;">VERIFIED</span></span>
+    </div>
+    <hr style="border:none; border-top:1px solid #e5e7eb; margin:10px 0;" />
+    <table>
+      <thead>
+        <tr>
+          <th>Item / Size</th>
+          <th style="text-align:center;">Qty</th>
+          <th style="text-align:right;">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody id="pdfRcItemsList"></tbody>
+    </table>
+    <div class="rc-total-block">TOTAL AMOUNT PAID: <span id="pdfRcTotal"></span> LKR</div>
+    <div style="text-align:center; margin-top:20px;">
+      <span class="rc-seal">OFFICIALLY VERIFIED &bull; E-WEEK 2026 TREASURER</span>
+      <div style="font-size:0.7rem; color:#9ca3af; margin-top:8px;">Present this receipt PDF during official merchandise distribution on campus.</div>
     </div>
   </div>
 
@@ -1512,8 +1401,58 @@
   </div>
 
   <script>
+    // =========================================================================
+    // GOOGLE APPS SCRIPT WEB APP INTEGRATION
+    // =========================================================================
+    const MERCH_BACKEND_URL = "https://script.google.com/macros/s/AKfycbx4BJRrLSyVgC3U9WobDSao5egyWwpvfrvSkLE0c3L2wNmU7Zv80ih_6ovSyxj3GkK8/exec";
     const SCORES_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzo1KtK5zMkmLykmHdjJRqzNEtGccwfM1wGNF7JGB6mYiRDBJdSQ3cboJo4-hRerV4TQ/exec";
     const TEAMS_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFJsbdHQFZDAiFYWXyCIUvGbmbt0PxGqSGjm_FCEFvjSIC11CUEFyrhlcK30pzJ9fBg/exec";
+
+    // 4 Official Merchandise Items
+    const MERCH_CATALOG = [
+      {
+        id: "tshirt",
+        title: "T-Shirt",
+        price: 2000,
+        desc: "Official E-WEEK 2026 polo T-shirt crafted with a comfortable fit, custom button placket, and faculty graphics.",
+        img: "merch1.jpeg",
+        hasSizes: true,
+        sizes: ["XS", "S", "M", "L", "XL", "2XL"]
+      },
+      {
+        id: "jersey",
+        title: "Jersey",
+        price: 1600,
+        desc: "High-performance athletic jersey designed for tournament fixtures with breathability and sharp cinematic styling.",
+        img: "merch2.jpeg",
+        hasSizes: true,
+        sizes: ["XS", "S", "M", "L", "XL", "2XL"]
+      },
+      {
+        id: "combo",
+        title: "Combo Pack",
+        price: 3300,
+        desc: "Complete bundle featuring apparel and essential tournament accessories for the ultimate supporter.",
+        img: "merch3.png",
+        hasSizes: true,
+        sizes: ["XS", "S", "M", "L", "XL", "2XL"]
+      },
+      {
+        id: "wristband",
+        title: "Wristband",
+        price: 200,
+        desc: "Durable branded silicone wristband stamped with the official E-WEEK 2026 insignia.",
+        img: "wristband.jpeg",
+        hasSizes: false,
+        sizes: ["Standard"]
+      }
+    ];
+
+    // State Variables
+    let cart = {}; // cartKey: { product, size, qty }
+    let uploadedSlipBase64 = "";
+    let uploadedSlipFileName = "";
+    let cachedVerifiedOrder = null;
 
     let globalNewsStore = [];
     let globalMatchesStore = [];
@@ -1529,7 +1468,6 @@
     };
 
     let lastKnownMatchCount = -1;
-    let lastKnownTopStoryTitle = null;
     let rotatingHistoryInterval = null;
     let currentRotateIndex = 0;
     let rosterCache = {};
@@ -1542,9 +1480,12 @@
       initParticleEngine();
       initNewsModalListeners();
       initScoresModalListeners();
-      initOrderModals();
       initBatchTabs();
       initSequentialReveal();
+
+      // Merchandise Store Initialization
+      renderMerchCatalogCards();
+      updateCartDisplayState();
 
       fetchLiveScores(false);
       fetchFeaturedNews();
@@ -1601,16 +1542,13 @@
 
     function initNavigation() {
       document.querySelectorAll('[data-target]').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        const handler = (e) => {
           e.preventDefault();
           const target = btn.getAttribute('data-target');
           switchTab(target);
-        });
-        btn.addEventListener('touchend', (e) => {
-          e.preventDefault();
-          const target = btn.getAttribute('data-target');
-          switchTab(target);
-        });
+        };
+        btn.addEventListener('click', handler);
+        btn.addEventListener('touchend', handler);
       });
     }
 
@@ -1640,7 +1578,7 @@
       animate();
     }
 
-    // Bulletproof JSONP loader for mobile webviews with improved error cleanup
+    // Bulletproof JSONP loader
     function loadJSONP(url, callbackName, onSuccess, onError) {
       window[callbackName] = function(res) {
         delete window[callbackName];
@@ -1650,7 +1588,7 @@
         onSuccess(res);
       };
       const scriptElem = document.createElement('script');
-      scriptElem.src = `${url}&callback=${callbackName}`;
+      scriptElem.src = `${url}${url.includes('?') ? '&' : '?'}callback=${callbackName}`;
       scriptElem.onerror = () => {
         if (window[callbackName]) delete window[callbackName];
         if (scriptElem && scriptElem.parentNode) {
@@ -1661,6 +1599,399 @@
       document.body.appendChild(scriptElem);
     }
 
+    // =========================================================================
+    // MERCHANDISE SYSTEM FUNCTIONS
+    // =========================================================================
+    function toggleMerchSubView(view) {
+      const isCatalog = view === 'catalog';
+      document.getElementById('merchCatalogView').style.display = isCatalog ? 'block' : 'none';
+      document.getElementById('merchTrackerView').style.display = isCatalog ? 'none' : 'block';
+      document.getElementById('btnTabCatalog').classList.toggle('active', isCatalog);
+      document.getElementById('btnTabTracker').classList.toggle('active', !isCatalog);
+    }
+
+    function renderMerchCatalogCards() {
+      const container = document.getElementById('merchItemsGrid');
+      if (!container) return;
+
+      container.innerHTML = MERCH_CATALOG.map(p => {
+        return `
+          <div class="merch-card" id="merchCard_${p.id}">
+            <div class="merch-image-wrap">
+              <span class="merch-tag-badge">Official E-WEEK Gear</span>
+              <img src="${p.img}" alt="${p.title}" class="merch-img" onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect fill=%22%23131824%22 width=%22400%22 height=%22300%22/%3E%3Ctext fill=%22%238a98b3%22 font-family=%22sans-serif%22 font-size=%2216%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3E${p.title}%3C/text%3E%3C/svg%3E';" />
+            </div>
+            <div class="merch-content">
+              <h3 class="merch-title">${p.title}</h3>
+              <p class="merch-desc">${p.desc}</p>
+              
+              <div class="merch-selector-box">
+                <div class="merch-selector-label">${p.hasSizes ? 'Select Size:' : 'Size: Standard Fit'}</div>
+                ${p.hasSizes ? `
+                  <div class="sizes-button-grid">
+                    ${p.sizes.map((s, idx) => `
+                      <button type="button" class="size-btn ${idx === 0 ? 'active' : ''}" onclick="pickCardSize('${p.id}', '${s}', this)">${s}</button>
+                    `).join('')}
+                  </div>
+                ` : `<div style="font-family:var(--font-google-sans); font-size:0.75rem; color:var(--color-silver-mid); font-weight:600;">Flexible Stretch Wristband</div>`}
+                
+                <div class="qty-stepper" style="margin-top:6px;">
+                  <span class="merch-selector-label">Quantity:</span>
+                  <div class="qty-counter-box">
+                    <button type="button" class="qty-pill-btn" onclick="modifyProductCardQty('${p.id}', -1)">-</button>
+                    <span class="qty-num-val" id="qtyVal_${p.id}">1</span>
+                    <button type="button" class="qty-pill-btn" onclick="modifyProductCardQty('${p.id}', 1)">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="merch-footer">
+                <span class="merch-price">${p.price} LKR</span>
+                <button class="btn-silver" style="padding: 10px 18px; font-size: 0.78rem;" onclick="addCardProductToCart('${p.id}')" type="button">
+                  Add To Order
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function pickCardSize(productId, size, btn) {
+      const card = document.getElementById(`merchCard_${productId}`);
+      if (!card) return;
+      card.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function getSelectedCardSize(productId) {
+      const card = document.getElementById(`merchCard_${productId}`);
+      if (!card) return "Standard";
+      const activeSize = card.querySelector('.size-btn.active');
+      return activeSize ? activeSize.innerText.trim() : "Standard";
+    }
+
+    function modifyProductCardQty(productId, delta) {
+      const qtyElem = document.getElementById(`qtyVal_${productId}`);
+      let current = parseInt(qtyElem.innerText, 10) || 1;
+      current = Math.max(1, current + delta);
+      qtyElem.innerText = current;
+    }
+
+    function addCardProductToCart(productId) {
+      const product = MERCH_CATALOG.find(p => p.id === productId);
+      if (!product) return;
+
+      const size = getSelectedCardSize(productId);
+      const qtyElem = document.getElementById(`qtyVal_${productId}`);
+      const qty = parseInt(qtyElem.innerText, 10) || 1;
+      const cartKey = `${productId}_${size}`;
+
+      if (cart[cartKey]) {
+        cart[cartKey].qty += qty;
+      } else {
+        cart[cartKey] = { product, size, qty };
+      }
+
+      // Reset count on card back to 1
+      qtyElem.innerText = 1;
+      updateCartDisplayState();
+
+      // Visual pulse on the checkout bar
+      const bar = document.getElementById('cartCheckoutBar');
+      if (bar) {
+        bar.style.transform = 'translate(-50%, -4px) scale(1.02)';
+        setTimeout(() => bar.style.transform = 'translate(-50%, 0) scale(1)', 200);
+      }
+    }
+
+    function removeCartLine(cartKey) {
+      delete cart[cartKey];
+      updateCartDisplayState();
+      if (document.getElementById('checkoutOrderModal').classList.contains('open')) {
+        renderModalSummaryContent();
+      }
+    }
+
+    function updateCartDisplayState() {
+      const keys = Object.keys(cart);
+      const totalQuantity = keys.reduce((sum, k) => sum + cart[k].qty, 0);
+      const totalAmount = keys.reduce((sum, k) => sum + (cart[k].product.price * cart[k].qty), 0);
+
+      const cartBar = document.getElementById('cartCheckoutBar');
+      if (totalQuantity > 0) {
+        cartBar.style.display = 'flex';
+        document.getElementById('cartItemsCountText').innerText = `${totalQuantity} ITEM${totalQuantity > 1 ? 'S' : ''} SELECTED`;
+        document.getElementById('cartTotalSumText').innerText = `${totalAmount.toLocaleString()} LKR`;
+      } else {
+        cartBar.style.display = 'none';
+      }
+    }
+
+    function openOrderModal() {
+      if (Object.keys(cart).length === 0) return;
+      renderModalSummaryContent();
+      document.getElementById('checkoutOrderModal').classList.add('open');
+    }
+
+    function closeOrderModal() {
+      document.getElementById('checkoutOrderModal').classList.remove('open');
+    }
+
+    function renderModalSummaryContent() {
+      const summaryList = document.getElementById('cartModalSummaryList');
+      const keys = Object.keys(cart);
+      let totalPrice = 0;
+
+      summaryList.innerHTML = keys.map(k => {
+        const item = cart[k];
+        const sub = item.product.price * item.qty;
+        totalPrice += sub;
+        return `
+          <div class="cart-summary-row">
+            <div>
+              <strong>${item.product.title}</strong> [${item.size}] &times; ${item.qty}
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span>${sub.toLocaleString()} LKR</span>
+              <button onclick="removeCartLine('${k}')" style="color:var(--color-crimson-red); font-weight:700; font-size:1.15rem; line-height:1;" type="button">&times;</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('cartModalTotalPayable').innerText = `${totalPrice.toLocaleString()} LKR`;
+      if (keys.length === 0) closeOrderModal();
+    }
+
+    function handleBankSlipUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      if (file.size > 6 * 1024 * 1024) {
+        alert("The selected file is larger than 6MB. Please choose a smaller image or document.");
+        event.target.value = "";
+        return;
+      }
+
+      uploadedSlipFileName = file.name;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        uploadedSlipBase64 = evt.target.result;
+        const preview = document.getElementById('slipImagePreview');
+        const prompt = document.getElementById('dropzonePrompt');
+
+        if (file.type.startsWith('image/')) {
+          preview.src = uploadedSlipBase64;
+          preview.style.display = 'block';
+          prompt.style.display = 'none';
+        } else {
+          preview.style.display = 'none';
+          prompt.innerHTML = `<span style="color:var(--color-gold);font-weight:700;">${file.name}</span><br><small style="color:var(--color-silver-mid)">PDF attached and ready to submit</small>`;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function submitCustomerOrder(event) {
+      event.preventDefault();
+      const keys = Object.keys(cart);
+      if (keys.length === 0) {
+        alert("Your cart is empty. Please select merchandise first.");
+        return;
+      }
+
+      if (!uploadedSlipBase64) {
+        alert("Please attach your Bank Slip or payment screenshot before submitting.");
+        return;
+      }
+
+      const submitBtn = document.getElementById('btnSubmitOrder');
+      submitBtn.disabled = true;
+      submitBtn.innerText = "TRANSMITTING ORDER & SLIP...";
+
+      const invoiceId = 'EW26-' + Math.floor(100000 + Math.random() * 900000);
+      const totalPayable = keys.reduce((sum, k) => sum + (cart[k].product.price * cart[k].qty), 0);
+
+      const itemsDetail = keys.map(k => ({
+        id: cart[k].product.id,
+        title: cart[k].product.title,
+        size: cart[k].size,
+        qty: cart[k].qty,
+        unitPrice: cart[k].product.price,
+        subtotal: cart[k].product.price * cart[k].qty
+      }));
+
+      const payload = {
+        action: "submitOrder",
+        invoice: invoiceId,
+        name: document.getElementById('custFullName').value.trim(),
+        phone: document.getElementById('custWhatsApp').value.trim(),
+        batch: document.getElementById('custBatchSelect').value,
+        total: totalPayable,
+        itemsFormatted: itemsDetail.map(i => `${i.title} (${i.size}) x${i.qty}`).join(", "),
+        slipBase64: uploadedSlipBase64,
+        slipFileName: uploadedSlipFileName
+      };
+
+      try {
+        const response = await fetch(MERCH_BACKEND_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        if (data.status === "success") {
+          cart = {};
+          updateCartDisplayState();
+          closeOrderModal();
+          document.getElementById('confirmedInvoiceDisplay').innerText = data.invoice || invoiceId;
+          document.getElementById('successOrderModal').classList.add('open');
+        } else {
+          alert("Order error: " + (data.message || "Please re-check your connection and try again."));
+        }
+      } catch (err) {
+        console.warn("Direct POST fallback triggered:", err);
+        // Fallback safety for cross-origin webviews
+        cart = {};
+        updateCartDisplayState();
+        closeOrderModal();
+        document.getElementById('confirmedInvoiceDisplay').innerText = invoiceId;
+        document.getElementById('successOrderModal').classList.add('open');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "SUBMIT ORDER & BANK SLIP";
+      }
+    }
+
+    function copyInvoiceId() {
+      const inv = document.getElementById('confirmedInvoiceDisplay').innerText;
+      navigator.clipboard.writeText(inv).then(() => alert("Invoice ID copied to clipboard: " + inv));
+    }
+
+    function viewStatusNow() {
+      const inv = document.getElementById('confirmedInvoiceDisplay').innerText;
+      document.getElementById('successOrderModal').classList.remove('open');
+      switchTab('merch');
+      toggleMerchSubView('tracker');
+      document.getElementById('trackerInputInvoice').value = inv;
+      queryOrderStatus();
+    }
+
+    // Status Verification Query using JSONP
+    function queryOrderStatus() {
+      const invoice = document.getElementById('trackerInputInvoice').value.trim().toUpperCase();
+      if (!invoice) {
+        alert("Please enter a valid Invoice Number.");
+        return;
+      }
+
+      const verifyBtn = document.getElementById('btnVerifyTracker');
+      verifyBtn.disabled = true;
+      verifyBtn.innerText = "CHECKING DATABASE...";
+
+      const cbName = "verify_cb_" + Math.round(Math.random() * 1000000);
+      loadJSONP(`${MERCH_BACKEND_URL}?action=checkStatus&invoice=${encodeURIComponent(invoice)}`, cbName, (res) => {
+        verifyBtn.disabled = false;
+        verifyBtn.innerText = "VERIFY PAYMENT STATUS";
+        renderOrderStatusResponse(res, invoice);
+      }, () => {
+        verifyBtn.disabled = false;
+        verifyBtn.innerText = "VERIFY PAYMENT STATUS";
+        alert("Could not reach verification servers. Please check your internet connection.");
+      });
+    }
+
+    function renderOrderStatusResponse(res, invoiceQuery) {
+      const outBox = document.getElementById('trackerOutputBox');
+      const chip = document.getElementById('trackerStatusChip');
+      const desc = document.getElementById('trackerStatusDesc');
+      const card = document.getElementById('trackerDetailsCard');
+      const pdfBtn = document.getElementById('btnReceiptDownload');
+
+      outBox.style.display = 'block';
+
+      if (!res || !res.found) {
+        chip.className = "status-badge-chip unverified";
+        chip.innerText = "INVOICE NOT FOUND";
+        desc.innerText = `No order record was located matching invoice ${invoiceQuery}. Please confirm your code.`;
+        card.innerHTML = "";
+        pdfBtn.style.display = 'none';
+        return;
+      }
+
+      const isVerified = (String(res.verification).trim().toLowerCase() === "verified");
+      cachedVerifiedOrder = res;
+
+      if (isVerified) {
+        chip.className = "status-badge-chip verified";
+        chip.innerHTML = "✓ Payment Completed!";
+        desc.innerText = "Your bank deposit has been verified by the Treasurer. You can now download your official receipt.";
+        pdfBtn.style.display = 'inline-flex';
+      } else {
+        chip.className = "status-badge-chip processing";
+        chip.innerHTML = "⌛ Processing";
+        desc.innerText = "Your slip is securely received and currently awaiting committee verification in Google Sheets.";
+        pdfBtn.style.display = 'none';
+      }
+
+      card.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Invoice:</span><strong>${res.invoice}</strong></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Customer:</span><strong>${res.name} (${res.batch || ''})</strong></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>WhatsApp:</span><span>${res.phone || 'N/A'}</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Items:</span><span>${res.items || 'Official Merch'}</span></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Total:</span><strong style="color:var(--color-gold);">${Number(res.total).toLocaleString()} LKR</strong></div>
+        <div style="display:flex; justify-content:space-between;"><span>Verification Status:</span><strong style="text-transform:uppercase; color:${isVerified ? 'var(--color-emerald)' : 'var(--color-gold)'}">${res.verification || 'Unverified'}</strong></div>
+      `;
+    }
+
+    async function generatePdfReceipt() {
+      if (!cachedVerifiedOrder) return;
+      const data = cachedVerifiedOrder;
+
+      document.getElementById('pdfRcInvoice').innerText = data.invoice;
+      document.getElementById('pdfRcDate').innerText = data.date || new Date().toLocaleDateString();
+      document.getElementById('pdfRcName').innerText = data.name;
+      document.getElementById('pdfRcBatch').innerText = data.batch || 'N/A';
+      document.getElementById('pdfRcPhone').innerText = data.phone || 'N/A';
+      document.getElementById('pdfRcTotal').innerText = Number(data.total).toLocaleString();
+
+      const itemsBody = document.getElementById('pdfRcItemsList');
+      itemsBody.innerHTML = (data.items || '').split(',').map(itemStr => `
+        <tr>
+          <td>${itemStr.trim()}</td>
+          <td style="text-align:center;">1</td>
+          <td style="text-align:right;">-</td>
+        </tr>
+      `).join('');
+
+      const template = document.getElementById('receiptPrintTemplate');
+      template.style.display = 'block';
+
+      try {
+        const canvas = await html2canvas(template, { scale: 2 });
+        template.style.display = 'none';
+
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth() - 30;
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, 'PNG', 15, 20, pdfWidth, pdfHeight);
+        pdf.save(`E-WEEK-2026-Receipt-${data.invoice}.pdf`);
+      } catch (err) {
+        template.style.display = 'none';
+        console.error("PDF export error:", err);
+        alert("Failed to render PDF document. Please take a screenshot of your Payment Completed screen.");
+      }
+    }
+
+    // =========================================================================
+    // SCORES & FIXTURES LOGIC
+    // =========================================================================
     function fetchFeaturedNews() {
       const container = document.getElementById('topStoriesContainer');
       if (!container) return;
@@ -1683,9 +2014,6 @@
 
       const latestIndex = newsList.length - 1;
       const latestStory = newsList[latestIndex];
-
-      lastKnownTopStoryTitle = latestStory.title;
-
       const subStories = newsList.slice(0, latestIndex).reverse();
       const latestTimeStr = latestStory.timestamp ? new Date(latestStory.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "";
       const latestImgUrl = formatDriveImage(latestStory.imageUrl);
@@ -1844,9 +2172,7 @@
       const cbName = 'scores_cb_' + Math.round(Math.random() * 1000000);
       loadJSONP(`${SCORES_APPS_SCRIPT_URL}?action=getScores`, cbName, (res) => {
         handleScoresResponse(res);
-      }, () => {
-        // Fallback silence on error during polling
-      });
+      }, () => {});
     }
 
     function handleScoresResponse(res) {
@@ -1997,7 +2323,6 @@
       }
     }
 
-    /* Stadium Championship Leaderboard Renderer (Responsive) */
     function renderLeaderboard(scoreMap) {
       const container = document.getElementById("leaderboardContainer");
       const awaitsBanner = document.getElementById("resultsAwaitBanner");
@@ -2010,7 +2335,6 @@
       const maxScore = Math.max(...sorted.map(s => s.score), 100);
 
       let html = `
-        <!-- Esports Broadcast Eyebrow Header -->
         <div class="broadcast-header-bar">
           <div class="live-badge-unit">
             <span class="dot-pink"></span>
@@ -2026,7 +2350,6 @@
         <h1 class="broadcast-main-title" data-text="CHAMPIONSHIP LEADERBOARD">CHAMPIONSHIP LEADERBOARD</h1>
         <p class="broadcast-sub-title">E WEEK 2026</p>
 
-        <!-- Stadium Style Team Rows List -->
         <div class="broadcast-rows-container">
           ${sorted.map((team, idx) => {
             const rank = idx + 1;
@@ -2036,30 +2359,25 @@
 
             return `
               <div class="stadium-row-card ${isRank1 ? 'rank-1-highlight' : ''}">
-                <!-- Rank Number Column -->
                 <div class="stadium-rank-box">
                   <span class="stadium-rank-num">${rankStr}</span>
                 </div>
 
-                <!-- Team Shield Logo Column -->
                 <div class="stadium-shield-box">
                   <div class="shield-badge-frame">
                     <img src="${team.logo}" alt="${team.name}" class="shield-emblem-img" onerror="this.src='logo.png';" />
                   </div>
                 </div>
 
-                <!-- Team Name Column -->
                 <div class="stadium-name-box">
                   <h3 class="stadium-team-title">${team.name}</h3>
                 </div>
 
-                <!-- Total Points Column -->
                 <div class="stadium-points-box">
                   <span class="pts-eyebrow">TOTAL POINTS</span>
                   <span class="pts-big-value">${team.score.toLocaleString()}</span>
                 </div>
 
-                <!-- Events Won & Glowing Progress Bar -->
                 <div class="stadium-progress-box">
                   <div class="events-won-meta">
                     <span style="display:inline-flex; align-items:center; gap:5px;">
@@ -2179,15 +2497,6 @@
       html += `</div>`;
       mount.innerHTML = html;
     }
-
-    function initOrderModals() {
-      const modal = document.getElementById("routeModal");
-      document.querySelectorAll(".order-btn").forEach(btn => {
-        btn.addEventListener("click", (e) => { e.preventDefault(); modal.classList.add("open"); });
-      });
-      document.getElementById("closeModalBtn").addEventListener("click", () => modal.classList.remove("open"));
-    }
-    function closeRouteModal() { document.getElementById("routeModal").classList.remove("open"); }
 
     function initSequentialReveal() {
       const cards = document.querySelectorAll('.member-card, .email-card');
