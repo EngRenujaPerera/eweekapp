@@ -115,7 +115,6 @@
       scroll-behavior: smooth;
     }
 
-    /* Fixed containment issue: contain: layout/style broke position: fixed */
     body {
       position: relative;
       min-height: 100vh;
@@ -175,9 +174,7 @@
       pointer-events: none;
     }
 
-    /* ==========================================================================
-       ANCHORED SCREEN CONTROLS (LOCKED TO DISPLAY VIEWPORT)
-       ========================================================================== */
+    /* THEME TOGGLE */
     .theme-toggle-widget {
       position: fixed !important;
       bottom: calc(115px + env(safe-area-inset-bottom, 0px)) !important;
@@ -195,12 +192,12 @@
       cursor: pointer;
       box-shadow: 0 6px 20px rgba(0,0,0,0.35);
       transition: transform 0.2s ease;
-      -webkit-transform: translate3d(0,0,0);
       transform: translate3d(0,0,0);
     }
     .theme-toggle-widget:hover { transform: scale(1.08) translate3d(0,0,0); }
     .theme-toggle-widget svg { width: 20px; height: 20px; fill: currentColor; }
 
+    /* VIEWPORT DOCKED CONTROLS */
     .fixed-bottom-ticker {
       position: fixed !important;
       bottom: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
@@ -216,10 +213,8 @@
       align-items: center;
       box-shadow: 0 -4px 18px rgba(0,0,0,0.25);
       cursor: pointer;
-      -webkit-transform: translate3d(0,0,0);
       transform: translate3d(0,0,0);
     }
-
     .fbt-col-latest {
       display: flex;
       align-items: center;
@@ -331,7 +326,6 @@
       align-items: center;
       padding-left: 4px;
       padding-right: 4px;
-      -webkit-transform: translate3d(0,0,0);
       transform: translate3d(0,0,0);
       box-shadow: 0 -4px 16px rgba(0,0,0,0.35);
     }
@@ -351,9 +345,7 @@
     .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; }
     .mob-nav-item.active { color: var(--color-gold); }
 
-    /* ==========================================================================
-       TOP SITE HEADER
-       ========================================================================== */
+    /* TOP SITE HEADER */
     .site-header {
       position: fixed;
       top: 0;
@@ -514,9 +506,7 @@
     }
     .hero-intro-text strong { color: var(--color-gold); }
 
-    /* ==========================================================================
-       ANIMATED TOURNAMENT LEADERBOARD
-       ========================================================================== */
+    /* LEADERBOARD */
     .results-section {
       padding: 30px 0 60px;
       scroll-margin-top: 75px;
@@ -525,7 +515,6 @@
       max-width: 980px;
       margin: 0 auto;
     }
-
     .lb-header {
       display: flex;
       align-items: center;
@@ -565,14 +554,12 @@
       color: var(--color-stone-light);
       font-weight: 600;
     }
-
     .standings-list-wrapper {
       display: flex;
       flex-direction: column;
       gap: 12px;
       margin-top: 14px;
     }
-
     .standing-item-row {
       position: relative;
       display: grid;
@@ -591,21 +578,15 @@
       contain: content;
       overflow: hidden;
     }
-
     @keyframes lbRowSlideIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
-
     .standing-item-row:hover {
       border-color: rgba(245, 158, 11, 0.5);
       background-color: var(--color-card-bg);
       transform: translateX(4px) translateY(-1px);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
     }
-
     .standing-item-row.pos-1-row {
       border-color: rgba(245, 158, 11, 0.5);
       background: linear-gradient(90deg, rgba(245, 158, 11, 0.12) 0%, var(--standing-row-bg) 85%);
@@ -626,7 +607,6 @@
       0% { left: -100%; }
       50%, 100% { left: 200%; }
     }
-
     .standing-rank-badge {
       font-family: var(--font-sport);
       font-size: 1.9rem;
@@ -640,10 +620,6 @@
       color: var(--color-gold);
       text-shadow: 0 0 12px var(--color-gold-glow);
     }
-    .standing-item-row:hover .standing-rank-badge {
-      transform: scale(1.1);
-    }
-
     .standing-team-emblem {
       width: 42px;
       height: 42px;
@@ -654,15 +630,7 @@
       border: 1px solid var(--color-card-border-subtle);
       transition: transform 0.25s var(--ease-out);
     }
-    .standing-item-row:hover .standing-team-emblem {
-      transform: rotate(-4deg) scale(1.08);
-    }
-
-    .standing-team-info-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
+    .standing-team-info-wrap { display: flex; flex-direction: column; gap: 2px; }
     .standing-team-name {
       font-family: var(--font-google-sans);
       font-size: 1.18rem;
@@ -685,12 +653,7 @@
       border-radius: 4px;
       text-transform: uppercase;
     }
-
-    .standing-progress-block {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .standing-progress-block { display: flex; flex-direction: column; gap: 6px; }
     .standing-meta-row {
       display: flex;
       align-items: center;
@@ -719,10 +682,7 @@
       background: linear-gradient(90deg, var(--color-gold) 0%, #fbbf24 100%);
       box-shadow: 0 0 8px var(--color-gold-glow);
     }
-
-    .standing-points-block {
-      text-align: right;
-    }
+    .standing-points-block { text-align: right; }
     .standing-points-val {
       font-family: var(--font-sport);
       font-size: 2.2rem;
@@ -765,7 +725,7 @@
       .fbt-col-latest { border-right: none !important; border-bottom: 1px solid var(--color-card-border-subtle) !important; padding-bottom: 3px !important; }
     }
 
-    /* Top Stories Section */
+    /* TOP STORIES */
     .featured-news-section { padding: 40px 0; }
     .top-stories-container {
       max-width: 1140px;
@@ -813,7 +773,6 @@
       align-items: center;
       gap: 4px;
     }
-
     .news-grid-sub { display: flex; flex-direction: column; gap: 12px; }
     .news-card-sub {
       background: var(--color-card-bg);
@@ -829,72 +788,7 @@
     .ncs-img { width: 100%; height: 100%; object-fit: cover; }
     .ncs-body { padding: 10px 14px; }
 
-    /* Modals */
-    .news-modal-backdrop, .scores-modal-backdrop, .order-modal-backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(4, 5, 8, 0.75);
-      z-index: 2000000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.2s ease;
-    }
-    .news-modal-backdrop.open, .scores-modal-backdrop.open, .order-modal-backdrop.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .news-modal-box, .scores-modal-box, .order-modal-box {
-      max-width: 580px;
-      width: 100%;
-      max-height: 86vh;
-      overflow-y: auto;
-      background: var(--color-card-bg);
-      border: 1px solid var(--color-card-border);
-      border-radius: 20px;
-      padding: 24px;
-      position: relative;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    }
-    .news-modal-close, .scores-modal-close, .order-modal-close {
-      position: absolute;
-      top: 14px;
-      right: 16px;
-      width: 32px;
-      height: 32px;
-      background: var(--color-graphite);
-      border: 1px solid var(--color-card-border-subtle);
-      color: var(--color-silver-bright);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.1rem;
-    }
-    .news-modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: 12px; margin-bottom: 14px; }
-    .news-modal-title { font-family: var(--font-google-sans); font-size: 1.3rem; color: var(--color-silver-bright); font-weight: 800; margin-bottom: 10px; }
-    .news-modal-desc { font-family: var(--font-google-sans); font-size: 0.9rem; color: var(--color-silver-mid); line-height: 1.6; }
-
-    .all-scores-list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
-    .all-score-item {
-      background: var(--color-graphite);
-      border: 1px solid var(--color-card-border-subtle);
-      border-radius: 12px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    /* Teams & Events */
+    /* TEAMS & EVENTS */
     .teams-main-section { padding: 90px 0 50px; text-align: center; }
     .batch-tabs-grid { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
     .batch-tab-btn {
@@ -967,7 +861,7 @@
       font-weight: 800;
     }
 
-    /* Fixtures */
+    /* FIXTURES */
     .fixtures-hero { padding: 90px 0 20px; text-align: center; }
     .fixtures-container { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
     .fixture-card {
@@ -996,7 +890,9 @@
       font-weight: 700;
     }
 
-    /* Merchandise */
+    /* ==========================================================================
+       MERCHANDISE & UNIQUE CHECKOUT SYSTEM STYLES
+       ========================================================================== */
     .merch-hero { padding: 90px 0 15px; text-align: center; }
     .merch-subnav { display: flex; justify-content: center; gap: 8px; margin: 12px auto 20px; }
     .merch-subnav-btn {
@@ -1110,7 +1006,7 @@
       z-index: 1000000;
       background: var(--color-card-bg);
       border: 1.5px solid var(--color-gold);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       border-radius: 16px;
       padding: 10px 20px;
       display: flex;
@@ -1119,7 +1015,322 @@
       gap: 12px;
     }
 
-    /* Contact */
+    /* STEP WIZARD DIALOG */
+    .order-modal-backdrop, .news-modal-backdrop, .scores-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(4, 5, 8, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 2000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .order-modal-backdrop.open, .news-modal-backdrop.open, .scores-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .order-modal-box {
+      max-width: 580px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: 24px;
+      padding: 26px 24px;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    }
+    .order-modal-close, .news-modal-close, .scores-modal-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      width: 32px;
+      height: 32px;
+      background: var(--color-graphite);
+      border: 1px solid var(--color-card-border-subtle);
+      color: var(--color-silver-bright);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.15s ease;
+    }
+    .order-modal-close:hover { background: var(--color-crimson-red); color: #fff; }
+
+    /* Stepper Header */
+    .order-stepper-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 14px 0 20px;
+      position: relative;
+    }
+    .order-stepper-header::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: var(--color-card-border-subtle);
+      z-index: 1;
+    }
+    .step-node {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-card-bg);
+      padding: 0 6px;
+    }
+    .step-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-graphite);
+      border: 1.5px solid var(--color-card-border-subtle);
+      color: var(--color-stone-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      font-family: var(--font-google-sans);
+      transition: all 0.25s ease;
+    }
+    .step-node.active .step-circle {
+      background: var(--color-gold);
+      color: #000;
+      border-color: var(--color-gold-light);
+      box-shadow: 0 0 12px var(--color-gold-glow);
+    }
+    .step-node.completed .step-circle {
+      background: var(--color-emerald);
+      color: #fff;
+      border-color: var(--color-emerald);
+    }
+    .step-label {
+      font-family: var(--font-google-sans);
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: var(--color-stone-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .step-node.active .step-label { color: var(--color-gold); }
+
+    /* Step Card Blocks */
+    .step-view { display: none; }
+    .step-view.active { display: block; animation: stepFadeIn 0.3s var(--ease-out); }
+    @keyframes stepFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    .summary-item-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--color-graphite);
+      border: 1px solid var(--color-card-border-subtle);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+    }
+    .summary-item-title { font-family: var(--font-google-sans); font-size: 0.85rem; font-weight: 700; color: var(--color-silver-bright); }
+    .summary-item-meta { font-size: 0.7rem; color: var(--color-stone-light); }
+    .summary-item-price { font-family: var(--font-sport); font-size: 1.3rem; color: var(--color-gold); font-weight: 700; }
+
+    /* Bank Account Card */
+    .bank-details-card {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, var(--color-graphite) 100%);
+      border: 1.5px solid var(--color-gold);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .bank-card-title {
+      font-family: var(--font-google-sans);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--color-gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bank-acc-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      background: var(--color-obsidian);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--color-card-border-subtle);
+    }
+    .bank-acc-num {
+      font-family: var(--font-sport);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--color-silver-bright);
+      letter-spacing: 0.06em;
+    }
+    .btn-copy-acc {
+      padding: 5px 10px;
+      background: var(--color-steel-dark);
+      border: 1px solid var(--color-card-border-subtle);
+      border-radius: 6px;
+      color: var(--color-gold);
+      font-size: 0.68rem;
+      font-weight: 800;
+      font-family: var(--font-google-sans);
+      cursor: pointer;
+    }
+    .btn-copy-acc:active { transform: scale(0.95); }
+
+    /* Drag & Drop Slip Uploader */
+    .slip-upload-dropzone {
+      border: 2px dashed var(--color-card-border);
+      background: var(--color-input-bg);
+      border-radius: 14px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .slip-upload-dropzone:hover {
+      border-color: var(--color-gold);
+      background: var(--color-graphite);
+    }
+    .slip-upload-dropzone.has-file {
+      border-color: var(--color-emerald);
+      background: rgba(16, 185, 129, 0.06);
+    }
+    .slip-upload-icon {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 8px;
+      fill: var(--color-gold);
+    }
+    .slip-preview-container {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--color-graphite);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid var(--color-card-border-subtle);
+    }
+    .slip-preview-name {
+      font-family: var(--font-google-sans);
+      font-size: 0.75rem;
+      color: var(--color-silver-bright);
+      font-weight: 700;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 250px;
+    }
+    .slip-preview-thumb { width: 34px; height: 34px; object-fit: cover; border-radius: 4px; }
+
+    /* Holographic Confirmation Card */
+    .order-success-card {
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .success-check-bubble {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid var(--color-emerald);
+      color: var(--color-emerald);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .success-check-bubble svg { width: 34px; height: 34px; fill: currentColor; }
+    .invoice-token-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-graphite);
+      border: 1.5px dashed var(--color-gold);
+      padding: 10px 18px;
+      border-radius: 12px;
+      margin: 12px 0 18px;
+    }
+    .invoice-token-val {
+      font-family: var(--font-sport);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--color-gold);
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
+    /* IN-APP TOAST NOTIFICATION */
+    .eweek-toast-anchor {
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: var(--color-card-bg);
+      border: 1.5px solid var(--color-gold);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      padding: 10px 20px;
+      border-radius: 30px;
+      z-index: 3000000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .eweek-toast-anchor.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .eweek-toast-icon { width: 18px; height: 18px; fill: var(--color-gold); flex-shrink: 0; }
+    .eweek-toast-text {
+      font-family: var(--font-google-sans);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--color-silver-bright);
+    }
+
+    /* Spinner Animation */
+    .spinner-ring {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(0,0,0,0.25);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spinRing 0.8s linear infinite;
+    }
+    @keyframes spinRing { to { transform: rotate(360deg); } }
+
+    /* CONTACT & FOOTER */
     .contact-page-hero { padding: 90px 0 20px; text-align: center; }
     .contact-grid-layout {
       max-width: 1040px;
@@ -1166,7 +1377,6 @@
     .form-input:focus, .form-textarea:focus { border-color: var(--color-gold); outline: none; }
     .form-textarea { resize: vertical; min-height: 85px; }
 
-    /* Footer */
     .site-footer {
       padding: 35px 0 160px;
       border-top: 1px solid var(--color-card-border-subtle);
@@ -1186,15 +1396,19 @@
 
 <body>
 
+  <!-- In-Theme Toast System -->
+  <div class="eweek-toast-anchor" id="eweekToast" role="alert" aria-live="assertive">
+    <svg class="eweek-toast-icon" id="toastIcon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+    <span class="eweek-toast-text" id="toastMessage">Notification</span>
+  </div>
+
   <!-- Background Layer -->
   <div id="bg-image-container" aria-hidden="true">
     <img id="bg-image" src="bg.jpeg" alt="Background" onerror="this.style.display='none';" />
   </div>
   <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-  <!-- =========================================================================
-       VIEWPORT DOCKED CONTROLS (ALWAYS FIXED AT SCREEN BOTTOM)
-       ========================================================================= -->
+  <!-- Anchored Viewport Controls -->
   <button class="theme-toggle-widget" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Theme" type="button">
     <svg id="themeIcon" viewBox="0 0 24 24">
       <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
@@ -1330,9 +1544,7 @@
           <p class="section-subtitle">Real-time aggregate points accrued across all inter-batch sporting & cultural events.</p>
           <div class="silver-divider"><span class="divider-node"></span></div>
 
-          <div id="leaderboardMount">
-            <!-- Dynamically populated smooth animated standings -->
-          </div>
+          <div id="leaderboardMount"></div>
         </div>
       </section>
 
@@ -1509,46 +1721,133 @@
     </button>
   </aside>
 
-  <!-- Checkout & Bank Slip Modal -->
-  <div class="order-modal-backdrop" id="checkoutOrderModal">
+  <!-- =========================================================================
+       ADVANCED UNIQUE STEPPER CHECKOUT MODAL
+       ========================================================================= -->
+  <div class="order-modal-backdrop" id="checkoutOrderModal" role="dialog" aria-hidden="true">
     <div class="order-modal-box">
-      <button class="order-modal-close" onclick="closeOrderModal()" type="button">&times;</button>
-      <span class="section-eyebrow">ORDER SUMMARY</span>
-      <h3 class="section-title" style="font-size: 1.3rem; text-align: left;">CONFIRM & PAY</h3>
+      <button class="order-modal-close" onclick="closeOrderModal()" type="button" aria-label="Close dialog">&times;</button>
       
-      <div id="cartModalSummaryList" style="margin: 12px 0; background: var(--color-graphite); border-radius: 10px; padding: 10px;"></div>
-      
-      <div style="display:flex; justify-content:space-between; align-items:center; margin: 10px 0 14px;">
-        <span style="font-weight:700; color:var(--color-silver-mid);">Total Payable:</span>
-        <span style="font-size:1.25rem; font-weight:800; color:var(--color-gold);" id="cartModalTotalPayable">0 LKR</span>
+      <span class="section-eyebrow">ORDER CONCIERGE</span>
+      <h3 class="section-title" style="font-size: 1.25rem; text-align: left;" id="stepperTitle">CHECKOUT</h3>
+
+      <!-- 3-Step Wizard Navigation -->
+      <div class="order-stepper-header">
+        <div class="step-node active" id="stepNode1">
+          <div class="step-circle">1</div>
+          <span class="step-label">Details</span>
+        </div>
+        <div class="step-node" id="stepNode2">
+          <div class="step-circle">2</div>
+          <span class="step-label">Payment</span>
+        </div>
+        <div class="step-node" id="stepNode3">
+          <div class="step-circle">3</div>
+          <span class="step-label">Complete</span>
+        </div>
       </div>
 
-      <div style="background: var(--color-graphite); border: 1px solid var(--color-gold); border-radius: 10px; padding: 12px; margin-bottom: 14px; font-size:0.82rem;">
-        <div style="color:var(--color-gold); font-weight:800; font-size:0.7rem; text-transform:uppercase; margin-bottom:4px;">Bank Of Ceylon Deposit</div>
-        <div>Account: <strong>97171666</strong> (Aniruththish T.)</div>
-      </div>
+      <!-- STEP 1: REVIEW & CUSTOMER DETAILS -->
+      <div class="step-view active" id="stepView1">
+        <div style="margin-bottom: 14px; max-height: 160px; overflow-y: auto;" id="cartModalSummaryList"></div>
 
-      <form id="orderForm" onsubmit="submitCustomerOrder(event)">
-        <div class="form-group"><label class="form-label">Full Name *</label><input type="text" id="custFullName" class="form-input" required /></div>
-        <div class="form-group"><label class="form-label">WhatsApp Number *</label><input type="tel" id="custWhatsApp" class="form-input" required /></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; background: var(--color-graphite); padding: 10px 14px; border-radius: 10px; margin-bottom: 14px; border: 1px solid var(--color-card-border-subtle);">
+          <span style="font-weight:700; font-size:0.85rem; color:var(--color-silver-mid);">Total Payable:</span>
+          <span style="font-size:1.35rem; font-family:var(--font-sport); font-weight:800; color:var(--color-gold);" id="cartModalTotalPayable">0 LKR</span>
+        </div>
+
         <div class="form-group">
-          <label class="form-label">Batch *</label>
+          <label class="form-label">Full Name *</label>
+          <input type="text" id="custFullName" class="form-input" placeholder="e.g. Kasun Fernando" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">WhatsApp Mobile Number *</label>
+          <input type="tel" id="custWhatsApp" class="form-input" placeholder="e.g. 0771234567" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">University Batch *</label>
           <select id="custBatchSelect" class="form-input" required>
-            <option value="E23">E23</option>
-            <option value="E22">E22</option>
-            <option value="E24">E24</option>
-            <option value="E25">E25</option>
-            <option value="STAFF">Staff</option>
+            <option value="E23">E23 Batch</option>
+            <option value="E22">E22 Batch</option>
+            <option value="E24">E24 Batch</option>
+            <option value="E25">E25 Batch</option>
+            <option value="STAFF">Academic / Non-Academic Staff</option>
           </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Bank Slip Screenshot *</label>
-          <input type="file" id="bankSlipFileInput" class="form-input" accept="image/*,application/pdf" required onchange="handleBankSlipUpload(event)" />
-        </div>
-        <button type="submit" class="btn-silver" id="btnSubmitOrder" style="width: 100%; margin-top: 8px;">
-          SUBMIT ORDER
+
+        <button type="button" class="btn-silver" onclick="goToWizardStep(2)" style="width: 100%; margin-top: 10px;">
+          CONTINUE TO PAYMENT &rarr;
         </button>
-      </form>
+      </div>
+
+      <!-- STEP 2: BANK DEPOSIT & SLIP SUBMISSION -->
+      <div class="step-view" id="stepView2">
+        <div class="bank-details-card">
+          <div class="bank-card-title">
+            <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor;"><path d="M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-4.5-9L2 6v2h19V6l-9.5-5z"/></svg>
+            Bank of Ceylon Transfer Details
+          </div>
+          <div style="font-size: 0.78rem; color: var(--color-silver-mid); margin-bottom: 6px;">
+            Beneficiary: <strong style="color:var(--color-silver-bright);">Aniruththish T. (Treasurer)</strong>
+          </div>
+          <div class="bank-acc-grid">
+            <span class="bank-acc-num" id="bankAccNumberText">97171666</span>
+            <button type="button" class="btn-copy-acc" onclick="copyBankAccNumber()">COPY NUMBER</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Upload Bank Transfer Slip / Screenshot *</label>
+          <div class="slip-upload-dropzone" id="slipDropzone" onclick="document.getElementById('bankSlipFileInput').click()">
+            <svg class="slip-upload-icon" viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+            <div style="font-family: var(--font-google-sans); font-size: 0.82rem; font-weight: 700; color: var(--color-silver-bright);">Tap or Drag Slip Image Here</div>
+            <div style="font-size: 0.68rem; color: var(--color-stone-light); margin-top: 2px;">Supports JPG, PNG, PDF up to 5MB</div>
+            <input type="file" id="bankSlipFileInput" style="display: none;" accept="image/*,application/pdf" onchange="handleBankSlipUpload(event)" />
+          </div>
+
+          <div class="slip-preview-container" id="slipPreviewBar">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <img id="slipThumbImg" class="slip-preview-thumb" src="" alt="Slip Preview" />
+              <span class="slip-preview-name" id="slipFileNameText">slip.png</span>
+            </div>
+            <button type="button" onclick="clearSelectedSlip()" style="color:var(--color-crimson-red); font-weight:800; font-size:0.75rem;">REMOVE</button>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top: 16px;">
+          <button type="button" class="btn-silver btn-silver-secondary" onclick="goToWizardStep(1)" style="flex: 1;">
+            &larr; BACK
+          </button>
+          <button type="button" class="btn-silver" id="btnSubmitOrder" onclick="executeFinalOrderSubmission()" style="flex: 1.5;">
+            SUBMIT ORDER
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: ORDER CONFIRMED (HOLOGRAPHIC BADGE) -->
+      <div class="step-view" id="stepView3">
+        <div class="order-success-card">
+          <div class="success-check-bubble">
+            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          </div>
+          <h3 style="font-family: var(--font-display); font-size: 1.35rem; color: var(--color-silver-bright); margin-bottom: 4px;">ORDER SUBMITTED!</h3>
+          <p style="font-size: 0.8rem; color: var(--color-stone-light);">Your deposit slip has been securely transmitted for committee verification.</p>
+
+          <div class="invoice-token-badge">
+            <span style="font-family: var(--font-google-sans); font-size: 0.7rem; font-weight: 800; color: var(--color-stone-light); text-transform: uppercase;">INVOICE ID:</span>
+            <span class="invoice-token-val" id="confirmedInvoiceId">EW26-000000</span>
+            <button type="button" class="btn-copy-acc" onclick="copyInvoiceId()">COPY</button>
+          </div>
+
+          <div style="background: var(--color-graphite); border-radius: 12px; padding: 12px; font-size: 0.78rem; text-align: left; margin-bottom: 18px; border: 1px solid var(--color-card-border-subtle);" id="confirmedOrderSummaryBox">
+          </div>
+
+          <button type="button" class="btn-silver" onclick="closeOrderModalAndReset()" style="width: 100%;">
+            RETURN TO TOURNAMENT PORTAL
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -1599,9 +1898,9 @@
     let cart = {};
     let uploadedSlipBase64 = "";
     let uploadedSlipFileName = "";
+    let activeWizardStep = 1;
     let globalNewsStore = [];
     let globalMatchesStore = [];
-    let rosterCache = {};
 
     let batchData = [
       { name: "E23", logo: "e23.png", score: 0, wins: 0 },
@@ -1628,11 +1927,42 @@
       fetchFeaturedNews();
       fetchFixtures();
 
-      // Poll intervals: Scores every 15s, News every 60s
+      // Intervals
       setInterval(fetchLiveScores, 15000);
       setInterval(fetchFeaturedNews, 60000);
     });
 
+    // =========================================================================
+    // IN-THEME TOAST ENGINE
+    // =========================================================================
+    let toastTimeout = null;
+    function showToast(message, type = 'info') {
+      const toast = document.getElementById('eweekToast');
+      const text = document.getElementById('toastMessage');
+      const icon = document.getElementById('toastIcon');
+
+      text.innerText = message;
+      if (type === 'success') {
+        toast.style.borderColor = 'var(--color-emerald)';
+        icon.style.fill = 'var(--color-emerald)';
+      } else if (type === 'error') {
+        toast.style.borderColor = 'var(--color-crimson-red)';
+        icon.style.fill = 'var(--color-crimson-red)';
+      } else {
+        toast.style.borderColor = 'var(--color-gold)';
+        icon.style.fill = 'var(--color-gold)';
+      }
+
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3200);
+    }
+
+    // =========================================================================
+    // THEME & NAVIGATION
+    // =========================================================================
     function toggleTheme() {
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
@@ -1773,7 +2103,6 @@
 
       mount.innerHTML = html;
 
-      // Update Ticker Podiums
       if (sorted[0]) document.getElementById('fbtPts1').innerText = sorted[0].score;
       if (sorted[1]) document.getElementById('fbtPts2').innerText = sorted[1].score;
       if (sorted[2]) document.getElementById('fbtPts3').innerText = sorted[2].score;
@@ -1897,7 +2226,7 @@
     }
 
     // =========================================================================
-    // MERCHANDISE & ORDERS
+    // ADVANCED MERCHANDISE & STEPPER CHECKOUT
     // =========================================================================
     function renderMerchCatalogCards() {
       const container = document.getElementById('merchItemsGrid');
@@ -1963,6 +2292,7 @@
 
       document.getElementById(`qtyVal_${id}`).innerText = 1;
       updateCartDisplayState();
+      showToast(`Added ${qty}x ${product.title} (${size}) to cart`, 'success');
     }
 
     function updateCartDisplayState() {
@@ -1981,21 +2311,13 @@
     }
 
     function openOrderModal() {
-      const list = document.getElementById('cartModalSummaryList');
       const keys = Object.keys(cart);
-      let total = 0;
-      list.innerHTML = keys.map(k => {
-        const item = cart[k];
-        const sub = item.product.price * item.qty;
-        total += sub;
-        return `
-          <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:0.8rem;">
-            <span>${item.product.title} (${item.size}) &times; ${item.qty}</span>
-            <strong>${sub} LKR</strong>
-          </div>
-        `;
-      }).join('');
-      document.getElementById('cartModalTotalPayable').innerText = `${total.toLocaleString()} LKR`;
+      if (keys.length === 0) {
+        showToast("Your cart is empty. Please select apparel first.", "error");
+        return;
+      }
+      goToWizardStep(1);
+      renderModalCartSummary();
       document.getElementById('checkoutOrderModal').classList.add('open');
     }
 
@@ -2003,35 +2325,143 @@
       document.getElementById('checkoutOrderModal').classList.remove('open');
     }
 
+    function closeOrderModalAndReset() {
+      closeOrderModal();
+      goToWizardStep(1);
+    }
+
+    function renderModalCartSummary() {
+      const list = document.getElementById('cartModalSummaryList');
+      const keys = Object.keys(cart);
+      let total = 0;
+
+      list.innerHTML = keys.map(k => {
+        const item = cart[k];
+        const sub = item.product.price * item.qty;
+        total += sub;
+        return `
+          <div class="summary-item-card">
+            <div>
+              <div class="summary-item-title">${item.product.title}</div>
+              <div class="summary-item-meta">Size: <strong>${item.size}</strong> &bull; Qty: <strong>${item.qty}</strong></div>
+            </div>
+            <div class="summary-item-price">${sub.toLocaleString()} LKR</div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('cartModalTotalPayable').innerText = `${total.toLocaleString()} LKR`;
+    }
+
+    function goToWizardStep(step) {
+      if (step === 2) {
+        const name = document.getElementById('custFullName').value.trim();
+        const phone = document.getElementById('custWhatsApp').value.trim();
+        if (!name) {
+          showToast("Please enter your full name to proceed.", "error");
+          document.getElementById('custFullName').focus();
+          return;
+        }
+        if (!phone || phone.length < 9) {
+          showToast("Please enter a valid WhatsApp mobile number.", "error");
+          document.getElementById('custWhatsApp').focus();
+          return;
+        }
+      }
+
+      activeWizardStep = step;
+      document.querySelectorAll('.step-view').forEach(v => v.classList.remove('active'));
+      document.getElementById(`stepView${step}`)?.classList.add('active');
+
+      // Update stepper header nodes
+      for (let i = 1; i <= 3; i++) {
+        const node = document.getElementById(`stepNode${i}`);
+        node.classList.remove('active', 'completed');
+        if (i === step) node.classList.add('active');
+        else if (i < step) node.classList.add('completed');
+      }
+
+      const titles = { 1: "REVIEW & DETAILS", 2: "DEPOSIT & PAYMENT SLIP", 3: "ORDER TRANSMITTED" };
+      document.getElementById('stepperTitle').innerText = titles[step] || "CHECKOUT";
+    }
+
+    function copyBankAccNumber() {
+      const acc = document.getElementById('bankAccNumberText').innerText;
+      navigator.clipboard.writeText(acc).then(() => {
+        showToast("Bank Account (97171666) copied to clipboard!", "success");
+      }).catch(() => {
+        showToast("Account: 97171666", "info");
+      });
+    }
+
+    function copyInvoiceId() {
+      const inv = document.getElementById('confirmedInvoiceId').innerText;
+      navigator.clipboard.writeText(inv).then(() => {
+        showToast(`Invoice ${inv} copied to clipboard!`, "success");
+      });
+    }
+
     function handleBankSlipUpload(e) {
       const file = e.target.files[0];
       if (!file) return;
+
+      if (file.size > 5 * 1024 * 1024) {
+        showToast("Slip file is too large! Maximum limit is 5MB.", "error");
+        return;
+      }
+
       uploadedSlipFileName = file.name;
       const reader = new FileReader();
-      reader.onload = (evt) => { uploadedSlipBase64 = evt.target.result; };
+      reader.onload = (evt) => {
+        uploadedSlipBase64 = evt.target.result;
+        document.getElementById('slipDropzone').classList.add('has-file');
+        document.getElementById('slipPreviewBar').style.display = 'flex';
+        document.getElementById('slipFileNameText').innerText = file.name;
+        document.getElementById('slipThumbImg').src = file.type.includes('image') ? uploadedSlipBase64 : 'logo.png';
+        showToast("Payment slip selected successfully!", "success");
+      };
       reader.readAsDataURL(file);
     }
 
-    async function submitCustomerOrder(e) {
-      e.preventDefault();
+    function clearSelectedSlip() {
+      uploadedSlipBase64 = "";
+      uploadedSlipFileName = "";
+      document.getElementById('bankSlipFileInput').value = "";
+      document.getElementById('slipDropzone').classList.remove('has-file');
+      document.getElementById('slipPreviewBar').style.display = 'none';
+      showToast("Payment slip cleared.", "info");
+    }
+
+    async function executeFinalOrderSubmission() {
       const keys = Object.keys(cart);
-      if (keys.length === 0 || !uploadedSlipBase64) return;
+      if (keys.length === 0) {
+        showToast("Cart is empty.", "error");
+        return;
+      }
+      if (!uploadedSlipBase64) {
+        showToast("Please upload your Bank Deposit Slip or Screenshot.", "error");
+        return;
+      }
 
       const btn = document.getElementById('btnSubmitOrder');
       btn.disabled = true;
-      btn.innerText = "Transmitting...";
+      btn.innerHTML = `<span class="spinner-ring"></span> Transmitting Order...`;
 
       const invoiceId = 'EW26-' + Math.floor(100000 + Math.random() * 900000);
       const total = keys.reduce((s, k) => s + (cart[k].product.price * cart[k].qty), 0);
+      const name = document.getElementById('custFullName').value.trim();
+      const phone = document.getElementById('custWhatsApp').value.trim();
+      const batch = document.getElementById('custBatchSelect').value;
+      const formattedItems = keys.map(k => `${cart[k].product.title} (${cart[k].size}) x${cart[k].qty}`).join(", ");
 
       const payload = {
         action: "submitOrder",
         invoice: invoiceId,
-        name: document.getElementById('custFullName').value.trim(),
-        phone: document.getElementById('custWhatsApp').value.trim(),
-        batch: document.getElementById('custBatchSelect').value,
+        name: name,
+        phone: phone,
+        batch: batch,
         total: total,
-        itemsFormatted: keys.map(k => `${cart[k].product.title} (${cart[k].size}) x${cart[k].qty}`).join(", "),
+        itemsFormatted: formattedItems,
         slipBase64: uploadedSlipBase64,
         slipFileName: uploadedSlipFileName
       };
@@ -2043,14 +2473,27 @@
           body: JSON.stringify(payload)
         });
       } catch (err) {
-        console.warn("POST handled via fallback", err);
+        console.warn("POST handled via endpoint fallback", err);
       } finally {
-        alert("Order submitted successfully! Your Invoice ID: " + invoiceId);
+        // Populate Step 3 Confirmation
+        document.getElementById('confirmedInvoiceId').innerText = invoiceId;
+        document.getElementById('confirmedOrderSummaryBox').innerHTML = `
+          <div>Customer: <strong>${name}</strong> (${batch})</div>
+          <div>WhatsApp: <strong>${phone}</strong></div>
+          <div>Items: <strong>${formattedItems}</strong></div>
+          <div>Total Deposited: <strong style="color:var(--color-gold);">${total.toLocaleString()} LKR</strong></div>
+        `;
+
+        // Clear State
         cart = {};
+        clearSelectedSlip();
         updateCartDisplayState();
-        closeOrderModal();
+
         btn.disabled = false;
-        btn.innerText = "SUBMIT ORDER";
+        btn.innerHTML = "SUBMIT ORDER";
+
+        goToWizardStep(3);
+        showToast("Your order was placed successfully!", "success");
       }
     }
 
@@ -2063,10 +2506,14 @@
 
     function queryOrderStatus() {
       const inv = document.getElementById('trackerInputInvoice').value.trim().toUpperCase();
-      if (!inv) return;
+      if (!inv) {
+        showToast("Please enter an Invoice ID (e.g. EW26-894120).", "error");
+        return;
+      }
+
       const btn = document.getElementById('btnVerifyTracker');
       btn.disabled = true;
-      btn.innerText = "Checking...";
+      btn.innerHTML = `<span class="spinner-ring"></span> Checking Database...`;
 
       const cbName = "verify_cb_" + Math.round(Math.random() * 1000000);
       loadJSONP(`${MERCH_BACKEND_URL}?action=checkStatus&invoice=${encodeURIComponent(inv)}`, cbName, (res) => {
@@ -2080,23 +2527,33 @@
           const verified = String(res.verification).trim().toLowerCase() === "verified";
           chip.style.background = verified ? 'rgba(16,185,129,0.2)' : 'rgba(245,158,11,0.2)';
           chip.style.color = verified ? 'var(--color-emerald)' : 'var(--color-gold)';
-          chip.innerText = verified ? "✓ Verified & Confirmed" : "⌛ Processing Verification";
+          chip.innerText = verified ? "✓ Verified & Confirmed" : "⌛ Slip Verification In Progress";
           document.getElementById('trackerDetailsCard').innerHTML = `
             <div>Invoice: <strong>${res.invoice}</strong></div>
-            <div>Name: <strong>${res.name}</strong></div>
+            <div>Customer Name: <strong>${res.name}</strong></div>
             <div>Total: <strong>${res.total} LKR</strong></div>
+            <div style="margin-top:6px; color:var(--color-stone-light);">Status: ${verified ? 'Your apparel order has been confirmed by the organizing committee.' : 'Your bank slip is currently being reconciled with bank statements.'}</div>
           `;
+          showToast("Invoice found!", "success");
         } else {
-          chip.innerText = "Not Found";
+          chip.innerText = "Invoice Not Found";
           chip.style.background = 'rgba(244,63,94,0.2)';
           chip.style.color = 'var(--color-crimson-red)';
+          document.getElementById('trackerDetailsCard').innerHTML = `
+            <div style="color:var(--color-stone-light);">No record exists with Invoice ID: <strong>${inv}</strong>. Please ensure the code matches the confirmation badge.</div>
+          `;
+          showToast("Invoice not found in records.", "error");
         }
       }, () => {
         btn.disabled = false;
         btn.innerText = "VERIFY PAYMENT STATUS";
+        showToast("Network error verifying invoice.", "error");
       });
     }
 
+    // =========================================================================
+    // MODAL DIALOG CONTROLLERS
+    // =========================================================================
     function openNewsModal(idx) {
       const item = globalNewsStore[idx];
       if (!item) return;
