@@ -208,13 +208,18 @@
       border-top: 1px solid var(--color-card-border);
       padding: 6px 14px;
       display: grid;
-      grid-template-columns: 1.3fr 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr 1fr;
       gap: 10px;
       align-items: center;
       box-shadow: 0 -4px 18px rgba(0,0,0,0.25);
       cursor: pointer;
       transform: translate3d(0,0,0);
+      transition: background-color 0.3s ease;
     }
+    .fixed-bottom-ticker.flash-update {
+      background: rgba(245, 158, 11, 0.22);
+    }
+
     .fbt-col-latest {
       display: flex;
       align-items: center;
@@ -234,6 +239,11 @@
       background: linear-gradient(135deg, var(--color-gold) 0%, #b45309 100%);
       padding: 2px 6px;
       border-radius: 4px;
+      white-space: nowrap;
+    }
+    .fbt-tag.new-release {
+      background: linear-gradient(135deg, var(--color-emerald) 0%, #059669 100%);
+      animation: pulseDot 1s infinite alternate;
     }
     .fbt-match-info {
       font-family: var(--font-google-sans);
@@ -260,6 +270,18 @@
     .fbt-team-name { font-family: var(--font-google-sans); font-size: 0.58rem; font-weight: 700; color: var(--color-silver-mid); }
     .fbt-score { font-family: var(--font-google-sans); font-size: 0.72rem; font-weight: 800; color: var(--color-crimson-red); }
     .fbt-vs { font-family: var(--font-google-sans); font-size: 0.52rem; color: var(--color-gold); font-weight: 800; }
+    .fbt-winner-chip {
+      font-family: var(--font-google-sans);
+      font-size: 0.55rem;
+      font-weight: 800;
+      color: var(--color-emerald);
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      padding: 1px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
 
     .fbt-col-history {
       display: flex;
@@ -1056,6 +1078,18 @@
       position: relative;
       box-shadow: 0 24px 60px rgba(0,0,0,0.6);
     }
+    .scores-modal-box {
+      max-width: 680px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: 24px;
+      padding: 26px 22px;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    }
     .order-modal-close, .news-modal-close, .scores-modal-close {
       position: absolute;
       top: 14px;
@@ -1073,7 +1107,7 @@
       font-size: 1.1rem;
       transition: background 0.15s ease;
     }
-    .order-modal-close:hover { background: var(--color-crimson-red); color: #fff; }
+    .order-modal-close:hover, .scores-modal-close:hover { background: var(--color-crimson-red); color: #fff; }
 
     /* Stepper Header */
     .order-stepper-header {
@@ -1293,6 +1327,130 @@
       line-height: 1;
     }
 
+    /* ==========================================================================
+       PROFESSIONAL "ALL RELEASED RESULTS" SYSTEM
+       ========================================================================== */
+    .all-scores-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .pro-match-result-card {
+      background: var(--color-graphite);
+      border: 1px solid var(--color-card-border-subtle);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .pro-match-result-card:hover {
+      border-color: rgba(245, 158, 11, 0.4);
+      transform: translateY(-2px);
+    }
+    .pro-match-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--color-card-border-subtle);
+      padding-bottom: 6px;
+    }
+    .pro-match-sport-name {
+      font-family: var(--font-google-sans);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--color-gold);
+      text-transform: uppercase;
+    }
+    .pro-match-status-badge {
+      font-family: var(--font-google-sans);
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--color-emerald);
+    }
+    .pro-match-status-badge.live {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: var(--color-crimson-red);
+    }
+    .pro-match-body-grid {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 10px;
+      text-align: center;
+    }
+    .pro-team-unit {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pro-team-unit.left { justify-content: flex-end; }
+    .pro-team-unit.right { justify-content: flex-start; }
+    .pro-team-emblem { width: 30px; height: 30px; object-fit: contain; }
+    .pro-team-name-tag {
+      font-family: var(--font-google-sans);
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--color-silver-bright);
+    }
+    .pro-team-unit.is-winner .pro-team-name-tag {
+      color: var(--color-gold);
+    }
+    .pro-score-cluster {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-obsidian);
+      border: 1px solid var(--color-card-border-subtle);
+      padding: 4px 12px;
+      border-radius: 10px;
+    }
+    .pro-score-digit {
+      font-family: var(--font-sport);
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--color-silver-bright);
+    }
+    .pro-score-digit.winner-score {
+      color: var(--color-emerald);
+    }
+    .pro-score-colon {
+      font-family: var(--font-google-sans);
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--color-gold);
+    }
+    .pro-match-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-google-sans);
+      font-size: 0.7rem;
+      color: var(--color-stone-light);
+      padding-top: 4px;
+    }
+    .pro-outcome-summary {
+      font-weight: 800;
+      color: var(--color-emerald);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pro-outcome-summary.tie { color: var(--color-stone-light); }
+
     /* IN-APP TOAST NOTIFICATION */
     .eweek-toast-anchor {
       position: fixed;
@@ -1422,11 +1580,12 @@
     </svg>
   </button>
 
+  <!-- Live Ticker Bar with Direct Score & Outcome Engine -->
   <div class="fixed-bottom-ticker" id="floatingResultsWidget" onclick="openAllScoresModal()" title="Tap to view all scores">
     <div class="fbt-col-latest">
       <div class="fbt-left">
-        <span class="fbt-tag">LATEST</span>
-        <div class="fbt-match-info" id="fbtMatchTitle">Syncing...</div>
+        <span class="fbt-tag" id="fbtBadgeTag">LATEST</span>
+        <div class="fbt-match-info" id="fbtMatchTitle">Syncing scores...</div>
       </div>
       <div class="fbt-scorecard-mini" id="fbtScorecard">
         <span style="font-size:0.65rem; color:var(--color-stone-light);">Loading...</span>
@@ -1436,7 +1595,7 @@
     <div class="fbt-col-history">
       <div class="fbt-rotating-container" id="fbtRotatingContainer">
         <div class="fbt-rotate-item active" style="justify-content:center;">
-          <span style="font-size:0.65rem; color:var(--color-stone-light);">Tap to view all scores</span>
+          <span style="font-size:0.65rem; color:var(--color-stone-light); font-weight:700;">Tap to view all released scores</span>
         </div>
       </div>
     </div>
@@ -1485,15 +1644,16 @@
     </button>
   </nav>
 
-  <!-- Scores Modal -->
+  <!-- Professional Full Scores Modal -->
   <div class="scores-modal-backdrop" id="scoresModalBackdrop" role="dialog" aria-hidden="true">
     <div class="scores-modal-box">
-      <button class="scores-modal-close" id="scoresModalCloseBtn" type="button">&times;</button>
+      <button class="scores-modal-close" id="scoresModalCloseBtn" type="button" aria-label="Close scores">&times;</button>
       <span class="section-eyebrow">TOURNAMENT FEED</span>
       <h3 class="section-title" style="font-size: 1.3rem;">ALL RELEASED RESULTS</h3>
+      <p style="text-align:center; font-size:0.78rem; color:var(--color-stone-light); margin-top:-2px;">Verified scores and official batch victories from tournament scorekeepers.</p>
       <div class="silver-divider"><span class="divider-node"></span></div>
       <div class="all-scores-list" id="allScoresListContainer">
-        <div style="text-align: center; color: var(--color-stone-light); padding: 20px;">Loading full scoreboard history...</div>
+        <div style="text-align: center; color: var(--color-stone-light); padding: 25px;">Loading full scoreboard history...</div>
       </div>
     </div>
   </div>
@@ -1974,6 +2134,7 @@
     let activeWizardStep = 1;
     let globalNewsStore = [];
     let globalMatchesStore = [];
+    let lastRenderedMatchSignature = "";
 
     let batchData = [
       { name: "E23", logo: "e23.png", score: 0, wins: 0 },
@@ -1982,6 +2143,14 @@
       { name: "E25", logo: "e25.png", score: 0, wins: 0 },
       { name: "STAFF", logo: "staff.png", score: 0, wins: 0 }
     ];
+
+    const BATCH_LOGOS = {
+      "E22": "e22.png",
+      "E23": "e23.png",
+      "E24": "e24.png",
+      "E25": "e25.png",
+      "STAFF": "staff.png"
+    };
 
     document.addEventListener("DOMContentLoaded", () => {
       const savedTheme = localStorage.getItem('eweek_theme') || 'dark';
@@ -2000,8 +2169,8 @@
       fetchFeaturedNews();
       fetchFixtures();
 
-      // Intervals
-      setInterval(fetchLiveScores, 15000);
+      // Precise 5-second Score Refresh Engine
+      setInterval(fetchLiveScores, 5000);
       setInterval(fetchFeaturedNews, 60000);
     });
 
@@ -2120,13 +2289,54 @@
         onSuccess(res);
       };
       const script = document.createElement('script');
-      script.src = `${url}${url.includes('?') ? '&' : '?'}callback=${callbackName}`;
+      script.src = `${url}${url.includes('?') ? '&' : '?'}callback=${callbackName}&_ts=${Date.now()}`;
       script.onerror = () => {
         if (window[callbackName]) delete window[callbackName];
         if (script.parentNode) script.parentNode.removeChild(script);
         if (onError) onError();
       };
       document.body.appendChild(script);
+    }
+
+    // Helper: Determine Winner Outcome from Match Scores
+    function resolveMatchWinner(teamA, scoreA, teamB, scoreB, status) {
+      const sA = Number(scoreA) || 0;
+      const sB = Number(scoreB) || 0;
+      const tA = String(teamA).trim().toUpperCase();
+      const tB = String(teamB).trim().toUpperCase();
+      const isCompleted = String(status || '').toLowerCase() === 'completed';
+
+      if (sA > sB) {
+        return {
+          winner: tA,
+          loser: tB,
+          text: `${tA} WON`,
+          isTie: false,
+          winnerScore: sA,
+          loserScore: sB,
+          winnerTeam: 'A'
+        };
+      } else if (sB > sA) {
+        return {
+          winner: tB,
+          loser: tA,
+          text: `${tB} WON`,
+          isTie: false,
+          winnerScore: sB,
+          loserScore: sA,
+          winnerTeam: 'B'
+        };
+      } else {
+        return {
+          winner: null,
+          loser: null,
+          text: isCompleted ? "MATCH TIED" : "LEVEL SCORE",
+          isTie: true,
+          winnerScore: sA,
+          loserScore: sB,
+          winnerTeam: null
+        };
+      }
     }
 
     // =========================================================================
@@ -2182,7 +2392,7 @@
     }
 
     // =========================================================================
-    // API SYNC
+    // 5-SECOND LIVE SCORE & MATCH RELEASE POLLING ENGINE
     // =========================================================================
     function fetchLiveScores() {
       const cbName = 'scores_cb_' + Math.round(Math.random() * 1000000);
@@ -2200,7 +2410,8 @@
           const sB = Number(m.scoreB) || 0;
           if (scoreMap[tA] !== undefined) scoreMap[tA] += sA;
           if (scoreMap[tB] !== undefined) scoreMap[tB] += sB;
-          if (m.status === "Completed") {
+
+          if (String(m.status || '').toLowerCase() === "completed") {
             if (sA > sB && winsMap[tA] !== undefined) winsMap[tA]++;
             else if (sB > sA && winsMap[tB] !== undefined) winsMap[tB]++;
           }
@@ -2216,16 +2427,120 @@
 
         renderSmoothLeaderboard();
 
+        // Check for new match release & update Ticker
         if (matches.length > 0) {
           const last = matches[matches.length - 1];
-          document.getElementById('fbtMatchTitle').innerText = `${last.sport} (${last.category})`;
+          const outcome = resolveMatchWinner(last.teamA, last.scoreA, last.teamB, last.scoreB, last.status);
+          const currentSignature = `${last.sport}_${last.teamA}_${last.scoreA}_${last.scoreB}_${last.teamB}_${last.status}`;
+
+          const tickerWidget = document.getElementById('floatingResultsWidget');
+          const badgeTag = document.getElementById('fbtBadgeTag');
+
+          if (lastRenderedMatchSignature && lastRenderedMatchSignature !== currentSignature) {
+            badgeTag.innerText = "NEW RESULT";
+            badgeTag.classList.add("new-release");
+            tickerWidget.classList.add('flash-update');
+            setTimeout(() => {
+              tickerWidget.classList.remove('flash-update');
+            }, 3000);
+          } else {
+            badgeTag.innerText = "LATEST";
+            badgeTag.classList.remove("new-release");
+          }
+          lastRenderedMatchSignature = currentSignature;
+
+          const sportName = last.category ? `${last.sport} (${last.category})` : last.sport;
+          document.getElementById('fbtMatchTitle').innerText = sportName;
+
+          const emblemA = BATCH_LOGOS[String(last.teamA).toUpperCase()] || 'logo.png';
+          const emblemB = BATCH_LOGOS[String(last.teamB).toUpperCase()] || 'logo.png';
+
           document.getElementById('fbtScorecard').innerHTML = `
-            <span class="fbt-team-name">${last.teamA}</span> <span class="fbt-score">${last.scoreA}</span>
+            <div class="fbt-team-item">
+              <img src="${emblemA}" class="fbt-emblem" alt="${last.teamA}" onerror="this.src='logo.png';" />
+              <span class="fbt-team-name">${last.teamA}</span>
+            </div>
+            <span class="fbt-score">${last.scoreA}</span>
             <span class="fbt-vs">:</span>
-            <span class="fbt-score">${last.scoreB}</span> <span class="fbt-team-name">${last.teamB}</span>
+            <span class="fbt-score">${last.scoreB}</span>
+            <div class="fbt-team-item">
+              <img src="${emblemB}" class="fbt-emblem" alt="${last.teamB}" onerror="this.src='logo.png';" />
+              <span class="fbt-team-name">${last.teamB}</span>
+            </div>
+            ${outcome.winner ? `<span class="fbt-winner-chip">${outcome.winner} WON</span>` : ''}
           `;
         }
+
+        // Keep modal updated if open
+        if (document.getElementById('scoresModalBackdrop').classList.contains('open')) {
+          renderAllScoresModalContent();
+        }
       }, () => {});
+    }
+
+    // Professional Modal Renderer for All Released Results
+    function renderAllScoresModalContent() {
+      const container = document.getElementById('allScoresListContainer');
+      if (!container) return;
+
+      if (globalMatchesStore.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--color-stone-light);">No tournament scores recorded yet.</div>`;
+        return;
+      }
+
+      // Latest first
+      const reversed = [...globalMatchesStore].reverse();
+
+      container.innerHTML = reversed.map((m, idx) => {
+        const outcome = resolveMatchWinner(m.teamA, m.scoreA, m.teamB, m.scoreB, m.status);
+        const emblemA = BATCH_LOGOS[String(m.teamA).toUpperCase()] || 'logo.png';
+        const emblemB = BATCH_LOGOS[String(m.teamB).toUpperCase()] || 'logo.png';
+        const isLive = String(m.status || '').toLowerCase() === 'live';
+
+        return `
+          <div class="pro-match-result-card">
+            <div class="pro-match-header">
+              <span class="pro-match-sport-name">${m.sport} ${m.category ? `&bull; ${m.category}` : ''}</span>
+              <span class="pro-match-status-badge ${isLive ? 'live' : ''}">${m.status || 'Completed'}</span>
+            </div>
+
+            <div class="pro-match-body-grid">
+              <div class="pro-team-unit left ${outcome.winnerTeam === 'A' ? 'is-winner' : ''}">
+                <span class="pro-team-name-tag">${m.teamA}</span>
+                <img src="${emblemA}" class="pro-team-emblem" alt="${m.teamA}" onerror="this.src='logo.png';" />
+              </div>
+
+              <div class="pro-score-cluster">
+                <span class="pro-score-digit ${outcome.winnerTeam === 'A' ? 'winner-score' : ''}">${m.scoreA}</span>
+                <span class="pro-score-colon">:</span>
+                <span class="pro-score-digit ${outcome.winnerTeam === 'B' ? 'winner-score' : ''}">${m.scoreB}</span>
+              </div>
+
+              <div class="pro-team-unit right ${outcome.winnerTeam === 'B' ? 'is-winner' : ''}">
+                <img src="${emblemB}" class="pro-team-emblem" alt="${m.teamB}" onerror="this.src='logo.png';" />
+                <span class="pro-team-name-tag">${m.teamB}</span>
+              </div>
+            </div>
+
+            <div class="pro-match-footer">
+              <div class="pro-outcome-summary ${outcome.isTie ? 'tie' : ''}">
+                ${outcome.winner ? `
+                  <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor;"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>
+                  <span>VICTORY: <strong>${outcome.winner}</strong> (+${outcome.winnerScore - outcome.loserScore} PTS)</span>
+                ` : `
+                  <span>RESULT: <strong>${outcome.text}</strong></span>
+                `}
+              </div>
+              <span style="font-size:0.65rem; color:var(--color-stone-light);">${m.date || 'Official Record'}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openAllScoresModal() {
+      renderAllScoresModalContent();
+      document.getElementById('scoresModalBackdrop').classList.add('open');
     }
 
     function fetchFeaturedNews() {
@@ -2457,7 +2772,6 @@
       document.querySelectorAll('.step-view').forEach(v => v.classList.remove('active'));
       document.getElementById(`stepView${step}`)?.classList.add('active');
 
-      // Update stepper header nodes
       for (let i = 1; i <= 3; i++) {
         const node = document.getElementById(`stepNode${i}`);
         node.classList.remove('active', 'completed');
@@ -2561,7 +2875,6 @@
       } catch (err) {
         console.warn("POST handled via endpoint fallback", err);
       } finally {
-        // Populate Step 3 Confirmation
         document.getElementById('confirmedInvoiceId').innerText = invoiceId;
         document.getElementById('confirmedOrderSummaryBox').innerHTML = `
           <div>Customer: <strong>${name}</strong> (${batch})</div>
@@ -2571,7 +2884,6 @@
           <div>Total Deposited: <strong style="color:var(--color-gold);">${total.toLocaleString()} LKR</strong></div>
         `;
 
-        // Clear State
         cart = {};
         clearSelectedSlip();
         updateCartDisplayState();
@@ -2614,7 +2926,7 @@
           const verified = String(res.verification).trim().toLowerCase() === "verified";
           chip.style.background = verified ? 'rgba(16,185,129,0.2)' : 'rgba(245,158,11,0.2)';
           chip.style.color = verified ? 'var(--color-emerald)' : 'var(--color-gold)';
-          chip.innerText = verified ? "✓ Verified & Confirmed" : "⌛ Slip Verification In Progress";
+          chip.innerText = verified ? "Verified & Confirmed" : "Slip Verification In Progress";
           document.getElementById('trackerDetailsCard').innerHTML = `
             <div>Invoice: <strong>${res.invoice}</strong></div>
             <div>Customer Name: <strong>${res.name}</strong></div>
@@ -2649,24 +2961,6 @@
       document.getElementById('modalNewsTitle').innerText = item.title;
       document.getElementById('modalNewsDesc').innerText = item.description;
       document.getElementById('newsModalBackdrop').classList.add('open');
-    }
-
-    function openAllScoresModal() {
-      const container = document.getElementById('allScoresListContainer');
-      if (globalMatchesStore.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:20px; color:var(--color-stone-light);">No scores recorded.</div>`;
-      } else {
-        container.innerHTML = [...globalMatchesStore].reverse().map(m => `
-          <div class="all-score-item">
-            <div>
-              <div style="font-size:0.65rem; color:var(--color-gold); font-weight:800;">${m.sport}</div>
-              <div style="font-size:0.85rem; font-weight:700;">${m.teamA} (${m.scoreA}) vs (${m.scoreB}) ${m.teamB}</div>
-            </div>
-            <div style="font-size:0.65rem; color:var(--color-emerald); font-weight:800;">${m.status || 'Completed'}</div>
-          </div>
-        `).join('');
-      }
-      document.getElementById('scoresModalBackdrop').classList.add('open');
     }
 
     function initModalCloseHandlers() {
