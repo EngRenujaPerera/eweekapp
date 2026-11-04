@@ -463,6 +463,11 @@
     }
     .btn-silver:disabled { opacity: 0.55; cursor: not-allowed; }
     .btn-silver:hover:not(:disabled) { filter: brightness(1.08); }
+    .btn-silver-secondary {
+      background: var(--color-steel-dark);
+      color: var(--color-silver-bright);
+      border: 1px solid var(--color-card-border-subtle);
+    }
 
     /* Hero Banner */
     .hero-section {
@@ -955,11 +960,12 @@
       flex-direction: column;
       gap: 6px;
     }
-    .sizes-button-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+    .sizes-button-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    .variants-button-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
     .size-btn {
-      padding: 5px 0;
+      padding: 6px 2px;
       font-family: var(--font-google-sans);
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 800;
       text-align: center;
       border-radius: 4px;
@@ -967,6 +973,7 @@
       color: var(--color-silver-bright);
       border: 1px solid var(--color-card-border-subtle);
       cursor: pointer;
+      white-space: nowrap;
     }
     .size-btn.active { background: var(--color-gold); color: #000; font-weight: 800; }
     .qty-counter-box { display: flex; align-items: center; gap: 8px; }
@@ -1655,7 +1662,7 @@
       </section>
     </section>
 
-   <!-- CONTACT PANEL -->
+    <!-- CONTACT PANEL -->
     <section class="page-panel" id="panel-contact">
       <section class="contact-page-hero">
         <div class="container">
@@ -1670,7 +1677,7 @@
         <div class="container">
           <div class="contact-grid-layout">
             <div class="glass-box">
-              <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--color-silver-bright); margin-bottom: 12px; border-bottom: 1px solid var(--color-card-border-subtle); padding-bottom: 8px;">Executive Committee/h3>
+              <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--color-silver-bright); margin-bottom: 12px; border-bottom: 1px solid var(--color-card-border-subtle); padding-bottom: 8px;">Executive Leadership</h3>
               <div class="committee-grid">
                 <a href="tel:0703071770" class="member-card">
                   <img src="president.jpeg" alt="De Silva L.H.L.N." class="member-avatar" onerror="this.src='logo.png';" />
@@ -1734,6 +1741,8 @@
         </div>
       </section>
     </section>
+  </main>
+
   <!-- Sticky Bottom Checkout Tray -->
   <aside class="cart-checkout-bar" id="cartCheckoutBar" style="display: none;">
     <div>
@@ -1785,16 +1794,21 @@
           <input type="text" id="custFullName" class="form-input" placeholder="e.g. Kasun Fernando" required />
         </div>
         <div class="form-group">
+          <label class="form-label">Registration Number (Index No.) *</label>
+          <input type="text" id="custRegNumber" class="form-input" placeholder="e.g. 2023/E/158" required />
+        </div>
+        <div class="form-group">
           <label class="form-label">WhatsApp Mobile Number *</label>
           <input type="tel" id="custWhatsApp" class="form-input" placeholder="e.g. 0771234567" required />
         </div>
         <div class="form-group">
           <label class="form-label">University Batch *</label>
           <select id="custBatchSelect" class="form-input" required>
+            <option value="E26">E26 Batch</option>
+            <option value="E25">E25 Batch</option>
+            <option value="E24">E24 Batch</option>
             <option value="E23">E23 Batch</option>
             <option value="E22">E22 Batch</option>
-            <option value="E24">E24 Batch</option>
-            <option value="E25">E25 Batch</option>
             <option value="STAFF">Academic / Non-Academic Staff</option>
           </select>
         </div>
@@ -1912,11 +1926,46 @@
     const SCORES_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzo1KtK5zMkmLykmHdjJRqzNEtGccwfM1wGNF7JGB6mYiRDBJdSQ3cboJo4-hRerV4TQ/exec";
     const TEAMS_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFJsbdHQFZDAiFYWXyCIUvGbmbt0PxGqSGjm_FCEFvjSIC11CUEFyrhlcK30pzJ9fBg/exec";
 
+    const APPAREL_SIZES = ["3XS", "2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL"];
+    const WRISTBAND_COLORS = ["White", "Black", "Deep Blue"];
+
     const MERCH_CATALOG = [
-      { id: "tshirt", title: "T-Shirt", price: 2000, desc: "Official polo T-shirt with faculty emblem.", img: "merch1.jpeg", hasSizes: true, sizes: ["XS", "S", "M", "L", "XL", "2XL"] },
-      { id: "jersey", title: "Jersey", price: 1600, desc: "Breathable tournament match jersey.", img: "merch2.jpeg", hasSizes: true, sizes: ["XS", "S", "M", "L", "XL", "2XL"] },
-      { id: "combo", title: "Combo Pack", price: 3300, desc: "Complete bundle featuring apparel and accessories.", img: "merch3.png", hasSizes: true, sizes: ["XS", "S", "M", "L", "XL", "2XL"] },
-      { id: "wristband", title: "Wristband", price: 200, desc: "Durable silicone wristband.", img: "wristband.jpeg", hasSizes: false, sizes: ["Standard"] }
+      { 
+        id: "tshirt", 
+        title: "T-Shirt", 
+        price: 2000, 
+        desc: "Official polo T-shirt with faculty emblem.", 
+        img: "merch1.jpeg", 
+        selectorType: "size", 
+        options: APPAREL_SIZES 
+      },
+      { 
+        id: "jersey", 
+        title: "Jersey", 
+        price: 1600, 
+        desc: "Breathable tournament match jersey.", 
+        img: "merch2.jpeg", 
+        selectorType: "size", 
+        options: APPAREL_SIZES 
+      },
+      { 
+        id: "combo", 
+        title: "Combo Pack", 
+        price: 3300, 
+        desc: "Complete bundle featuring apparel and accessories.", 
+        img: "merch3.png", 
+        selectorType: "size", 
+        options: APPAREL_SIZES 
+      },
+      { 
+        id: "wristband", 
+        title: "Wristband", 
+        price: 200, 
+        desc: "Durable silicone tournament wristband.", 
+        img: "wristband.jpeg", 
+        selectorType: "color", 
+        options: WRISTBAND_COLORS 
+      }
     ];
 
     let cart = {};
@@ -2266,12 +2315,16 @@
             <h3 class="merch-title">${p.title}</h3>
             <p class="merch-desc">${p.desc}</p>
             <div class="merch-selector-box">
-              <span style="font-size:0.65rem; font-weight:700; color:var(--color-stone-light); text-transform:uppercase;">Size</span>
-              ${p.hasSizes ? `
-                <div class="sizes-button-grid">
-                  ${p.sizes.map((s, idx) => `<button type="button" class="size-btn ${idx === 0 ? 'active' : ''}" onclick="pickCardSize('${p.id}', '${s}', this)">${s}</button>`).join('')}
-                </div>
-              ` : `<div style="font-size:0.75rem; color:var(--color-silver-mid);">Standard Fit</div>`}
+              <span style="font-size:0.65rem; font-weight:700; color:var(--color-stone-light); text-transform:uppercase;">
+                ${p.selectorType === 'color' ? 'Select Color' : 'Select Size'}
+              </span>
+              <div class="${p.selectorType === 'color' ? 'variants-button-grid' : 'sizes-button-grid'}">
+                ${p.options.map((opt, idx) => `
+                  <button type="button" class="size-btn ${idx === 0 ? 'active' : ''}" onclick="pickCardOption('${p.id}', '${opt}', this)">
+                    ${opt}
+                  </button>
+                `).join('')}
+              </div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
                 <span style="font-size:0.65rem; font-weight:700; color:var(--color-stone-light); text-transform:uppercase;">Qty</span>
                 <div class="qty-counter-box">
@@ -2290,7 +2343,7 @@
       `).join('');
     }
 
-    function pickCardSize(id, size, btn) {
+    function pickCardOption(id, opt, btn) {
       const card = document.getElementById(`card_${id}`);
       if (!card) return;
       card.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
@@ -2306,17 +2359,17 @@
     function addToCart(id) {
       const product = MERCH_CATALOG.find(p => p.id === id);
       const card = document.getElementById(`card_${id}`);
-      const activeSize = card.querySelector('.size-btn.active');
-      const size = activeSize ? activeSize.innerText : "Standard";
+      const activeBtn = card.querySelector('.size-btn.active');
+      const selectedOption = activeBtn ? activeBtn.innerText : product.options[0];
       const qty = parseInt(document.getElementById(`qtyVal_${id}`).innerText, 10) || 1;
-      const key = `${id}_${size}`;
+      const key = `${id}_${selectedOption}`;
 
       if (cart[key]) cart[key].qty += qty;
-      else cart[key] = { product, size, qty };
+      else cart[key] = { product, option: selectedOption, qty };
 
       document.getElementById(`qtyVal_${id}`).innerText = 1;
       updateCartDisplayState();
-      showToast(`Added ${qty}x ${product.title} (${size}) to cart`, 'success');
+      showToast(`Added ${qty}x ${product.title} (${selectedOption}) to cart`, 'success');
     }
 
     function updateCartDisplayState() {
@@ -2367,7 +2420,7 @@
           <div class="summary-item-card">
             <div>
               <div class="summary-item-title">${item.product.title}</div>
-              <div class="summary-item-meta">Size: <strong>${item.size}</strong> &bull; Qty: <strong>${item.qty}</strong></div>
+              <div class="summary-item-meta">Type/Size: <strong>${item.option}</strong> &bull; Qty: <strong>${item.qty}</strong></div>
             </div>
             <div class="summary-item-price">${sub.toLocaleString()} LKR</div>
           </div>
@@ -2380,10 +2433,17 @@
     function goToWizardStep(step) {
       if (step === 2) {
         const name = document.getElementById('custFullName').value.trim();
+        const regNumber = document.getElementById('custRegNumber').value.trim();
         const phone = document.getElementById('custWhatsApp').value.trim();
+
         if (!name) {
           showToast("Please enter your full name to proceed.", "error");
           document.getElementById('custFullName').focus();
+          return;
+        }
+        if (!regNumber) {
+          showToast("Please enter your Registration Number (Index No.).", "error");
+          document.getElementById('custRegNumber').focus();
           return;
         }
         if (!phone || phone.length < 9) {
@@ -2474,14 +2534,16 @@
       const invoiceId = 'EW26-' + Math.floor(100000 + Math.random() * 900000);
       const total = keys.reduce((s, k) => s + (cart[k].product.price * cart[k].qty), 0);
       const name = document.getElementById('custFullName').value.trim();
+      const regNumber = document.getElementById('custRegNumber').value.trim();
       const phone = document.getElementById('custWhatsApp').value.trim();
       const batch = document.getElementById('custBatchSelect').value;
-      const formattedItems = keys.map(k => `${cart[k].product.title} (${cart[k].size}) x${cart[k].qty}`).join(", ");
+      const formattedItems = keys.map(k => `${cart[k].product.title} (${cart[k].option}) x${cart[k].qty}`).join(", ");
 
       const payload = {
         action: "submitOrder",
         invoice: invoiceId,
         name: name,
+        regNumber: regNumber,
         phone: phone,
         batch: batch,
         total: total,
@@ -2503,6 +2565,7 @@
         document.getElementById('confirmedInvoiceId').innerText = invoiceId;
         document.getElementById('confirmedOrderSummaryBox').innerHTML = `
           <div>Customer: <strong>${name}</strong> (${batch})</div>
+          <div>Registration No: <strong>${regNumber}</strong></div>
           <div>WhatsApp: <strong>${phone}</strong></div>
           <div>Items: <strong>${formattedItems}</strong></div>
           <div>Total Deposited: <strong style="color:var(--color-gold);">${total.toLocaleString()} LKR</strong></div>
