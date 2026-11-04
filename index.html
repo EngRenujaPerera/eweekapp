@@ -115,17 +115,17 @@
       scroll-behavior: smooth;
     }
 
+    /* Fixed containment issue: contain: layout/style broke position: fixed */
     body {
       position: relative;
       min-height: 100vh;
       line-height: 1.5;
       background-color: var(--color-obsidian);
-      padding-bottom: 160px; /* Space for the locked ticker and mobile navbar */
+      padding-bottom: 160px;
       touch-action: pan-y;
       user-select: none;
       -webkit-user-select: none;
       overflow-x: hidden;
-      contain: layout style;
     }
 
     input, textarea, select {
@@ -175,12 +175,14 @@
       pointer-events: none;
     }
 
-    /* THEME TOGGLE */
+    /* ==========================================================================
+       ANCHORED SCREEN CONTROLS (LOCKED TO DISPLAY VIEWPORT)
+       ========================================================================== */
     .theme-toggle-widget {
-      position: fixed;
-      bottom: calc(115px + env(safe-area-inset-bottom, 0px));
-      right: 16px;
-      z-index: 10001;
+      position: fixed !important;
+      bottom: calc(115px + env(safe-area-inset-bottom, 0px)) !important;
+      right: 16px !important;
+      z-index: 999999 !important;
       background: var(--color-card-bg);
       border: 1px solid var(--color-card-border);
       border-radius: 50%;
@@ -191,56 +193,20 @@
       justify-content: center;
       color: var(--color-silver-bright);
       cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
       transition: transform 0.2s ease;
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
     }
-    .theme-toggle-widget:hover { transform: scale(1.08); }
+    .theme-toggle-widget:hover { transform: scale(1.08) translate3d(0,0,0); }
     .theme-toggle-widget svg { width: 20px; height: 20px; fill: currentColor; }
 
-    /* ==========================================================================
-       ALWAYS PINNED BOTTOM TICKER & MOBILE APP BAR
-       ========================================================================== */
-    .mobile-bottom-bar {
-      display: flex;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: calc(58px + env(safe-area-inset-bottom, 0px));
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-      background: var(--color-ticker-bg);
-      border-top: 1px solid var(--color-card-border-subtle);
-      z-index: 10000;
-      justify-content: space-around;
-      align-items: center;
-      padding-left: 4px;
-      padding-right: 4px;
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
-    }
-    .mob-nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      height: 100%;
-      color: var(--color-stone);
-      cursor: pointer;
-      padding: 4px 0;
-      transition: color 0.15s ease;
-    }
-    .mob-nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; }
-    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; }
-    .mob-nav-item.active { color: var(--color-gold); }
-
     .fixed-bottom-ticker {
-      position: fixed;
-      bottom: calc(58px + env(safe-area-inset-bottom, 0px));
-      left: 0;
-      width: 100vw;
-      z-index: 9999;
+      position: fixed !important;
+      bottom: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
+      left: 0 !important;
+      width: 100vw !important;
+      z-index: 999990 !important;
       background: var(--color-ticker-bg);
       border-top: 1px solid var(--color-card-border);
       padding: 6px 14px;
@@ -248,10 +214,10 @@
       grid-template-columns: 1.3fr 1fr 1fr;
       gap: 10px;
       align-items: center;
-      box-shadow: 0 -4px 18px rgba(0,0,0,0.15);
+      box-shadow: 0 -4px 18px rgba(0,0,0,0.25);
       cursor: pointer;
-      transform: translateZ(0);
-      backface-visibility: hidden;
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
     }
 
     .fbt-col-latest {
@@ -349,6 +315,41 @@
     .fbt-p-emblem { width: 16px; height: 16px; object-fit: contain; }
     .p-rank { font-family: var(--font-google-sans); font-size: 0.55rem; color: var(--color-silver-dark); font-weight: 700; }
     .p-pts { font-family: var(--font-google-sans); font-size: 0.6rem; color: var(--color-silver-bright); font-weight: 800; }
+
+    .mobile-bottom-bar {
+      display: flex;
+      position: fixed !important;
+      bottom: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
+      padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+      background: var(--color-ticker-bg);
+      border-top: 1px solid var(--color-card-border-subtle);
+      z-index: 999995 !important;
+      justify-content: space-around;
+      align-items: center;
+      padding-left: 4px;
+      padding-right: 4px;
+      -webkit-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.35);
+    }
+    .mob-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      height: 100%;
+      color: var(--color-stone);
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color 0.15s ease;
+    }
+    .mob-nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; }
+    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; }
+    .mob-nav-item.active { color: var(--color-gold); }
 
     /* ==========================================================================
        TOP SITE HEADER
@@ -754,6 +755,14 @@
       .standing-points-block { grid-area: pts; }
       .standing-points-val { font-size: 1.7rem; }
       .standing-progress-block { grid-area: bar; padding-top: 6px; border-top: 1px solid var(--color-card-border-subtle); }
+      
+      .fixed-bottom-ticker {
+        grid-template-columns: 1fr !important;
+        gap: 4px !important;
+        padding: 4px 10px !important;
+      }
+      .fbt-col-history { display: none !important; }
+      .fbt-col-latest { border-right: none !important; border-bottom: 1px solid var(--color-card-border-subtle) !important; padding-bottom: 3px !important; }
     }
 
     /* Top Stories Section */
@@ -828,7 +837,7 @@
       width: 100vw;
       height: 100vh;
       background: rgba(4, 5, 8, 0.75);
-      z-index: 20000;
+      z-index: 2000000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1098,7 +1107,7 @@
       transform: translateX(-50%);
       width: 90%;
       max-width: 800px;
-      z-index: 10001;
+      z-index: 1000000;
       background: var(--color-card-bg);
       border: 1.5px solid var(--color-gold);
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -1170,13 +1179,6 @@
     @media (max-width: 992px) {
       .desktop-nav-menu { display: none; }
       .top-stories-container, .contact-grid-layout { grid-template-columns: 1fr; }
-      .fixed-bottom-ticker {
-        grid-template-columns: 1fr;
-        gap: 4px;
-        padding: 4px 10px;
-      }
-      .fbt-col-history { display: none; }
-      .fbt-col-latest { border-right: none; border-bottom: 1px solid var(--color-card-border-subtle); padding-bottom: 3px; }
       .committee-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -1190,14 +1192,15 @@
   </div>
   <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-  <!-- Theme Toggle Widget -->
+  <!-- =========================================================================
+       VIEWPORT DOCKED CONTROLS (ALWAYS FIXED AT SCREEN BOTTOM)
+       ========================================================================= -->
   <button class="theme-toggle-widget" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Theme" type="button">
     <svg id="themeIcon" viewBox="0 0 24 24">
       <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
     </svg>
   </button>
 
-  <!-- Live Ticker Bar (Locked to display bottom above app menu) -->
   <div class="fixed-bottom-ticker" id="floatingResultsWidget" onclick="openAllScoresModal()" title="Tap to view all scores">
     <div class="fbt-col-latest">
       <div class="fbt-left">
@@ -1238,20 +1241,6 @@
     </div>
   </div>
 
-  <!-- Scores Modal -->
-  <div class="scores-modal-backdrop" id="scoresModalBackdrop" role="dialog" aria-hidden="true">
-    <div class="scores-modal-box">
-      <button class="scores-modal-close" id="scoresModalCloseBtn" type="button">&times;</button>
-      <span class="section-eyebrow">TOURNAMENT FEED</span>
-      <h3 class="section-title" style="font-size: 1.3rem;">ALL RELEASED RESULTS</h3>
-      <div class="silver-divider"><span class="divider-node"></span></div>
-      <div class="all-scores-list" id="allScoresListContainer">
-        <div style="text-align: center; color: var(--color-stone-light); padding: 20px;">Loading full scoreboard history...</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mobile Bottom App Nav (Locked to the viewport display bottom) -->
   <nav class="mobile-bottom-bar" aria-label="Mobile Navigation">
     <button class="mob-nav-item active" data-target="home" type="button">
       <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -1274,6 +1263,19 @@
       <span>Contact</span>
     </button>
   </nav>
+
+  <!-- Scores Modal -->
+  <div class="scores-modal-backdrop" id="scoresModalBackdrop" role="dialog" aria-hidden="true">
+    <div class="scores-modal-box">
+      <button class="scores-modal-close" id="scoresModalCloseBtn" type="button">&times;</button>
+      <span class="section-eyebrow">TOURNAMENT FEED</span>
+      <h3 class="section-title" style="font-size: 1.3rem;">ALL RELEASED RESULTS</h3>
+      <div class="silver-divider"><span class="divider-node"></span></div>
+      <div class="all-scores-list" id="allScoresListContainer">
+        <div style="text-align: center; color: var(--color-stone-light); padding: 20px;">Loading full scoreboard history...</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Top App Header -->
   <header class="site-header" id="siteHeader">
@@ -1626,7 +1628,7 @@
       fetchFeaturedNews();
       fetchFixtures();
 
-      // Poll intervals: Scores every 15s, News every 60s (1 minute)
+      // Poll intervals: Scores every 15s, News every 60s
       setInterval(fetchLiveScores, 15000);
       setInterval(fetchFeaturedNews, 60000);
     });
