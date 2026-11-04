@@ -52,10 +52,6 @@
       --color-emerald: #10b981;
       --color-cyan: #38bdf8;
 
-      /* Podium & Standing System */
-      --podium-gold-bg: linear-gradient(180deg, rgba(245, 158, 11, 0.16) 0%, rgba(17, 23, 38, 0.95) 100%);
-      --podium-silver-bg: linear-gradient(180deg, rgba(148, 163, 184, 0.12) 0%, rgba(17, 23, 38, 0.95) 100%);
-      --podium-bronze-bg: linear-gradient(180deg, rgba(217, 119, 6, 0.12) 0%, rgba(17, 23, 38, 0.95) 100%);
       --standing-row-bg: #131927;
       --standing-row-border: rgba(255, 255, 255, 0.07);
     }
@@ -90,10 +86,6 @@
       --color-emerald: #059669;
       --color-cyan: #0284c7;
 
-      /* Podium & Standing System */
-      --podium-gold-bg: linear-gradient(180deg, rgba(254, 243, 199, 0.8) 0%, #ffffff 100%);
-      --podium-silver-bg: linear-gradient(180deg, rgba(241, 245, 249, 0.9) 0%, #ffffff 100%);
-      --podium-bronze-bg: linear-gradient(180deg, rgba(254, 237, 213, 0.7) 0%, #ffffff 100%);
       --standing-row-bg: #ffffff;
       --standing-row-border: rgba(15, 23, 42, 0.07);
     }
@@ -107,9 +99,6 @@
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* ==========================================================================
-       SMOOTH RENDERING & PERFORMANCE RESETS
-       ========================================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -131,19 +120,12 @@
       min-height: 100vh;
       line-height: 1.5;
       background-color: var(--color-obsidian);
-      padding-bottom: 140px;
+      padding-bottom: 160px; /* Space for the locked ticker and mobile navbar */
       touch-action: pan-y;
       user-select: none;
       -webkit-user-select: none;
       overflow-x: hidden;
       contain: layout style;
-    }
-
-    /* Force hardware acceleration on transform layers */
-    .hardware-accel {
-      transform: translateZ(0);
-      will-change: transform;
-      backface-visibility: hidden;
     }
 
     input, textarea, select {
@@ -164,7 +146,6 @@
       z-index: 10;
     }
 
-    /* Optimized Lightweight Background */
     #bg-image-container {
       position: fixed;
       top: 0;
@@ -182,9 +163,7 @@
       object-fit: cover;
       transform: translateZ(0);
     }
-    :root[data-theme="light"] #bg-image-container {
-      opacity: 0.08;
-    }
+    :root[data-theme="light"] #bg-image-container { opacity: 0.08; }
 
     #particle-canvas {
       position: fixed;
@@ -199,9 +178,9 @@
     /* THEME TOGGLE */
     .theme-toggle-widget {
       position: fixed;
-      bottom: 125px;
+      bottom: calc(115px + env(safe-area-inset-bottom, 0px));
       right: 16px;
-      z-index: 1001;
+      z-index: 10001;
       background: var(--color-card-bg);
       border: 1px solid var(--color-card-border);
       border-radius: 50%;
@@ -219,14 +198,49 @@
     .theme-toggle-widget svg { width: 20px; height: 20px; fill: currentColor; }
 
     /* ==========================================================================
-       BOTTOM TICKER BAR
+       ALWAYS PINNED BOTTOM TICKER & MOBILE APP BAR
        ========================================================================== */
-    .fixed-bottom-ticker {
+    .mobile-bottom-bar {
+      display: flex;
       position: fixed;
-      bottom: 58px;
+      bottom: 0;
       left: 0;
       width: 100vw;
-      z-index: 1000;
+      height: calc(58px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      background: var(--color-ticker-bg);
+      border-top: 1px solid var(--color-card-border-subtle);
+      z-index: 10000;
+      justify-content: space-around;
+      align-items: center;
+      padding-left: 4px;
+      padding-right: 4px;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
+    }
+    .mob-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      height: 100%;
+      color: var(--color-stone);
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color 0.15s ease;
+    }
+    .mob-nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; }
+    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; }
+    .mob-nav-item.active { color: var(--color-gold); }
+
+    .fixed-bottom-ticker {
+      position: fixed;
+      bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+      left: 0;
+      width: 100vw;
+      z-index: 9999;
       background: var(--color-ticker-bg);
       border-top: 1px solid var(--color-card-border);
       padding: 6px 14px;
@@ -237,6 +251,7 @@
       box-shadow: 0 -4px 18px rgba(0,0,0,0.15);
       cursor: pointer;
       transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     .fbt-col-latest {
@@ -284,7 +299,6 @@
     .fbt-team-name { font-family: var(--font-google-sans); font-size: 0.58rem; font-weight: 700; color: var(--color-silver-mid); }
     .fbt-score { font-family: var(--font-google-sans); font-size: 0.72rem; font-weight: 800; color: var(--color-crimson-red); }
     .fbt-vs { font-family: var(--font-google-sans); font-size: 0.52rem; color: var(--color-gold); font-weight: 800; }
-    .fbt-winner { color: var(--color-emerald); font-family: var(--font-google-sans); font-size: 0.52rem; font-weight: 800; text-transform: uppercase; }
 
     .fbt-col-history {
       display: flex;
@@ -335,40 +349,6 @@
     .fbt-p-emblem { width: 16px; height: 16px; object-fit: contain; }
     .p-rank { font-family: var(--font-google-sans); font-size: 0.55rem; color: var(--color-silver-dark); font-weight: 700; }
     .p-pts { font-family: var(--font-google-sans); font-size: 0.6rem; color: var(--color-silver-bright); font-weight: 800; }
-
-    /* ==========================================================================
-       MOBILE BOTTOM APP BAR
-       ========================================================================== */
-    .mobile-bottom-bar {
-      display: flex;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: 58px;
-      background: var(--color-ticker-bg);
-      border-top: 1px solid var(--color-card-border-subtle);
-      z-index: 1002;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0 4px;
-      transform: translateZ(0);
-    }
-    .mob-nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      height: 100%;
-      color: var(--color-stone);
-      cursor: pointer;
-      padding: 4px 0;
-      transition: color 0.15s ease;
-    }
-    .mob-nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; }
-    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; }
-    .mob-nav-item.active { color: var(--color-gold); }
 
     /* ==========================================================================
        TOP SITE HEADER
@@ -490,11 +470,6 @@
     }
     .btn-silver:disabled { opacity: 0.55; cursor: not-allowed; }
     .btn-silver:hover:not(:disabled) { filter: brightness(1.08); }
-    .btn-silver-secondary {
-      background: var(--color-steel-dark);
-      color: var(--color-silver-bright);
-      border: 1px solid var(--color-card-border-subtle);
-    }
 
     /* Hero Banner */
     .hero-section {
@@ -539,14 +514,14 @@
     .hero-intro-text strong { color: var(--color-gold); }
 
     /* ==========================================================================
-       NEW UNIQUE & PROFESSIONAL LEADERBOARD DESIGN
+       ANIMATED TOURNAMENT LEADERBOARD
        ========================================================================== */
     .results-section {
       padding: 30px 0 60px;
       scroll-margin-top: 75px;
     }
     .leaderboard-container {
-      max-width: 1040px;
+      max-width: 980px;
       margin: 0 auto;
     }
 
@@ -577,6 +552,11 @@
       height: 7px;
       border-radius: 50%;
       background: var(--color-emerald);
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.75); }
     }
     .lb-updated-meta {
       font-family: var(--font-google-sans);
@@ -585,190 +565,130 @@
       font-weight: 600;
     }
 
-    /* Podium Stage for Top 3 Batches */
-    .podium-stage-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.12fr 1fr;
-      gap: 14px;
-      align-items: end;
-      margin-bottom: 24px;
-    }
-    .podium-column {
-      position: relative;
-      border-radius: 18px;
-      padding: 20px 14px 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      border: 1px solid var(--color-card-border-subtle);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-      transition: transform 0.2s ease;
-    }
-    .podium-column:hover { transform: translateY(-3px); }
-
-    .podium-column.pos-1 {
-      background: var(--podium-gold-bg);
-      border-color: rgba(245, 158, 11, 0.6);
-      box-shadow: 0 14px 35px var(--color-gold-glow);
-      padding-top: 26px;
-      padding-bottom: 20px;
-    }
-    .podium-column.pos-2 {
-      background: var(--podium-silver-bg);
-      border-color: rgba(148, 163, 184, 0.45);
-    }
-    .podium-column.pos-3 {
-      background: var(--podium-bronze-bg);
-      border-color: rgba(217, 119, 6, 0.35);
-    }
-
-    .podium-crown-badge {
-      position: absolute;
-      top: -14px;
-      background: linear-gradient(135deg, var(--color-gold) 0%, #b45309 100%);
-      color: #fff;
-      font-family: var(--font-google-sans);
-      font-size: 0.65rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      padding: 3px 12px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
-    }
-
-    .podium-avatar-wrap {
-      width: 66px;
-      height: 66px;
-      border-radius: 50%;
-      background: var(--color-graphite);
-      border: 2.5px solid var(--color-card-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
-    .pos-1 .podium-avatar-wrap {
-      width: 78px;
-      height: 78px;
-      border-color: var(--color-gold);
-    }
-    .podium-emblem-img {
-      width: 70%;
-      height: 70%;
-      object-fit: contain;
-    }
-
-    .podium-team-title {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      color: var(--color-silver-bright);
-      margin-bottom: 4px;
-    }
-    .pos-1 .podium-team-title {
-      font-size: 1.6rem;
-      color: var(--color-gold);
-    }
-
-    .podium-points-tag {
-      font-family: var(--font-sport);
-      font-size: 2.2rem;
-      line-height: 1;
-      font-weight: 700;
-      color: var(--color-silver-bright);
-      letter-spacing: 0.03em;
-    }
-    .pos-1 .podium-points-tag {
-      font-size: 2.7rem;
-      color: var(--color-gold);
-    }
-    .podium-pts-label {
-      font-family: var(--font-google-sans);
-      font-size: 0.62rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: var(--color-stone-light);
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .podium-wins-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: var(--color-steel-dark);
-      border: 1px solid var(--color-card-border-subtle);
-      border-radius: 12px;
-      padding: 3px 10px;
-      font-family: var(--font-google-sans);
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: var(--color-silver-mid);
-    }
-    .podium-wins-pill svg { width: 12px; height: 12px; fill: currentColor; }
-
-    /* Complete Standings Ladder */
     .standings-list-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-top: 10px;
+      gap: 12px;
+      margin-top: 14px;
     }
 
     .standing-item-row {
+      position: relative;
       display: grid;
       grid-template-columns: 55px 50px 1.4fr 1.3fr 120px;
       align-items: center;
       background: var(--standing-row-bg);
       border: 1px solid var(--standing-row-border);
-      border-radius: 14px;
-      padding: 10px 18px;
-      gap: 12px;
-      transition: border-color 0.15s ease, background-color 0.15s ease;
+      border-radius: 16px;
+      padding: 12px 20px;
+      gap: 14px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: lbRowSlideIn 0.5s var(--ease-out) forwards;
+      animation-delay: calc(var(--row-index) * 0.08s);
+      transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s var(--ease-out), box-shadow 0.25s ease;
       contain: content;
+      overflow: hidden;
     }
+
+    @keyframes lbRowSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .standing-item-row:hover {
-      border-color: var(--color-gold);
+      border-color: rgba(245, 158, 11, 0.5);
+      background-color: var(--color-card-bg);
+      transform: translateX(4px) translateY(-1px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
     }
+
     .standing-item-row.pos-1-row {
-      border-color: var(--color-card-border);
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.08) 0%, var(--standing-row-bg) 100%);
+      border-color: rgba(245, 158, 11, 0.5);
+      background: linear-gradient(90deg, rgba(245, 158, 11, 0.12) 0%, var(--standing-row-bg) 85%);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.12);
+    }
+    .standing-item-row.pos-1-row::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.08), transparent);
+      animation: rankShine 4s infinite ease-in-out;
+      pointer-events: none;
+    }
+    @keyframes rankShine {
+      0% { left: -100%; }
+      50%, 100% { left: 200%; }
     }
 
     .standing-rank-badge {
       font-family: var(--font-sport);
-      font-size: 1.8rem;
+      font-size: 1.9rem;
       line-height: 1;
       font-weight: 700;
       color: var(--color-stone-light);
       text-align: center;
+      transition: transform 0.2s ease, color 0.2s ease;
     }
-    .pos-1-row .standing-rank-badge { color: var(--color-gold); }
+    .pos-1-row .standing-rank-badge {
+      color: var(--color-gold);
+      text-shadow: 0 0 12px var(--color-gold-glow);
+    }
+    .standing-item-row:hover .standing-rank-badge {
+      transform: scale(1.1);
+    }
 
     .standing-team-emblem {
-      width: 38px;
-      height: 38px;
+      width: 42px;
+      height: 42px;
       object-fit: contain;
-      border-radius: 8px;
+      border-radius: 10px;
       background: var(--color-graphite);
-      padding: 3px;
+      padding: 4px;
+      border: 1px solid var(--color-card-border-subtle);
+      transition: transform 0.25s var(--ease-out);
+    }
+    .standing-item-row:hover .standing-team-emblem {
+      transform: rotate(-4deg) scale(1.08);
     }
 
+    .standing-team-info-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
     .standing-team-name {
       font-family: var(--font-google-sans);
-      font-size: 1.15rem;
+      font-size: 1.18rem;
       font-weight: 800;
       color: var(--color-silver-bright);
       letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pos-1-row .standing-team-name { color: var(--color-gold); }
+    .leader-badge {
+      font-family: var(--font-google-sans);
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: #000;
+      background: var(--color-gold);
+      padding: 1px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
     }
 
     .standing-progress-block {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
     }
     .standing-meta-row {
       display: flex;
@@ -782,20 +702,21 @@
     }
     .standing-bar-track {
       width: 100%;
-      height: 6px;
+      height: 7px;
       background: var(--color-graphite);
-      border-radius: 4px;
+      border-radius: 6px;
       overflow: hidden;
       border: 1px solid var(--color-card-border-subtle);
     }
     .standing-bar-fill {
       height: 100%;
       background: linear-gradient(90deg, var(--color-cyan) 0%, #38bdf8 100%);
-      border-radius: 4px;
-      transition: width 0.8s var(--ease-out);
+      border-radius: 6px;
+      transition: width 1s var(--ease-out);
     }
     .pos-1-row .standing-bar-fill {
       background: linear-gradient(90deg, var(--color-gold) 0%, #fbbf24 100%);
+      box-shadow: 0 0 8px var(--color-gold-glow);
     }
 
     .standing-points-block {
@@ -803,10 +724,11 @@
     }
     .standing-points-val {
       font-family: var(--font-sport);
-      font-size: 2.1rem;
+      font-size: 2.2rem;
       line-height: 0.9;
       font-weight: 700;
       color: var(--color-silver-bright);
+      letter-spacing: 0.02em;
     }
     .pos-1-row .standing-points-val { color: var(--color-gold); }
     .standing-points-lbl {
@@ -819,23 +741,19 @@
     }
 
     @media (max-width: 768px) {
-      .podium-stage-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-      .podium-column.pos-1 { order: -1; }
       .standing-item-row {
         grid-template-columns: 36px 36px 1fr auto;
         grid-template-areas: "rank emblem name pts" "bar bar bar bar";
-        padding: 10px 12px;
+        padding: 10px 14px;
         gap: 6px 10px;
       }
       .standing-rank-badge { grid-area: rank; font-size: 1.5rem; text-align: left; }
       .standing-team-emblem { grid-area: emblem; width: 32px; height: 32px; }
-      .standing-team-name { grid-area: name; font-size: 1rem; }
+      .standing-team-info-wrap { grid-area: name; }
+      .standing-team-name { font-size: 1rem; }
       .standing-points-block { grid-area: pts; }
-      .standing-points-val { font-size: 1.6rem; }
-      .standing-progress-block { grid-area: bar; padding-top: 4px; border-top: 1px solid var(--color-card-border-subtle); }
+      .standing-points-val { font-size: 1.7rem; }
+      .standing-progress-block { grid-area: bar; padding-top: 6px; border-top: 1px solid var(--color-card-border-subtle); }
     }
 
     /* Top Stories Section */
@@ -910,7 +828,7 @@
       width: 100vw;
       height: 100vh;
       background: rgba(4, 5, 8, 0.75);
-      z-index: 3000;
+      z-index: 20000;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1019,15 +937,6 @@
       margin-bottom: 10px;
     }
     .event-card-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: var(--color-silver-bright); }
-    .event-category-badge {
-      font-family: var(--font-google-sans);
-      font-size: 0.6rem;
-      padding: 2px 7px;
-      background: var(--color-graphite);
-      border-radius: 12px;
-      color: var(--color-silver-bright);
-      font-weight: 700;
-    }
     .athletes-list { list-style: none; display: flex; flex-direction: column; gap: 6px; max-height: 180px; overflow-y: auto; }
     .athlete-item {
       display: flex;
@@ -1184,12 +1093,12 @@
     /* Sticky Cart Bar */
     .cart-checkout-bar {
       position: fixed;
-      bottom: 65px;
+      bottom: calc(118px + env(safe-area-inset-bottom, 0px));
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
       max-width: 800px;
-      z-index: 1001;
+      z-index: 10001;
       background: var(--color-card-bg);
       border: 1.5px solid var(--color-gold);
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -1250,7 +1159,7 @@
 
     /* Footer */
     .site-footer {
-      padding: 35px 0 130px;
+      padding: 35px 0 160px;
       border-top: 1px solid var(--color-card-border-subtle);
       background: var(--color-charcoal);
       text-align: center;
@@ -1262,7 +1171,6 @@
       .desktop-nav-menu { display: none; }
       .top-stories-container, .contact-grid-layout { grid-template-columns: 1fr; }
       .fixed-bottom-ticker {
-        bottom: 58px;
         grid-template-columns: 1fr;
         gap: 4px;
         padding: 4px 10px;
@@ -1276,7 +1184,7 @@
 
 <body>
 
-  <!-- Optimized Background -->
+  <!-- Background Layer -->
   <div id="bg-image-container" aria-hidden="true">
     <img id="bg-image" src="bg.jpeg" alt="Background" onerror="this.style.display='none';" />
   </div>
@@ -1289,7 +1197,7 @@
     </svg>
   </button>
 
-  <!-- Live Ticker Bar -->
+  <!-- Live Ticker Bar (Locked to display bottom above app menu) -->
   <div class="fixed-bottom-ticker" id="floatingResultsWidget" onclick="openAllScoresModal()" title="Tap to view all scores">
     <div class="fbt-col-latest">
       <div class="fbt-left">
@@ -1343,7 +1251,7 @@
     </div>
   </div>
 
-  <!-- Mobile Bottom App Nav -->
+  <!-- Mobile Bottom App Nav (Locked to the viewport display bottom) -->
   <nav class="mobile-bottom-bar" aria-label="Mobile Navigation">
     <button class="mob-nav-item active" data-target="home" type="button">
       <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -1405,7 +1313,7 @@
         </div>
       </section>
 
-      <!-- CHAMPIONSHIP LEADERBOARD (NEW UNIQUE SMOOTH DESIGN) -->
+      <!-- CHAMPIONSHIP LEADERBOARD -->
       <section class="results-section" id="results">
         <div class="container leaderboard-container">
           <div class="lb-header">
@@ -1421,7 +1329,7 @@
           <div class="silver-divider"><span class="divider-node"></span></div>
 
           <div id="leaderboardMount">
-            <!-- Dynamically populated smooth podium & standings -->
+            <!-- Dynamically populated smooth animated standings -->
           </div>
         </div>
       </section>
@@ -1527,9 +1435,6 @@
               <div id="trackerStatusChip" style="display:inline-block; padding: 6px 14px; border-radius: 20px; font-weight:800; font-size:0.8rem; text-transform:uppercase; margin-bottom:10px;"></div>
               <p id="trackerStatusDesc" style="font-size: 0.85rem; color: var(--color-silver-mid); margin-bottom: 14px;"></p>
               <div id="trackerDetailsCard" style="background: var(--color-graphite); border-radius: 12px; padding: 12px; text-align: left; font-size: 0.82rem; margin-bottom: 14px;"></div>
-              <button class="btn-silver" id="btnReceiptDownload" onclick="generatePdfReceipt()" type="button" style="display: none; width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color:#fff;">
-                DOWNLOAD RECEIPT (PDF)
-              </button>
             </div>
           </div>
         </div>
@@ -1675,7 +1580,7 @@
   </footer>
 
   <!-- =========================================================================
-       JAVASCRIPT LOGIC (OPTIMIZED & THROTTLED)
+       JAVASCRIPT LOGIC
        ========================================================================= -->
   <script>
     const MERCH_BACKEND_URL = "https://script.google.com/macros/s/AKfycbx4BJRrLSyVgC3U9WobDSao5egyWwpvfrvSkLE0c3L2wNmU7Zv80ih_6ovSyxj3GkK8/exec";
@@ -1703,7 +1608,6 @@
       { name: "E25", logo: "e25.png", score: 0, wins: 0 },
       { name: "STAFF", logo: "staff.png", score: 0, wins: 0 }
     ];
-    const logoMap = { "E22": "e22.png", "E23": "e23.png", "E24": "e24.png", "E25": "e25.png", "STAFF": "staff.png" };
 
     document.addEventListener("DOMContentLoaded", () => {
       const savedTheme = localStorage.getItem('eweek_theme') || 'dark';
@@ -1717,11 +1621,14 @@
       renderMerchCatalogCards();
       renderSmoothLeaderboard();
 
+      // Initial Data Pull
       fetchLiveScores();
       fetchFeaturedNews();
       fetchFixtures();
 
+      // Poll intervals: Scores every 15s, News every 60s (1 minute)
       setInterval(fetchLiveScores, 15000);
+      setInterval(fetchFeaturedNews, 60000);
     });
 
     function toggleTheme() {
@@ -1763,7 +1670,6 @@
       });
     }
 
-    // Lightweight 25-Particle Engine (Zero Frame Dropping)
     function initOptimizedParticles() {
       const canvas = document.getElementById('particle-canvas');
       if (!canvas) return;
@@ -1819,58 +1725,34 @@
     }
 
     // =========================================================================
-    // NEW UNIQUE LEADERBOARD RENDERER
+    // LEADERBOARD RENDERER
     // =========================================================================
     function renderSmoothLeaderboard() {
       const mount = document.getElementById("leaderboardMount");
       if (!mount) return;
 
       const sorted = [...batchData].sort((a, b) => b.score - a.score);
-      const top3 = sorted.slice(0, 3);
-      const remainder = sorted.slice(3);
       const maxScore = Math.max(...sorted.map(s => s.score), 100);
 
-      // Reorder top 3 for classic sports podium layout: [2nd, 1st, 3rd]
-      const podiumOrder = [
-        { ...top3[1], pos: 2, label: "2nd Place" },
-        { ...top3[0], pos: 1, label: "Tournament Leader" },
-        { ...top3[2], pos: 3, label: "3rd Place" }
-      ];
-
-      let html = `
-        <!-- Top 3 Championship Podium -->
-        <div class="podium-stage-grid">
-          ${podiumOrder.map(item => `
-            <div class="podium-column pos-${item.pos}">
-              ${item.pos === 1 ? '<span class="podium-crown-badge">CHAMPION</span>' : ''}
-              <div class="podium-avatar-wrap">
-                <img src="${item.logo}" alt="${item.name}" class="podium-emblem-img" onerror="this.src='logo.png';" />
-              </div>
-              <h3 class="podium-team-title">${item.name}</h3>
-              <div class="podium-pts-label">${item.label}</div>
-              <div class="podium-points-tag">${item.score.toLocaleString()}</div>
-              <div class="podium-wins-pill">
-                <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>
-                ${item.wins} WINS
-              </div>
-            </div>
-          `).join('')}
-        </div>
-
-        <!-- Full League Table Ladder -->
+      const html = `
         <div class="standings-list-wrapper">
           ${sorted.map((team, idx) => {
             const rank = idx + 1;
             const rankStr = rank < 10 ? `0${rank}` : `${rank}`;
             const percent = Math.min(100, Math.round((team.score / maxScore) * 100));
             return `
-              <div class="standing-item-row ${rank === 1 ? 'pos-1-row' : ''}">
+              <div class="standing-item-row ${rank === 1 ? 'pos-1-row' : ''}" style="--row-index: ${idx};">
                 <div class="standing-rank-badge">${rankStr}</div>
                 <img src="${team.logo}" alt="${team.name}" class="standing-team-emblem" onerror="this.src='logo.png';" />
-                <div class="standing-team-name">${team.name}</div>
+                <div class="standing-team-info-wrap">
+                  <div class="standing-team-name">
+                    <span>${team.name}</span>
+                    ${rank === 1 ? '<span class="leader-badge">LEADER</span>' : ''}
+                  </div>
+                </div>
                 <div class="standing-progress-block">
                   <div class="standing-meta-row">
-                    <span>Events Won: ${team.wins}</span>
+                    <span>Victories: ${team.wins}</span>
                     <span>${percent}%</span>
                   </div>
                   <div class="standing-bar-track">
@@ -1896,7 +1778,7 @@
     }
 
     // =========================================================================
-    // API SYNC (SCORES, NEWS, FIXTURES)
+    // API SYNC
     // =========================================================================
     function fetchLiveScores() {
       const cbName = 'scores_cb_' + Math.round(Math.random() * 1000000);
@@ -1930,7 +1812,6 @@
 
         renderSmoothLeaderboard();
 
-        // Update Mini Ticker
         if (matches.length > 0) {
           const last = matches[matches.length - 1];
           document.getElementById('fbtMatchTitle').innerText = `${last.sport} (${last.category})`;
@@ -2014,7 +1895,7 @@
     }
 
     // =========================================================================
-    // MERCHANDISE CARDS & ORDER LOGIC
+    // MERCHANDISE & ORDERS
     // =========================================================================
     function renderMerchCatalogCards() {
       const container = document.getElementById('merchItemsGrid');
@@ -2214,7 +2095,6 @@
       });
     }
 
-    // Modal Events
     function openNewsModal(idx) {
       const item = globalNewsStore[idx];
       if (!item) return;
