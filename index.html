@@ -245,6 +245,9 @@
       background: linear-gradient(135deg, var(--color-emerald) 0%, #059669 100%);
       animation: pulseDot 1s infinite alternate;
     }
+    .fbt-tag.other-event-tag {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    }
     .fbt-match-info {
       font-family: var(--font-google-sans);
       font-size: 0.65rem;
@@ -752,7 +755,7 @@
       .fbt-col-latest { border-right: none !important; border-bottom: 1px solid var(--color-card-border-subtle) !important; padding-bottom: 3px !important; }
     }
 
-    /* TOP STORIES */
+    /* TOP STORIES & UNCROPPED DRIVE IMAGES */
     .featured-news-section { padding: 40px 0; }
     .top-stories-container {
       max-width: 1140px;
@@ -770,8 +773,23 @@
       flex-direction: column;
       box-shadow: 0 10px 25px rgba(0,0,0,0.06);
     }
-    .fhs-img-wrap { width: 100%; height: 240px; overflow: hidden; background: #000; }
-    .fhs-img { width: 100%; height: 100%; object-fit: cover; }
+    .fhs-img-wrap {
+      width: 100%;
+      min-height: 240px;
+      max-height: 360px;
+      overflow: hidden;
+      background: #060910;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .fhs-img {
+      width: 100%;
+      height: 100%;
+      max-height: 360px;
+      object-fit: contain; /* Full uncropped aspect ratio support */
+      background: #060910;
+    }
     .fhs-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
     .news-badge-tag {
       font-family: var(--font-google-sans);
@@ -807,12 +825,27 @@
       border-radius: 16px;
       overflow: hidden;
       display: grid;
-      grid-template-columns: 100px 1fr;
+      grid-template-columns: 110px 1fr;
       align-items: center;
       box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      cursor: pointer;
     }
-    .ncs-img-wrap { width: 100px; height: 100%; min-height: 95px; overflow: hidden; background: #000; }
-    .ncs-img { width: 100%; height: 100%; object-fit: cover; }
+    .ncs-img-wrap {
+      width: 110px;
+      height: 100%;
+      min-height: 95px;
+      overflow: hidden;
+      background: #060910;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ncs-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #060910;
+    }
     .ncs-body { padding: 10px 14px; }
 
     /* TEAMS & EVENTS */
@@ -917,9 +950,7 @@
       font-weight: 700;
     }
 
-    /* ==========================================================================
-       MERCHANDISE & UNIQUE CHECKOUT SYSTEM STYLES
-       ========================================================================== */
+    /* MERCHANDISE */
     .merch-hero { padding: 90px 0 15px; text-align: center; }
     .merch-subnav { display: flex; justify-content: center; gap: 8px; margin: 12px auto 20px; }
     .merch-subnav-btn {
@@ -1079,7 +1110,7 @@
       box-shadow: 0 24px 60px rgba(0,0,0,0.6);
     }
     .scores-modal-box {
-      max-width: 680px;
+      max-width: 700px;
       width: 100%;
       max-height: 88vh;
       overflow-y: auto;
@@ -1328,13 +1359,38 @@
     }
 
     /* ==========================================================================
-       PROFESSIONAL "ALL RELEASED RESULTS" SYSTEM
+       ALL RELEASED RESULTS SYSTEM (MATCHES + OTHER EVENTS)
        ========================================================================== */
+    .scores-filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .scores-filter-btn {
+      font-family: var(--font-google-sans);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 20px;
+      background: var(--color-graphite);
+      color: var(--color-silver-mid);
+      border: 1px solid var(--color-card-border-subtle);
+      cursor: pointer;
+    }
+    .scores-filter-btn.active {
+      background: var(--color-gold);
+      color: #000;
+      border-color: var(--color-gold-light);
+    }
+
     .all-scores-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin-top: 18px;
+      margin-top: 10px;
     }
     .pro-match-result-card {
       background: var(--color-graphite);
@@ -1382,6 +1438,12 @@
       border-color: rgba(244, 63, 94, 0.35);
       color: var(--color-crimson-red);
     }
+    .pro-match-status-badge.other-event {
+      background: rgba(139, 92, 246, 0.15);
+      border-color: rgba(139, 92, 246, 0.35);
+      color: #a78bfa;
+    }
+
     .pro-match-body-grid {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -1451,6 +1513,51 @@
     }
     .pro-outcome-summary.tie { color: var(--color-stone-light); }
 
+    /* Other Event Podium Layout inside Modal */
+    .other-event-podium-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      background: var(--color-obsidian);
+      border: 1px solid var(--color-card-border-subtle);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+    }
+    .podium-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 6px;
+      border-radius: 8px;
+    }
+    .podium-box.p1 {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .podium-box.p2 {
+      background: rgba(148, 163, 184, 0.1);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+    }
+    .podium-box.p3 {
+      background: rgba(180, 83, 9, 0.1);
+      border: 1px solid rgba(180, 83, 9, 0.25);
+    }
+    .podium-place-title {
+      font-family: var(--font-google-sans);
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .podium-box.p1 .podium-place-title { color: var(--color-gold); }
+    .podium-box.p2 .podium-place-title { color: var(--color-silver-mid); }
+    .podium-box.p3 .podium-place-title { color: #f97316; }
+    .podium-emblem { width: 28px; height: 28px; object-fit: contain; }
+    .podium-team-name { font-family: var(--font-google-sans); font-size: 0.85rem; font-weight: 800; color: #fff; }
+    .podium-pts-val { font-family: var(--font-sport); font-size: 1.25rem; font-weight: 700; color: var(--color-gold-light); line-height: 1; }
+
     /* IN-APP TOAST NOTIFICATION */
     .eweek-toast-anchor {
       position: fixed;
@@ -1481,6 +1588,53 @@
       font-size: 0.82rem;
       font-weight: 700;
       color: var(--color-silver-bright);
+    }
+
+    /* News Modal Uncropped Image Dialog */
+    .news-modal-box {
+      max-width: 650px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: 24px;
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+    }
+    .news-modal-img-container {
+      width: 100%;
+      max-height: 480px;
+      background: #05070c;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--color-card-border-subtle);
+    }
+    .news-modal-img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: contain; /* Full uncropped picture preview */
+      display: block;
+    }
+    .news-modal-title {
+      font-family: var(--font-google-sans);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--color-silver-bright);
+      margin-bottom: 8px;
+    }
+    .news-modal-desc {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--color-silver-mid);
+      line-height: 1.6;
+      white-space: pre-wrap;
     }
 
     /* Spinner Animation */
@@ -1580,8 +1734,8 @@
     </svg>
   </button>
 
-  <!-- Live Ticker Bar with Direct Score & Outcome Engine -->
-  <div class="fixed-bottom-ticker" id="floatingResultsWidget" onclick="openAllScoresModal()" title="Tap to view all scores">
+  <!-- Live Ticker Bar with Direct Score, Outcome & Other Events Support -->
+  <div class="fixed-bottom-ticker" id="floatingResultsWidget" onclick="openAllScoresModal()" title="Tap to view all scores & event results">
     <div class="fbt-col-latest">
       <div class="fbt-left">
         <span class="fbt-tag" id="fbtBadgeTag">LATEST</span>
@@ -1595,7 +1749,7 @@
     <div class="fbt-col-history">
       <div class="fbt-rotating-container" id="fbtRotatingContainer">
         <div class="fbt-rotate-item active" style="justify-content:center;">
-          <span style="font-size:0.65rem; color:var(--color-stone-light); font-weight:700;">Tap to view all released scores</span>
+          <span style="font-size:0.65rem; color:var(--color-stone-light); font-weight:700;">Tap to view all released scores &amp; extra events</span>
         </div>
       </div>
     </div>
@@ -1644,14 +1798,23 @@
     </button>
   </nav>
 
-  <!-- Professional Full Scores Modal -->
+  <!-- Professional Full Scores & Other Events Modal -->
   <div class="scores-modal-backdrop" id="scoresModalBackdrop" role="dialog" aria-hidden="true">
     <div class="scores-modal-box">
       <button class="scores-modal-close" id="scoresModalCloseBtn" type="button" aria-label="Close scores">&times;</button>
       <span class="section-eyebrow">TOURNAMENT FEED</span>
       <h3 class="section-title" style="font-size: 1.3rem;">ALL RELEASED RESULTS</h3>
-      <p style="text-align:center; font-size:0.78rem; color:var(--color-stone-light); margin-top:-2px;">Verified scores and official batch victories from tournament scorekeepers.</p>
+      <p style="text-align:center; font-size:0.78rem; color:var(--color-stone-light); margin-top:-2px;">Verified scores and placements from sports and extra events.</p>
+      
       <div class="silver-divider"><span class="divider-node"></span></div>
+
+      <!-- Quick Filter Switcher -->
+      <div class="scores-filter-bar">
+        <button type="button" class="scores-filter-btn active" onclick="setScoresFilter('ALL', this)">ALL RESULTS</button>
+        <button type="button" class="scores-filter-btn" onclick="setScoresFilter('MATCHES', this)">MATCH SCORES</button>
+        <button type="button" class="scores-filter-btn" onclick="setScoresFilter('OTHER', this)">EXTRA EVENTS</button>
+      </div>
+
       <div class="all-scores-list" id="allScoresListContainer">
         <div style="text-align: center; color: var(--color-stone-light); padding: 25px;">Loading full scoreboard history...</div>
       </div>
@@ -1690,7 +1853,7 @@
 
           <div class="hero-intro-badge-box">
             <p class="hero-intro-text">
-              Welcome to <strong>E-WEEK 2026</strong> — the premier inter-batch championship. Track live points, match lineups, and batch standings updated directly from official scorekeepers.
+              Welcome to <strong>E-WEEK 2026</strong> — the premier inter-batch championship. Track live points, match lineups, extra events, and batch standings updated directly from official scorekeepers.
             </p>
           </div>
         </div>
@@ -1708,7 +1871,7 @@
           </div>
 
           <h2 class="section-title">CHAMPIONSHIP LEADERBOARD</h2>
-          <p class="section-subtitle">Real-time aggregate points accrued across all inter-batch sporting & cultural events.</p>
+          <p class="section-subtitle">Real-time aggregate points accrued across all inter-batch sporting &amp; cultural events.</p>
           <div class="silver-divider"><span class="divider-node"></span></div>
 
           <div id="leaderboardMount"></div>
@@ -1734,7 +1897,7 @@
     <section class="page-panel" id="panel-teams">
       <div class="container teams-main-section">
         <span class="section-eyebrow">COMPETITION EVENT SQUADS</span>
-        <h1 class="section-title">TEAMS & EVENTS</h1>
+        <h1 class="section-title">TEAMS &amp; EVENTS</h1>
         <p class="section-subtitle">Select any batch to synchronize and inspect participant rosters event by event.</p>
         <div class="silver-divider"><span class="divider-node"></span></div>
 
@@ -1779,7 +1942,7 @@
     <section class="page-panel" id="panel-merch">
       <section class="merch-hero">
         <div class="container">
-          <span class="section-eyebrow">APPAREL & SOUVENIRS</span>
+          <span class="section-eyebrow">APPAREL &amp; SOUVENIRS</span>
           <h2 class="section-title">OFFICIAL MERCHANDISE</h2>
           <p class="section-subtitle">Support your batch. Select apparel, configure sizes, and submit your payment slip.</p>
           
@@ -1914,9 +2077,7 @@
     </button>
   </aside>
 
-  <!-- =========================================================================
-       ADVANCED UNIQUE STEPPER CHECKOUT MODAL
-       ========================================================================= -->
+  <!-- ADVANCED STEPPER CHECKOUT MODAL -->
   <div class="order-modal-backdrop" id="checkoutOrderModal" role="dialog" aria-hidden="true">
     <div class="order-modal-box">
       <button class="order-modal-close" onclick="closeOrderModal()" type="button" aria-label="Close dialog">&times;</button>
@@ -2022,7 +2183,7 @@
         </div>
       </div>
 
-      <!-- STEP 3: ORDER CONFIRMED (HOLOGRAPHIC BADGE) -->
+      <!-- STEP 3: ORDER CONFIRMED -->
       <div class="step-view" id="stepView3">
         <div class="order-success-card">
           <div class="success-check-bubble">
@@ -2049,15 +2210,17 @@
     </div>
   </div>
 
-  <!-- News Modal -->
+  <!-- News Modal (Full uncropped image display) -->
   <div class="news-modal-backdrop" id="newsModalBackdrop" role="dialog" aria-hidden="true">
     <div class="news-modal-box">
       <button class="news-modal-close" id="newsModalCloseBtn" type="button">&times;</button>
-      <div style="display:flex; justify-content:space-between; margin-bottom: 8px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom: 10px;">
         <span class="news-badge-tag" id="modalNewsTag">LIVE UPDATE</span>
         <span class="news-time-stamp" id="modalNewsTime"></span>
       </div>
-      <img src="" alt="News Image" class="news-modal-img" id="modalNewsImg" />
+      <div class="news-modal-img-container">
+        <img src="" alt="News Image" class="news-modal-img" id="modalNewsImg" />
+      </div>
       <h3 class="news-modal-title" id="modalNewsTitle">News Title</h3>
       <p class="news-modal-desc" id="modalNewsDesc"></p>
     </div>
@@ -2134,7 +2297,14 @@
     let activeWizardStep = 1;
     let globalNewsStore = [];
     let globalMatchesStore = [];
+    let globalOtherEventsStore = [];
+    let currentScoreFilter = "ALL";
     let lastRenderedMatchSignature = "";
+
+    // Internal ticker cycling state
+    let tickerItemsQueue = [];
+    let currentTickerIdx = 0;
+    let tickerIntervalTimer = null;
 
     let batchData = [
       { name: "E23", logo: "e23.png", score: 0, wins: 0 },
@@ -2152,6 +2322,30 @@
       "STAFF": "staff.png"
     };
 
+    // =========================================================================
+    // GOOGLE DRIVE FULL-SIZE IMAGE URL CONVERTER (NO CROPPING)
+    // =========================================================================
+    function transformDriveImageUrl(url) {
+      if (!url) return 'logo.png';
+      const str = String(url).trim();
+
+      // Extract Drive File ID from standard Drive formats
+      let fileId = null;
+      if (str.includes('drive.google.com/file/d/')) {
+        const parts = str.split('drive.google.com/file/d/')[1];
+        fileId = parts ? parts.split('/')[0] : null;
+      } else if (str.includes('id=')) {
+        const urlObj = new URL(str.startsWith('http') ? str : 'https://' + str);
+        fileId = urlObj.searchParams.get('id');
+      }
+
+      // If valid Google Drive ID, return high-res, uncropped web render URL
+      if (fileId) {
+        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
+      }
+      return str;
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       const savedTheme = localStorage.getItem('eweek_theme') || 'dark';
       setTheme(savedTheme);
@@ -2166,12 +2360,20 @@
 
       // Initial Data Pull
       fetchLiveScores();
+      fetchOtherEvents();
       fetchFeaturedNews();
       fetchFixtures();
 
-      // Precise 5-second Score Refresh Engine
-      setInterval(fetchLiveScores, 5000);
+      // Precise Live Refresh Polling
+      setInterval(() => {
+        fetchLiveScores();
+        fetchOtherEvents();
+      }, 5000);
       setInterval(fetchFeaturedNews, 60000);
+
+      // Start ticker rotation
+      if (tickerIntervalTimer) clearInterval(tickerIntervalTimer);
+      tickerIntervalTimer = setInterval(rotateTickerItem, 4000);
     });
 
     // =========================================================================
@@ -2298,7 +2500,6 @@
       document.body.appendChild(script);
     }
 
-    // Helper: Determine Winner Outcome from Match Scores
     function resolveMatchWinner(teamA, scoreA, teamB, scoreB, status) {
       const sA = Number(scoreA) || 0;
       const sB = Number(scoreB) || 0;
@@ -2340,8 +2541,56 @@
     }
 
     // =========================================================================
-    // LEADERBOARD RENDERER
+    // LEADERBOARD RENDERER (COMBINES MATCHES & OTHER EVENTS)
     // =========================================================================
+    function recalculateTotalPoints() {
+      let scoreMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
+      let winsMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
+
+      // 1. Matches scores & victories
+      globalMatchesStore.forEach(m => {
+        const tA = String(m.teamA).toUpperCase();
+        const tB = String(m.teamB).toUpperCase();
+        const sA = Number(m.scoreA) || 0;
+        const sB = Number(m.scoreB) || 0;
+        if (scoreMap[tA] !== undefined) scoreMap[tA] += sA;
+        if (scoreMap[tB] !== undefined) scoreMap[tB] += sB;
+
+        if (String(m.status || '').toLowerCase() === "completed") {
+          if (sA > sB && winsMap[tA] !== undefined) winsMap[tA]++;
+          else if (sB > sA && winsMap[tB] !== undefined) winsMap[tB]++;
+        }
+      });
+
+      // 2. Extra / Other Events points & victories
+      globalOtherEventsStore.forEach(evt => {
+        const p1Team = String(evt.place1Team || '').trim().toUpperCase();
+        const p1Pts = Number(evt.place1Pts) || 0;
+        const p2Team = String(evt.place2Team || '').trim().toUpperCase();
+        const p2Pts = Number(evt.place2Pts) || 0;
+        const p3Team = String(evt.place3Team || '').trim().toUpperCase();
+        const p3Pts = Number(evt.place3Pts) || 0;
+
+        if (scoreMap[p1Team] !== undefined) {
+          scoreMap[p1Team] += p1Pts;
+          winsMap[p1Team] = (winsMap[p1Team] || 0) + 1;
+        }
+        if (scoreMap[p2Team] !== undefined) scoreMap[p2Team] += p2Pts;
+        if (scoreMap[p3Team] !== undefined) scoreMap[p3Team] += p3Pts;
+      });
+
+      batchData.forEach(b => {
+        const k = b.name.toUpperCase();
+        if (scoreMap[k] !== undefined) {
+          b.score = scoreMap[k];
+          b.wins = winsMap[k] || 0;
+        }
+      });
+
+      renderSmoothLeaderboard();
+      buildTickerRotationQueue();
+    }
+
     function renderSmoothLeaderboard() {
       const mount = document.getElementById("leaderboardMount");
       if (!mount) return;
@@ -2392,149 +2641,226 @@
     }
 
     // =========================================================================
-    // 5-SECOND LIVE SCORE & MATCH RELEASE POLLING ENGINE
+    // 5-SECOND LIVE SCORE & OTHER EVENTS SYNC ENGINE
     // =========================================================================
     function fetchLiveScores() {
       const cbName = 'scores_cb_' + Math.round(Math.random() * 1000000);
       loadJSONP(`${SCORES_APPS_SCRIPT_URL}?action=getScores`, cbName, (res) => {
-        const matches = (res && res.matches) ? res.matches : [];
-        globalMatchesStore = matches;
-
-        let scoreMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
-        let winsMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
-
-        matches.forEach(m => {
-          const tA = String(m.teamA).toUpperCase();
-          const tB = String(m.teamB).toUpperCase();
-          const sA = Number(m.scoreA) || 0;
-          const sB = Number(m.scoreB) || 0;
-          if (scoreMap[tA] !== undefined) scoreMap[tA] += sA;
-          if (scoreMap[tB] !== undefined) scoreMap[tB] += sB;
-
-          if (String(m.status || '').toLowerCase() === "completed") {
-            if (sA > sB && winsMap[tA] !== undefined) winsMap[tA]++;
-            else if (sB > sA && winsMap[tB] !== undefined) winsMap[tB]++;
-          }
-        });
-
-        batchData.forEach(b => {
-          const k = b.name.toUpperCase();
-          if (scoreMap[k] !== undefined) {
-            b.score = scoreMap[k];
-            b.wins = winsMap[k] || 0;
-          }
-        });
-
-        renderSmoothLeaderboard();
-
-        // Check for new match release & update Ticker
-        if (matches.length > 0) {
-          const last = matches[matches.length - 1];
-          const outcome = resolveMatchWinner(last.teamA, last.scoreA, last.teamB, last.scoreB, last.status);
-          const currentSignature = `${last.sport}_${last.teamA}_${last.scoreA}_${last.scoreB}_${last.teamB}_${last.status}`;
-
-          const tickerWidget = document.getElementById('floatingResultsWidget');
-          const badgeTag = document.getElementById('fbtBadgeTag');
-
-          if (lastRenderedMatchSignature && lastRenderedMatchSignature !== currentSignature) {
-            badgeTag.innerText = "NEW RESULT";
-            badgeTag.classList.add("new-release");
-            tickerWidget.classList.add('flash-update');
-            setTimeout(() => {
-              tickerWidget.classList.remove('flash-update');
-            }, 3000);
-          } else {
-            badgeTag.innerText = "LATEST";
-            badgeTag.classList.remove("new-release");
-          }
-          lastRenderedMatchSignature = currentSignature;
-
-          const sportName = last.category ? `${last.sport} (${last.category})` : last.sport;
-          document.getElementById('fbtMatchTitle').innerText = sportName;
-
-          const emblemA = BATCH_LOGOS[String(last.teamA).toUpperCase()] || 'logo.png';
-          const emblemB = BATCH_LOGOS[String(last.teamB).toUpperCase()] || 'logo.png';
-
-          document.getElementById('fbtScorecard').innerHTML = `
-            <div class="fbt-team-item">
-              <img src="${emblemA}" class="fbt-emblem" alt="${last.teamA}" onerror="this.src='logo.png';" />
-              <span class="fbt-team-name">${last.teamA}</span>
-            </div>
-            <span class="fbt-score">${last.scoreA}</span>
-            <span class="fbt-vs">:</span>
-            <span class="fbt-score">${last.scoreB}</span>
-            <div class="fbt-team-item">
-              <img src="${emblemB}" class="fbt-emblem" alt="${last.teamB}" onerror="this.src='logo.png';" />
-              <span class="fbt-team-name">${last.teamB}</span>
-            </div>
-            ${outcome.winner ? `<span class="fbt-winner-chip">${outcome.winner} WON</span>` : ''}
-          `;
-        }
-
-        // Keep modal updated if open
+        globalMatchesStore = (res && res.matches) ? res.matches : [];
+        recalculateTotalPoints();
         if (document.getElementById('scoresModalBackdrop').classList.contains('open')) {
           renderAllScoresModalContent();
         }
       }, () => {});
     }
 
-    // Professional Modal Renderer for All Released Results
+    function fetchOtherEvents() {
+      const cbName = 'other_cb_' + Math.round(Math.random() * 1000000);
+      loadJSONP(`${SCORES_APPS_SCRIPT_URL}?action=getOtherEvents`, cbName, (res) => {
+        globalOtherEventsStore = (res && res.otherEvents) ? res.otherEvents : [];
+        recalculateTotalPoints();
+        if (document.getElementById('scoresModalBackdrop').classList.contains('open')) {
+          renderAllScoresModalContent();
+        }
+      }, () => {});
+    }
+
+    // =========================================================================
+    // TICKER BAR RENDERER & ROTATION (MATCHES & OTHER EVENTS)
+    // =========================================================================
+    function buildTickerRotationQueue() {
+      tickerItemsQueue = [];
+
+      // Add recent matches
+      globalMatchesStore.slice(-4).forEach(m => {
+        tickerItemsQueue.push({ type: 'match', data: m });
+      });
+
+      // Add recent other events
+      globalOtherEventsStore.slice(-3).forEach(o => {
+        tickerItemsQueue.push({ type: 'other', data: o });
+      });
+    }
+
+    function rotateTickerItem() {
+      if (tickerItemsQueue.length === 0) return;
+      currentTickerIdx = (currentTickerIdx + 1) % tickerItemsQueue.length;
+      const cur = tickerItemsQueue[currentTickerIdx];
+
+      const badgeTag = document.getElementById('fbtBadgeTag');
+      const titleEl = document.getElementById('fbtMatchTitle');
+      const scorecardEl = document.getElementById('fbtScorecard');
+
+      if (cur.type === 'match') {
+        const m = cur.data;
+        const outcome = resolveMatchWinner(m.teamA, m.scoreA, m.teamB, m.scoreB, m.status);
+        badgeTag.className = "fbt-tag";
+        badgeTag.innerText = m.status === 'Live' ? 'LIVE' : 'MATCH';
+        titleEl.innerText = m.category ? `${m.sport} (${m.category})` : m.sport;
+
+        const emblemA = BATCH_LOGOS[String(m.teamA).toUpperCase()] || 'logo.png';
+        const emblemB = BATCH_LOGOS[String(m.teamB).toUpperCase()] || 'logo.png';
+
+        scorecardEl.innerHTML = `
+          <div class="fbt-team-item">
+            <img src="${emblemA}" class="fbt-emblem" alt="${m.teamA}" onerror="this.src='logo.png';" />
+            <span class="fbt-team-name">${m.teamA}</span>
+          </div>
+          <span class="fbt-score">${m.scoreA}</span>
+          <span class="fbt-vs">:</span>
+          <span class="fbt-score">${m.scoreB}</span>
+          <div class="fbt-team-item">
+            <img src="${emblemB}" class="fbt-emblem" alt="${m.teamB}" onerror="this.src='logo.png';" />
+            <span class="fbt-team-name">${m.teamB}</span>
+          </div>
+          ${outcome.winner ? `<span class="fbt-winner-chip">${outcome.winner} WON</span>` : ''}
+        `;
+      } else {
+        // Other Event placement
+        const o = cur.data;
+        badgeTag.className = "fbt-tag other-event-tag";
+        badgeTag.innerText = "EXTRA EVENT";
+        titleEl.innerText = `${o.eventName} (${o.category || 'Open'})`;
+
+        const winnerEmblem = BATCH_LOGOS[String(o.place1Team).toUpperCase()] || 'logo.png';
+
+        scorecardEl.innerHTML = `
+          <div class="fbt-team-item">
+            <span style="font-size:0.6rem; color:var(--color-gold); font-weight:800;">1ST:</span>
+            <img src="${winnerEmblem}" class="fbt-emblem" alt="${o.place1Team}" onerror="this.src='logo.png';" />
+            <span class="fbt-team-name" style="color:var(--color-gold);">${o.place1Team}</span>
+          </div>
+          <span class="fbt-winner-chip">+${o.place1Pts} PTS</span>
+        `;
+      }
+    }
+
+    // =========================================================================
+    // MODAL DIALOG CONTROLLER (MATCHES + OTHER EVENTS FILTERING)
+    // =========================================================================
+    function setScoresFilter(filter, btn) {
+      currentScoreFilter = filter;
+      document.querySelectorAll('.scores-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderAllScoresModalContent();
+    }
+
     function renderAllScoresModalContent() {
       const container = document.getElementById('allScoresListContainer');
       if (!container) return;
 
-      if (globalMatchesStore.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--color-stone-light);">No tournament scores recorded yet.</div>`;
+      let combined = [];
+
+      if (currentScoreFilter === "ALL" || currentScoreFilter === "MATCHES") {
+        globalMatchesStore.forEach(m => {
+          combined.push({ type: 'match', date: m.timestamp || m.date, raw: m });
+        });
+      }
+
+      if (currentScoreFilter === "ALL" || currentScoreFilter === "OTHER") {
+        globalOtherEventsStore.forEach(o => {
+          combined.push({ type: 'other', date: o.timestamp, raw: o });
+        });
+      }
+
+      if (combined.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--color-stone-light);">No results recorded in this category yet.</div>`;
         return;
       }
 
-      // Latest first
-      const reversed = [...globalMatchesStore].reverse();
+      // Newest first
+      combined.reverse();
 
-      container.innerHTML = reversed.map((m, idx) => {
-        const outcome = resolveMatchWinner(m.teamA, m.scoreA, m.teamB, m.scoreB, m.status);
-        const emblemA = BATCH_LOGOS[String(m.teamA).toUpperCase()] || 'logo.png';
-        const emblemB = BATCH_LOGOS[String(m.teamB).toUpperCase()] || 'logo.png';
-        const isLive = String(m.status || '').toLowerCase() === 'live';
+      container.innerHTML = combined.map(item => {
+        if (item.type === 'match') {
+          const m = item.raw;
+          const outcome = resolveMatchWinner(m.teamA, m.scoreA, m.teamB, m.scoreB, m.status);
+          const emblemA = BATCH_LOGOS[String(m.teamA).toUpperCase()] || 'logo.png';
+          const emblemB = BATCH_LOGOS[String(m.teamB).toUpperCase()] || 'logo.png';
+          const isLive = String(m.status || '').toLowerCase() === 'live';
 
-        return `
-          <div class="pro-match-result-card">
-            <div class="pro-match-header">
-              <span class="pro-match-sport-name">${m.sport} ${m.category ? `&bull; ${m.category}` : ''}</span>
-              <span class="pro-match-status-badge ${isLive ? 'live' : ''}">${m.status || 'Completed'}</span>
+          return `
+            <div class="pro-match-result-card">
+              <div class="pro-match-header">
+                <span class="pro-match-sport-name">${m.sport} ${m.category ? `&bull; ${m.category}` : ''}</span>
+                <span class="pro-match-status-badge ${isLive ? 'live' : ''}">${m.status || 'Completed'}</span>
+              </div>
+
+              <div class="pro-match-body-grid">
+                <div class="pro-team-unit left ${outcome.winnerTeam === 'A' ? 'is-winner' : ''}">
+                  <span class="pro-team-name-tag">${m.teamA}</span>
+                  <img src="${emblemA}" class="pro-team-emblem" alt="${m.teamA}" onerror="this.src='logo.png';" />
+                </div>
+
+                <div class="pro-score-cluster">
+                  <span class="pro-score-digit ${outcome.winnerTeam === 'A' ? 'winner-score' : ''}">${m.scoreA}</span>
+                  <span class="pro-score-colon">:</span>
+                  <span class="pro-score-digit ${outcome.winnerTeam === 'B' ? 'winner-score' : ''}">${m.scoreB}</span>
+                </div>
+
+                <div class="pro-team-unit right ${outcome.winnerTeam === 'B' ? 'is-winner' : ''}">
+                  <img src="${emblemB}" class="pro-team-emblem" alt="${m.teamB}" onerror="this.src='logo.png';" />
+                  <span class="pro-team-name-tag">${m.teamB}</span>
+                </div>
+              </div>
+
+              <div class="pro-match-footer">
+                <div class="pro-outcome-summary ${outcome.isTie ? 'tie' : ''}">
+                  ${outcome.winner ? `
+                    <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor;"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>
+                    <span>VICTORY: <strong>${outcome.winner}</strong> (+${outcome.winnerScore - outcome.loserScore} PTS)</span>
+                  ` : `
+                    <span>RESULT: <strong>${outcome.text}</strong></span>
+                  `}
+                </div>
+                <span style="font-size:0.65rem; color:var(--color-stone-light);">${m.date || 'Official Match Record'}</span>
+              </div>
             </div>
+          `;
+        } else {
+          // Extra / Other Event Card with 1st, 2nd, 3rd places
+          const o = item.raw;
+          const e1 = BATCH_LOGOS[String(o.place1Team).toUpperCase()] || 'logo.png';
+          const e2 = BATCH_LOGOS[String(o.place2Team).toUpperCase()] || 'logo.png';
+          const e3 = BATCH_LOGOS[String(o.place3Team).toUpperCase()] || 'logo.png';
 
-            <div class="pro-match-body-grid">
-              <div class="pro-team-unit left ${outcome.winnerTeam === 'A' ? 'is-winner' : ''}">
-                <span class="pro-team-name-tag">${m.teamA}</span>
-                <img src="${emblemA}" class="pro-team-emblem" alt="${m.teamA}" onerror="this.src='logo.png';" />
+          return `
+            <div class="pro-match-result-card" style="border-left: 3px solid #8b5cf6;">
+              <div class="pro-match-header">
+                <span class="pro-match-sport-name" style="color: #a78bfa;">&#9733; ${o.eventName} &bull; ${o.category || 'Open'}</span>
+                <span class="pro-match-status-badge other-event">Extra Event</span>
               </div>
 
-              <div class="pro-score-cluster">
-                <span class="pro-score-digit ${outcome.winnerTeam === 'A' ? 'winner-score' : ''}">${m.scoreA}</span>
-                <span class="pro-score-colon">:</span>
-                <span class="pro-score-digit ${outcome.winnerTeam === 'B' ? 'winner-score' : ''}">${m.scoreB}</span>
+              <div class="other-event-podium-grid">
+                <div class="podium-box p1">
+                  <span class="podium-place-title">&#129351; 1st Place</span>
+                  <img src="${e1}" class="podium-emblem" alt="${o.place1Team}" onerror="this.src='logo.png';" />
+                  <span class="podium-team-name">${o.place1Team}</span>
+                  <span class="podium-pts-val">+${o.place1Pts}</span>
+                </div>
+
+                <div class="podium-box p2">
+                  <span class="podium-place-title">&#129352; 2nd Place</span>
+                  <img src="${e2}" class="podium-emblem" alt="${o.place2Team}" onerror="this.src='logo.png';" />
+                  <span class="podium-team-name">${o.place2Team}</span>
+                  <span class="podium-pts-val">+${o.place2Pts}</span>
+                </div>
+
+                <div class="podium-box p3">
+                  <span class="podium-place-title">&#129353; 3rd Place</span>
+                  <img src="${e3}" class="podium-emblem" alt="${o.place3Team}" onerror="this.src='logo.png';" />
+                  <span class="podium-team-name">${o.place3Team}</span>
+                  <span class="podium-pts-val">+${o.place3Pts}</span>
+                </div>
               </div>
 
-              <div class="pro-team-unit right ${outcome.winnerTeam === 'B' ? 'is-winner' : ''}">
-                <img src="${emblemB}" class="pro-team-emblem" alt="${m.teamB}" onerror="this.src='logo.png';" />
-                <span class="pro-team-name-tag">${m.teamB}</span>
+              <div class="pro-match-footer">
+                <span style="font-weight:700; color:var(--color-silver-mid); font-size:0.68rem;">Verified Placements Awarded</span>
+                <span style="font-size:0.65rem; color:var(--color-stone-light);">Championship Extra Record</span>
               </div>
             </div>
-
-            <div class="pro-match-footer">
-              <div class="pro-outcome-summary ${outcome.isTie ? 'tie' : ''}">
-                ${outcome.winner ? `
-                  <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor;"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>
-                  <span>VICTORY: <strong>${outcome.winner}</strong> (+${outcome.winnerScore - outcome.loserScore} PTS)</span>
-                ` : `
-                  <span>RESULT: <strong>${outcome.text}</strong></span>
-                `}
-              </div>
-              <span style="font-size:0.65rem; color:var(--color-stone-light);">${m.date || 'Official Record'}</span>
-            </div>
-          </div>
-        `;
+          `;
+        }
       }).join('');
     }
 
@@ -2543,6 +2869,9 @@
       document.getElementById('scoresModalBackdrop').classList.add('open');
     }
 
+    // =========================================================================
+    // FEATURED NEWS WITH GOOGLE DRIVE IMAGE FULL-SIZE UNRCOP RENDERING
+    // =========================================================================
     function fetchFeaturedNews() {
       const container = document.getElementById('topStoriesContainer');
       if (!container) return;
@@ -2557,10 +2886,13 @@
 
         const latest = news[news.length - 1];
         const prev = news.slice(0, news.length - 1).reverse();
+        const latestImg = transformDriveImageUrl(latest.imageUrl);
 
         container.innerHTML = `
           <div class="featured-hero-story">
-            <div class="fhs-img-wrap"><img src="${latest.imageUrl || 'logo.png'}" alt="${latest.title}" class="fhs-img" /></div>
+            <div class="fhs-img-wrap">
+              <img src="${latestImg}" alt="${latest.title}" class="fhs-img" onerror="this.src='logo.png';" />
+            </div>
             <div class="fhs-content">
               <div>
                 <span class="news-badge-tag">${latest.category || "UPDATE"}</span>
@@ -2571,19 +2903,35 @@
             </div>
           </div>
           <div class="news-grid-sub">
-            ${prev.map((item, idx) => `
-              <div class="news-card-sub">
-                <div class="ncs-img-wrap"><img src="${item.imageUrl || 'logo.png'}" alt="${item.title}" class="ncs-img" /></div>
-                <div class="ncs-body">
-                  <span class="news-badge-tag">${item.category || "NEWS"}</span>
-                  <h4 class="news-title-text" style="font-size:0.88rem; margin: 4px 0 2px;">${item.title}</h4>
-                  <p class="news-desc-text" style="font-size:0.75rem; max-height: 38px; overflow: hidden;">${item.description}</p>
+            ${prev.map((item, idx) => {
+              const origIdx = news.length - 2 - idx;
+              const subImg = transformDriveImageUrl(item.imageUrl);
+              return `
+                <div class="news-card-sub" onclick="openNewsModal(${origIdx})">
+                  <div class="ncs-img-wrap">
+                    <img src="${subImg}" alt="${item.title}" class="ncs-img" onerror="this.src='logo.png';" />
+                  </div>
+                  <div class="ncs-body">
+                    <span class="news-badge-tag">${item.category || "NEWS"}</span>
+                    <h4 class="news-title-text" style="font-size:0.88rem; margin: 4px 0 2px;">${item.title}</h4>
+                    <p class="news-desc-text" style="font-size:0.75rem; max-height: 38px; overflow: hidden;">${item.description}</p>
+                  </div>
                 </div>
-              </div>
-            `).join('')}
+              `;
+            }).join('')}
           </div>
         `;
       }, () => {});
+    }
+
+    function openNewsModal(idx) {
+      const item = globalNewsStore[idx];
+      if (!item) return;
+      document.getElementById('modalNewsTag').innerText = item.category || "UPDATE";
+      document.getElementById('modalNewsImg').src = transformDriveImageUrl(item.imageUrl);
+      document.getElementById('modalNewsTitle').innerText = item.title;
+      document.getElementById('modalNewsDesc').innerText = item.description;
+      document.getElementById('newsModalBackdrop').classList.add('open');
     }
 
     function fetchFixtures() {
@@ -2948,19 +3296,6 @@
         btn.innerText = "VERIFY PAYMENT STATUS";
         showToast("Network error verifying invoice.", "error");
       });
-    }
-
-    // =========================================================================
-    // MODAL DIALOG CONTROLLERS
-    // =========================================================================
-    function openNewsModal(idx) {
-      const item = globalNewsStore[idx];
-      if (!item) return;
-      document.getElementById('modalNewsTag').innerText = item.category || "UPDATE";
-      document.getElementById('modalNewsImg').src = item.imageUrl || 'logo.png';
-      document.getElementById('modalNewsTitle').innerText = item.title;
-      document.getElementById('modalNewsDesc').innerText = item.description;
-      document.getElementById('newsModalBackdrop').classList.add('open');
     }
 
     function initModalCloseHandlers() {
