@@ -2265,13 +2265,7 @@
     let activeWizardStep = 1;
     let globalNewsStore = [];
     let globalMatchesStore = [];
-    let globalOtherEventsStore = [];
     let currentScoreFilter = "ALL";
-
-    // Internal ticker cycling state
-    let tickerItemsQueue = [];
-    let currentTickerIdx = 0;
-    let tickerIntervalTimer = null;
 
     let batchData = [
       { name: "E23", logo: "e23.png", score: 0, wins: 0 },
@@ -2316,19 +2310,13 @@
       renderMerchCatalogCards();
       renderSmoothLeaderboard();
 
+      // Single Unified Fetch
       fetchLiveScores();
-      fetchOtherEvents();
       fetchFeaturedNews();
       fetchFixtures();
 
-      setInterval(() => {
-        fetchLiveScores();
-        fetchOtherEvents();
-      }, 5000);
+      setInterval(fetchLiveScores, 5000);
       setInterval(fetchFeaturedNews, 60000);
-
-      if (tickerIntervalTimer) clearInterval(tickerIntervalTimer);
-      tickerIntervalTimer = setInterval(rotateTickerItem, 4000);
     });
 
     let toastTimeout = null;
@@ -2466,9 +2454,9 @@
     }
 
     // =========================================================================
-    // PODIUM HELPER PARSERS: Formats entries as 1st (Batch) (Pts)
+    // SINGLE PLACEMENT PARSER
     // =========================================================================
-    function parsePodiumPlacement(rawStr, defaultRank) {
+    function parsePlacementEntry(rawStr, defaultRank) {
       if (!rawStr) return { rank: defaultRank, batch: "N/A", pts: 0 };
       const str = String(rawStr).trim();
       const match = str.match(/(?:(\d(?:st|nd|rd)?)\s*)?\(([^)]+)\)\s*(?:\(([^)]+)\))?/i);
@@ -2482,26 +2470,27 @@
       return { rank: defaultRank, batch: str.toUpperCase(), pts: 0 };
     }
 
-    function isPodiumRecord(m) {
+    function isRankedEvent(m) {
       if (!m) return false;
       if (m.type === "podium") return true;
       if (typeof m.teamA === 'string' && /1st\s*\(/i.test(m.teamA)) return true;
+      if (m.place1Team && !m.teamB) return true;
       return false;
     }
 
     // =========================================================================
-    // LEADERBOARD RECALCULATION ENGINE
+    // LEADERBOARD RECALCULATION & TICKER UPDATE
     // =========================================================================
     function recalculateTotalPoints() {
       let scoreMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
       let winsMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
 
-      // 1. Matches & Unified Scores Sheet
+      // Single source of truth from Match_Scores
       globalMatchesStore.forEach(m => {
-        if (isPodiumRecord(m)) {
-          const p1 = m.place1Team ? { batch: m.place1Team.toUpperCase(), pts: Number(m.place1Pts) || 0 } : parsePodiumPlacement(m.teamA, "1st");
-          const p2 = m.place2Team ? { batch: m.place2Team.toUpperCase(), pts: Number(m.place2Pts) || 0 } : parsePodiumPlacement(m.teamB, "2nd");
-          const p3 = m.place3Team ? { batch: m.place3Team.toUpperCase(), pts: Number(m.place3Pts) || 0 } : parsePodiumPlacement(m.scoreA, "3rd");
+        if (isRankedEvent(m)) {
+          const p1 = m.place1Team ? { batch: m.place1Team.toUpperCase(), pts: Number(m.place1Pts) || 0 } : parsePlacementEntry(m.teamA, "1st");
+          const p2 = m.place2Team ? { batch: m.place2Team.toUpperCase(), pts: Number(m.place2Pts) || 0 } : parsePlacementEntry(m.teamB, "2nd");
+          const p3 = m.place3Team ? { batch: m.place3Team.toUpperCase(), pts: Number(m.place3Pts) || 0 } : parsePlacementEntry(m.scoreA, "3rd");
 
           if (scoreMap[p1.batch] !== undefined) {
             scoreMap[p1.batch] += p1.pts;
@@ -2524,23 +2513,6 @@
         }
       });
 
-      // 2. Extra / Other Events (Legacy tab support)
-      globalOtherEventsStore.forEach(evt => {
-        const p1Team = String(evt.place1Team || '').trim().toUpperCase();
-        const p1Pts = Number(evt.place1Pts) || 0;
-        const p2Team = String(evt.place2Team || '').trim().toUpperCase();
-        const p2Pts = Number(evt.place2Pts) || 0;
-        const p3Team = String(evt.place3Team || '').trim().toUpperCase();
-        const p3Pts = Number(evt.place3Pts) || 0;
-
-        if (scoreMap[p1Team] !== undefined) {
-          scoreMap[p1Team] += p1Pts;
-          winsMap[p1Team] = (winsMap[p1Team] || 0) + 1;
-        }
-        if (scoreMap[p2Team] !== undefined) scoreMap[p2Team] += p2Pts;
-        if (scoreMap[p3Team] !== undefined) scoreMap[p3Team] += p3Pts;
-      });
-
       batchData.forEach(b => {
         const k = b.name.toUpperCase();
         if (scoreMap[k] !== undefined) {
@@ -2550,7 +2522,7 @@
       });
 
       renderSmoothLeaderboard();
-      buildTickerRotationQueue();
+      updateLatestTickerOnly();
     }
 
     function renderSmoothLeaderboard() {
@@ -2613,74 +2585,32 @@
       }, () => {});
     }
 
-    function fetchOtherEvents() {
-      const cbName = 'other_cb_' + Math.round(Math.random() * 1000000);
-      loadJSONP(`${SCORES_APPS_SCRIPT_URL}?action=getOtherEvents`, cbName, (res) => {
-        globalOtherEventsStore = (res && res.otherEvents) ? res.otherEvents : [];
-        recalculateTotalPoints();
-        if (document.getElementById('scoresModalBackdrop').classList.contains('open')) {
-          renderAllScoresModalContent();
-        }
-      }, () => {});
-    }
-
     // =========================================================================
-    // TICKER BAR RENDERER & ROTATION (MATCHES & 1ST/2ND/3RD PODIUMS)
+    // TICKER BAR: SHOWS ONLY THE LATEST RECORD
     // =========================================================================
-    function buildTickerRotationQueue() {
-      tickerItemsQueue = [];
-
-      globalMatchesStore.slice(-6).forEach(m => {
-        tickerItemsQueue.push({ type: isPodiumRecord(m) ? 'podium' : 'match', data: m });
-      });
-
-      globalOtherEventsStore.slice(-3).forEach(o => {
-        tickerItemsQueue.push({ type: 'other', data: o });
-      });
-    }
-
-    function rotateTickerItem() {
-      if (tickerItemsQueue.length === 0) return;
-      currentTickerIdx = (currentTickerIdx + 1) % tickerItemsQueue.length;
-      const cur = tickerItemsQueue[currentTickerIdx];
-
+    function updateLatestTickerOnly() {
       const badgeTag = document.getElementById('fbtBadgeTag');
       const titleEl = document.getElementById('fbtMatchTitle');
       const scorecardEl = document.getElementById('fbtScorecard');
 
-      if (cur.type === 'match') {
-        const m = cur.data;
-        const outcome = resolveMatchWinner(m.teamA, m.scoreA, m.teamB, m.scoreB, m.status);
+      if (!globalMatchesStore || globalMatchesStore.length === 0) {
+        badgeTag.innerText = "STANDBY";
+        titleEl.innerText = "Awaiting event fixtures...";
+        scorecardEl.innerHTML = `<span style="font-size:0.65rem; color:var(--color-stone-light);">No releases</span>`;
+        return;
+      }
+
+      // Latest record only
+      const latest = globalMatchesStore[globalMatchesStore.length - 1];
+
+      if (isRankedEvent(latest)) {
+        const p1 = latest.place1Team ? { batch: latest.place1Team.toUpperCase(), pts: Number(latest.place1Pts) || 0 } : parsePlacementEntry(latest.teamA, "1st");
+        const p2 = latest.place2Team ? { batch: latest.place2Team.toUpperCase(), pts: Number(latest.place2Pts) || 0 } : parsePlacementEntry(latest.teamB, "2nd");
+        const p3 = latest.place3Team ? { batch: latest.place3Team.toUpperCase(), pts: Number(latest.place3Pts) || 0 } : parsePlacementEntry(latest.scoreA, "3rd");
+
         badgeTag.className = "fbt-tag";
-        badgeTag.innerText = m.status === 'Live' ? 'LIVE' : 'MATCH';
-        titleEl.innerText = m.category ? `${m.sport} (${m.category})` : m.sport;
-
-        const emblemA = BATCH_LOGOS[String(m.teamA).toUpperCase()] || 'logo.png';
-        const emblemB = BATCH_LOGOS[String(m.teamB).toUpperCase()] || 'logo.png';
-
-        scorecardEl.innerHTML = `
-          <div class="fbt-team-item">
-            <img src="${emblemA}" class="fbt-emblem" alt="${m.teamA}" onerror="this.src='logo.png';" />
-            <span class="fbt-team-name">${m.teamA}</span>
-          </div>
-          <span class="fbt-score">${m.scoreA}</span>
-          <span class="fbt-vs">:</span>
-          <span class="fbt-score">${m.scoreB}</span>
-          <div class="fbt-team-item">
-            <img src="${emblemB}" class="fbt-emblem" alt="${m.teamB}" onerror="this.src='logo.png';" />
-            <span class="fbt-team-name">${m.teamB}</span>
-          </div>
-          ${outcome.winner ? `<span class="fbt-winner-chip">${outcome.winner} WON</span>` : ''}
-        `;
-      } else if (cur.type === 'podium') {
-        const p = cur.data;
-        const p1 = p.place1Team ? { rank: "1st", batch: p.place1Team.toUpperCase(), pts: Number(p.place1Pts) || 0 } : parsePodiumPlacement(p.teamA, "1st");
-        const p2 = p.place2Team ? { rank: "2nd", batch: p.place2Team.toUpperCase(), pts: Number(p.place2Pts) || 0 } : parsePodiumPlacement(p.teamB, "2nd");
-        const p3 = p.place3Team ? { rank: "3rd", batch: p.place3Team.toUpperCase(), pts: Number(p.place3Pts) || 0 } : parsePodiumPlacement(p.scoreA, "3rd");
-
-        badgeTag.className = "fbt-tag other-event-tag";
-        badgeTag.innerText = "PODIUM";
-        titleEl.innerText = `${p.sport} (${p.category || 'Open'})`;
+        badgeTag.innerText = "LATEST";
+        titleEl.innerText = `${latest.sport || latest.eventName} (${latest.category || 'Open'})`;
 
         const winnerEmblem = BATCH_LOGOS[p1.batch] || 'logo.png';
 
@@ -2694,26 +2624,33 @@
           ${p3.batch && p3.batch !== "N/A" ? `<span class="fbt-vs">&bull;</span><span style="font-size:0.6rem; color:#f97316; font-weight:700;">3rd (${p3.batch})(${p3.pts})</span>` : ''}
         `;
       } else {
-        const o = cur.data;
-        badgeTag.className = "fbt-tag other-event-tag";
-        badgeTag.innerText = "EXTRA EVENT";
-        titleEl.innerText = `${o.eventName} (${o.category || 'Open'})`;
+        const outcome = resolveMatchWinner(latest.teamA, latest.scoreA, latest.teamB, latest.scoreB, latest.status);
+        badgeTag.className = "fbt-tag";
+        badgeTag.innerText = latest.status === 'Live' ? 'LIVE' : 'LATEST';
+        titleEl.innerText = latest.category ? `${latest.sport} (${latest.category})` : latest.sport;
 
-        const winnerEmblem = BATCH_LOGOS[String(o.place1Team).toUpperCase()] || 'logo.png';
+        const emblemA = BATCH_LOGOS[String(latest.teamA).toUpperCase()] || 'logo.png';
+        const emblemB = BATCH_LOGOS[String(latest.teamB).toUpperCase()] || 'logo.png';
 
         scorecardEl.innerHTML = `
           <div class="fbt-team-item">
-            <img src="${winnerEmblem}" class="fbt-emblem" alt="${o.place1Team}" onerror="this.src='logo.png';" />
-            <span class="fbt-team-name" style="color:var(--color-gold); font-weight:800;">1st (${o.place1Team})(${o.place1Pts})</span>
+            <img src="${emblemA}" class="fbt-emblem" alt="${latest.teamA}" onerror="this.src='logo.png';" />
+            <span class="fbt-team-name">${latest.teamA}</span>
           </div>
-          <span class="fbt-vs">&bull;</span>
-          <span style="font-size:0.6rem; color:var(--color-silver-mid); font-weight:700;">2nd (${o.place2Team})(${o.place2Pts})</span>
+          <span class="fbt-score">${latest.scoreA}</span>
+          <span class="fbt-vs">:</span>
+          <span class="fbt-score">${latest.scoreB}</span>
+          <div class="fbt-team-item">
+            <img src="${emblemB}" class="fbt-emblem" alt="${latest.teamB}" onerror="this.src='logo.png';" />
+            <span class="fbt-team-name">${latest.teamB}</span>
+          </div>
+          ${outcome.winner ? `<span class="fbt-winner-chip">${outcome.winner} WON</span>` : ''}
         `;
       }
     }
 
     // =========================================================================
-    // MODAL DIALOG CONTROLLER (RELEASED RESULTS SUMMARY)
+    // PAST RELEASED RESULTS MODAL
     // =========================================================================
     function setScoresFilter(filter, btn) {
       currentScoreFilter = filter;
@@ -2726,38 +2663,32 @@
       const container = document.getElementById('allScoresListContainer');
       if (!container) return;
 
-      let combined = [];
-
-      if (currentScoreFilter === "ALL" || currentScoreFilter === "MATCHES") {
-        globalMatchesStore.forEach(m => {
-          if (!isPodiumRecord(m)) {
-            combined.push({ type: 'match', date: m.timestamp || m.date, raw: m });
-          }
-        });
-      }
-
-      if (currentScoreFilter === "ALL" || currentScoreFilter === "OTHER") {
-        globalMatchesStore.forEach(m => {
-          if (isPodiumRecord(m)) {
-            combined.push({ type: 'podium', date: m.timestamp || m.date, raw: m });
-          }
-        });
-
-        globalOtherEventsStore.forEach(o => {
-          combined.push({ type: 'other', date: o.timestamp, raw: o });
-        });
-      }
-
-      if (combined.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--color-stone-light);">No results recorded in this filter category yet.</div>`;
+      if (!globalMatchesStore || globalMatchesStore.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--color-stone-light);">No results released yet.</div>`;
         return;
       }
 
-      combined.reverse();
+      let filtered = [];
 
-      container.innerHTML = combined.map(item => {
-        if (item.type === 'match') {
-          const m = item.raw;
+      if (currentScoreFilter === "MATCHES") {
+        filtered = globalMatchesStore.filter(m => !isRankedEvent(m));
+      } else if (currentScoreFilter === "OTHER") {
+        filtered = globalMatchesStore.filter(m => isRankedEvent(m));
+      } else {
+        filtered = [...globalMatchesStore];
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--color-stone-light);">No results in this category.</div>`;
+        return;
+      }
+
+      // Newest released first
+      const list = [...filtered].reverse();
+
+      container.innerHTML = list.map(item => {
+        if (!isRankedEvent(item)) {
+          const m = item;
           const outcome = resolveMatchWinner(m.teamA, m.scoreA, m.teamB, m.scoreB, m.status);
           const emblemA = BATCH_LOGOS[String(m.teamA).toUpperCase()] || 'logo.png';
           const emblemB = BATCH_LOGOS[String(m.teamB).toUpperCase()] || 'logo.png';
@@ -2797,15 +2728,15 @@
                     <span>RESULT: <strong>${outcome.text}</strong></span>
                   `}
                 </div>
-                <span style="font-size:0.65rem; color:var(--color-stone-light);">${m.date || 'Official Match Record'}</span>
+                <span style="font-size:0.65rem; color:var(--color-stone-light);">${m.date || m.timestamp || 'Official Record'}</span>
               </div>
             </div>
           `;
-        } else if (item.type === 'podium') {
-          const m = item.raw;
-          const p1 = m.place1Team ? { rank: "1st", batch: m.place1Team.toUpperCase(), pts: Number(m.place1Pts) || 0 } : parsePodiumPlacement(m.teamA, "1st");
-          const p2 = m.place2Team ? { rank: "2nd", batch: m.place2Team.toUpperCase(), pts: Number(m.place2Pts) || 0 } : parsePodiumPlacement(m.teamB, "2nd");
-          const p3 = m.place3Team ? { rank: "3rd", batch: m.place3Team.toUpperCase(), pts: Number(m.place3Pts) || 0 } : parsePodiumPlacement(m.scoreA, "3rd");
+        } else {
+          const m = item;
+          const p1 = m.place1Team ? { batch: m.place1Team.toUpperCase(), pts: Number(m.place1Pts) || 0 } : parsePlacementEntry(m.teamA, "1st");
+          const p2 = m.place2Team ? { batch: m.place2Team.toUpperCase(), pts: Number(m.place2Pts) || 0 } : parsePlacementEntry(m.teamB, "2nd");
+          const p3 = m.place3Team ? { batch: m.place3Team.toUpperCase(), pts: Number(m.place3Pts) || 0 } : parsePlacementEntry(m.scoreA, "3rd");
 
           const e1 = BATCH_LOGOS[p1.batch] || 'logo.png';
           const e2 = BATCH_LOGOS[p2.batch] || 'logo.png';
@@ -2814,78 +2745,36 @@
           return `
             <div class="pro-match-result-card" style="border-left: 3px solid var(--color-gold);">
               <div class="pro-match-header">
-                <span class="pro-match-sport-name" style="color: var(--color-gold);">&#127942; ${m.sport} &bull; ${m.category || 'Open'}</span>
-                <span class="pro-match-status-badge other-event">Podium Result</span>
+                <span class="pro-match-sport-name" style="color: var(--color-gold);">${m.sport || m.eventName} &bull; ${m.category || 'Open'}</span>
+                <span class="pro-match-status-badge">1st: ${p1.batch}</span>
               </div>
 
               <div class="other-event-podium-grid">
                 <div class="podium-box p1">
-                  <span class="podium-place-title">&#129351; 1st Place</span>
+                  <span class="podium-place-title">1st Place</span>
                   <img src="${e1}" class="podium-emblem" alt="${p1.batch}" onerror="this.src='logo.png';" />
-                  <span class="podium-team-name">1st (${p1.batch})</span>
+                  <span class="podium-team-name">${p1.batch}</span>
                   <span class="podium-pts-val">+${p1.pts} PTS</span>
                 </div>
 
                 <div class="podium-box p2">
-                  <span class="podium-place-title">&#129352; 2nd Place</span>
+                  <span class="podium-place-title">2nd Place</span>
                   <img src="${e2}" class="podium-emblem" alt="${p2.batch}" onerror="this.src='logo.png';" />
-                  <span class="podium-team-name">2nd (${p2.batch})</span>
+                  <span class="podium-team-name">${p2.batch}</span>
                   <span class="podium-pts-val">+${p2.pts} PTS</span>
                 </div>
 
                 <div class="podium-box p3">
-                  <span class="podium-place-title">&#129353; 3rd Place</span>
+                  <span class="podium-place-title">3rd Place</span>
                   <img src="${e3}" class="podium-emblem" alt="${p3.batch}" onerror="this.src='logo.png';" />
-                  <span class="podium-team-name">3rd (${p3.batch})</span>
+                  <span class="podium-team-name">${p3.batch}</span>
                   <span class="podium-pts-val">+${p3.pts} PTS</span>
                 </div>
               </div>
 
               <div class="pro-match-footer">
-                <span style="font-weight:700; color:var(--color-silver-mid); font-size:0.68rem;">Verified Podium Standings</span>
+                <span style="font-weight:700; color:var(--color-silver-mid); font-size:0.68rem;">Verified Placements</span>
                 <span style="font-size:0.65rem; color:var(--color-stone-light);">${m.timestamp ? new Date(m.timestamp).toLocaleDateString() : 'Official Record'}</span>
-              </div>
-            </div>
-          `;
-        } else {
-          const o = item.raw;
-          const e1 = BATCH_LOGOS[String(o.place1Team).toUpperCase()] || 'logo.png';
-          const e2 = BATCH_LOGOS[String(o.place2Team).toUpperCase()] || 'logo.png';
-          const e3 = BATCH_LOGOS[String(o.place3Team).toUpperCase()] || 'logo.png';
-
-          return `
-            <div class="pro-match-result-card" style="border-left: 3px solid #8b5cf6;">
-              <div class="pro-match-header">
-                <span class="pro-match-sport-name" style="color: #a78bfa;">&#9733; ${o.eventName} &bull; ${o.category || 'Open'}</span>
-                <span class="pro-match-status-badge other-event">Extra Event</span>
-              </div>
-
-              <div class="other-event-podium-grid">
-                <div class="podium-box p1">
-                  <span class="podium-place-title">&#129351; 1st Place</span>
-                  <img src="${e1}" class="podium-emblem" alt="${o.place1Team}" onerror="this.src='logo.png';" />
-                  <span class="podium-team-name">1st (${o.place1Team})</span>
-                  <span class="podium-pts-val">+${o.place1Pts} PTS</span>
-                </div>
-
-                <div class="podium-box p2">
-                  <span class="podium-place-title">&#129352; 2nd Place</span>
-                  <img src="${e2}" class="podium-emblem" alt="${o.place2Team}" onerror="this.src='logo.png';" />
-                  <span class="podium-team-name">2nd (${o.place2Team})</span>
-                  <span class="podium-pts-val">+${o.place2Pts} PTS</span>
-                </div>
-
-                <div class="podium-box p3">
-                  <span class="podium-place-title">&#129353; 3rd Place</span>
-                  <img src="${e3}" class="podium-emblem" alt="${o.place3Team}" onerror="this.src='logo.png';" />
-                  <span class="podium-team-name">3rd (${o.place3Team})</span>
-                  <span class="podium-pts-val">+${o.place3Pts} PTS</span>
-                </div>
-              </div>
-
-              <div class="pro-match-footer">
-                <span style="font-weight:700; color:var(--color-silver-mid); font-size:0.68rem;">Verified Placements Awarded</span>
-                <span style="font-size:0.65rem; color:var(--color-stone-light);">Championship Extra Record</span>
               </div>
             </div>
           `;
@@ -2899,7 +2788,7 @@
     }
 
     // =========================================================================
-    // FEATURED NEWS WITH GOOGLE DRIVE IMAGE FULL-SIZE UNRCOP RENDERING
+    // FEATURED NEWS
     // =========================================================================
     function fetchFeaturedNews() {
       const container = document.getElementById('topStoriesContainer');
@@ -2991,7 +2880,7 @@
     }
 
     // =========================================================================
-    // ADVANCED MERCHANDISE & STEPPER CHECKOUT
+    // MERCHANDISE & STORE WIZARD
     // =========================================================================
     function renderMerchCatalogCards() {
       const container = document.getElementById('merchItemsGrid');
