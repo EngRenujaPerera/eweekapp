@@ -1708,7 +1708,7 @@
       <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4zm10 16H4V8h16v12z"/></svg>
       <span>Merch</span>
     </button>
-    <a class="mob-nav-item" href="https://www.eweek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">
+    <a class="mob-nav-item" href="https://www.eweeek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">
       <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
       <span>Aesthetic</span>
     </a>
@@ -1733,7 +1733,7 @@
             <li><a class="nav-item-link" data-target="teams">Teams</a></li>
             <li><a class="nav-item-link" data-target="fixtures">Fixtures</a></li>
             <li><a class="nav-item-link" data-target="merch">Merchandise</a></li>
-            <li><a class="nav-item-link" href="https://www.eweek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">Aesthetic</a></li>
+            <li><a class="nav-item-link" href="https://www.eweeek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">Aesthetic</a></li>
             <li><a class="nav-item-link" data-target="contact">Contact Us</a></li>
           </ul>
         </nav>
@@ -2666,16 +2666,25 @@
     // =========================================================================
     // ANNOUNCEMENTS MODAL (NOTIFICATION TAB)
     // =========================================================================
+    function isAnnouncementCategory(category) {
+      if (!category) return false;
+      const cat = String(category).trim().toLowerCase();
+      // Match only Announcement or Announcements (exclude Tournament Alert, Live Updates, etc.)
+      return cat === 'announcement' || cat === 'announcements';
+    }
+
     function openAnnouncementsModal() {
       const container = document.getElementById('announcementsListContainer');
       const dot = document.getElementById('notifDot');
       if (dot) dot.style.display = 'none';
 
-      if (!globalNewsStore || globalNewsStore.length === 0) {
+      // Strictly filter for category Announcement only (Column B)
+      const announcementItems = (globalNewsStore || []).filter(item => isAnnouncementCategory(item.category));
+
+      if (announcementItems.length === 0) {
         container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 30px;">No announcements currently posted.</div>`;
       } else {
-        // Collect all items tagged or posted under announcements (show all bulletins regardless of main feed suppression)
-        const reversedNews = [...globalNewsStore].reverse();
+        const reversedNews = [...announcementItems].reverse();
         container.innerHTML = reversedNews.map(item => `
           <div class="notif-announcement-card">
             <div class="notif-head-row">
@@ -2705,10 +2714,11 @@
         const news = (res && res.news) ? res.news : [];
         globalNewsStore = news;
 
-        // If announcements exist, flag notification dot
+        // Strictly check if any item is under the "Announcement" category only
+        const hasAnnouncements = news.some(item => isAnnouncementCategory(item.category));
         const notifDot = document.getElementById('notifDot');
-        if (notifDot && news.length > 0) {
-          notifDot.style.display = 'block';
+        if (notifDot) {
+          notifDot.style.display = hasAnnouncements ? 'block' : 'none';
         }
 
         if (!container) return;
