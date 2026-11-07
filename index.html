@@ -2277,7 +2277,7 @@
       fetchFixtures();
 
       setInterval(fetchLiveScores, 5000);
-      setInterval(fetchFeaturedNews, 60000);
+      setInterval(fetchFeaturedNews, 5000);
     });
 
     let toastTimeout = null;
@@ -2666,20 +2666,24 @@
     // =========================================================================
     // ANNOUNCEMENTS MODAL (NOTIFICATION TAB)
     // =========================================================================
-    function isAnnouncementCategory(category) {
-      if (!category) return false;
-      const cat = String(category).trim().toLowerCase();
-      // Match only Announcement or Announcements (exclude Tournament Alert, Live Updates, etc.)
-      return cat === 'ANNOUNCEMENT' || cat === 'announcements';
+    function getAnnouncementCategory(item) {
+      if (!item) return '';
+      return String(item.category || item.Category || item.CATEGORY || item.type || item.Type || '').trim();
     }
 
-    function openAnnouncementsModal() {
-      const container = document.getElementById('announcementsListContainer');
-      const dot = document.getElementById('notifDot');
-      if (dot) dot.style.display = 'none';
+    function isAnnouncementCategory(category) {
+      if (!category) return false;
+      const cat = String(category).trim().toUpperCase();
+      // Match ANNOUNCEMENT or ANNOUNCEMENTS strictly (skip TOURNAMENT ALERT, LIVE UPDATES, etc.)
+      return cat === 'ANNOUNCEMENT' || cat === 'ANNOUNCEMENTS';
+    }
 
-      // Strictly filter for category Announcement only (Column B)
-      const announcementItems = (globalNewsStore || []).filter(item => isAnnouncementCategory(item.category));
+    function renderAnnouncementsList() {
+      const container = document.getElementById('announcementsListContainer');
+      if (!container) return;
+
+      // Strictly filter for category ANNOUNCEMENT only (Column B)
+      const announcementItems = (globalNewsStore || []).filter(item => isAnnouncementCategory(getAnnouncementCategory(item)));
 
       if (announcementItems.length === 0) {
         container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 30px;">No announcements currently posted.</div>`;
@@ -2688,15 +2692,21 @@
         container.innerHTML = reversedNews.map(item => `
           <div class="notif-announcement-card">
             <div class="notif-head-row">
-              <span class="news-badge-tag">${item.category || "ANNOUNCEMENT"}</span>
-              <span style="font-size: 0.68rem; color: var(--color-stone-light);">${item.date || item.timestamp || 'Official Release'}</span>
+              <span class="news-badge-tag">${getAnnouncementCategory(item) || "ANNOUNCEMENT"}</span>
+              <span style="font-size: 0.68rem; color: var(--color-stone-light);">${item.date || item.Date || item.timestamp || item.Timestamp || 'Official Release'}</span>
             </div>
-            <h4 class="notif-title-text">${item.title}</h4>
-            <p class="notif-body-text">${item.description}</p>
+            <h4 class="notif-title-text">${item.title || item.Title || 'Announcement'}</h4>
+            <p class="notif-body-text">${item.description || item.Description || item.desc || ''}</p>
           </div>
         `).join('');
       }
+    }
 
+    function openAnnouncementsModal() {
+      const dot = document.getElementById('notifDot');
+      if (dot) dot.style.display = 'none';
+
+      renderAnnouncementsList();
       document.getElementById('notifModalBackdrop').classList.add('open');
     }
 
@@ -2714,11 +2724,20 @@
         const news = (res && res.news) ? res.news : [];
         globalNewsStore = news;
 
-        // Strictly check if any item is under the "Announcement" category only
-        const hasAnnouncements = news.some(item => isAnnouncementCategory(item.category));
+        // Strictly check if any item is under the "ANNOUNCEMENT" category only
+        const hasAnnouncements = news.some(item => isAnnouncementCategory(getAnnouncementCategory(item)));
         const notifDot = document.getElementById('notifDot');
         if (notifDot) {
-          notifDot.style.display = hasAnnouncements ? 'block' : 'none';
+          // Keep showing dot if unread and modal is not currently open
+          const isModalOpen = document.getElementById('notifModalBackdrop')?.classList.contains('open');
+          if (!isModalOpen) {
+            notifDot.style.display = hasAnnouncements ? 'block' : 'none';
+          }
+        }
+
+        // Real-time update: If the announcements dialog is currently open, re-render it automatically
+        if (document.getElementById('notifModalBackdrop')?.classList.contains('open')) {
+          renderAnnouncementsList();
         }
 
         if (!container) return;
