@@ -11,7 +11,7 @@
 
   <!-- Google Fonts Preload -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Google+Sans:wght@400;500;700;800&family=Inter:wght@300;400;500;600;700;800&family=Teko:wght@600;700&display=swap" rel="stylesheet" />
 
   <!-- PDF Generation Engine -->
@@ -120,7 +120,7 @@
       min-height: 100vh;
       line-height: 1.5;
       background-color: var(--color-obsidian);
-      padding-bottom: 160px;
+      padding-bottom: 90px;
       touch-action: pan-y;
       user-select: none;
       -webkit-user-select: none;
@@ -164,177 +164,153 @@
     }
     :root[data-theme="light"] #bg-image-container { opacity: 0.08; }
 
-    #particle-canvas {
+    /* FLOATING SCORES CIRCLE (REPLACING OLD TICKER) */
+    .floating-scores-widget {
+      position: fixed !important;
+      bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+      right: 18px !important;
+      z-index: 999999 !important;
+      background: var(--color-card-bg);
+      border: 1.5px solid var(--color-gold);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold);
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+      transform: translate3d(0,0,0);
+    }
+    .floating-scores-widget:hover {
+      transform: scale(1.1) translate3d(0,0,0);
+      box-shadow: 0 10px 28px var(--color-gold-glow);
+    }
+    .floating-scores-widget svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+    }
+    /* WHATSAPP STYLE POPPING BADGE */
+    .scores-badge-counter {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: 10px;
+      background: #25d366; /* WhatsApp brand green */
+      color: #ffffff;
+      font-family: var(--font-google-sans);
+      font-size: 0.68rem;
+      font-weight: 800;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(37, 211, 102, 0.6);
+      border: 2px solid var(--color-card-bg);
+      animation: popInWhatsApp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes popInWhatsApp {
+      0% { transform: scale(0); opacity: 0; }
+      70% { transform: scale(1.25); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* TOP SITE HEADER & HEADER CONTROLS */
+    .site-header {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 2;
-      pointer-events: none;
+      width: 100%;
+      z-index: 1000;
+      padding: 8px 0;
+      background: var(--color-header-bg);
+      border-bottom: 1px solid var(--color-card-border-subtle);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      transform: translateZ(0);
+    }
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 92%;
+      max-width: 1140px;
+      margin: 0 auto;
+      gap: 12px;
+    }
+    .brand-identity { display: flex; align-items: center; gap: 10px; cursor: pointer; flex-shrink: 0; }
+    .brand-logo-img { height: 34px; width: auto; object-fit: contain; }
+    .brand-title { font-family: var(--font-google-sans); font-size: 1.05rem; font-weight: 800; letter-spacing: 0.08em; color: var(--color-silver-bright); }
+    
+    .header-right-zone {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .desktop-nav-menu { display: flex; align-items: center; list-style: none; gap: 6px; }
+    .desktop-nav-menu .nav-item-link {
+      font-family: var(--font-google-sans);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-silver-mid);
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .desktop-nav-menu .nav-item-link:hover, .desktop-nav-menu .nav-item-link.active {
+      color: var(--color-gold);
+      background: rgba(245, 158, 11, 0.12);
     }
 
-    /* THEME TOGGLE */
-    .theme-toggle-widget {
-      position: fixed !important;
-      bottom: calc(115px + env(safe-area-inset-bottom, 0px)) !important;
-      right: 16px !important;
-      z-index: 999999 !important;
+    .header-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-circle-btn {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
       background: var(--color-card-bg);
       border: 1px solid var(--color-card-border);
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       color: var(--color-silver-bright);
-      cursor: pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-      transition: transform 0.2s ease;
-      transform: translate3d(0,0,0);
-    }
-    .theme-toggle-widget:hover { transform: scale(1.08) translate3d(0,0,0); }
-    .theme-toggle-widget svg { width: 20px; height: 20px; fill: currentColor; }
-
-    /* VIEWPORT DOCKED CONTROLS */
-    .fixed-bottom-ticker {
-      position: fixed !important;
-      bottom: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
-      left: 0 !important;
-      width: 100vw !important;
-      z-index: 999990 !important;
-      background: var(--color-ticker-bg);
-      border-top: 1px solid var(--color-card-border);
-      padding: 6px 14px;
-      display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      gap: 10px;
-      align-items: center;
-      box-shadow: 0 -4px 18px rgba(0,0,0,0.25);
-      cursor: pointer;
-      transform: translate3d(0,0,0);
-      transition: background-color 0.3s ease;
-    }
-    .fixed-bottom-ticker.flash-update {
-      background: rgba(245, 158, 11, 0.22);
-    }
-
-    .fbt-col-latest {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-right: 1px solid var(--color-card-border-subtle);
-      padding-right: 8px;
-      overflow: hidden;
-    }
-    .fbt-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
-    .fbt-tag {
-      font-family: var(--font-google-sans);
-      font-size: 0.52rem;
-      letter-spacing: 0.12em;
-      color: #fff;
-      font-weight: 800;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, var(--color-gold) 0%, #b45309 100%);
-      padding: 2px 6px;
-      border-radius: 4px;
-      white-space: nowrap;
-    }
-    .fbt-tag.new-release {
-      background: linear-gradient(135deg, var(--color-emerald) 0%, #059669 100%);
-      animation: pulseDot 1s infinite alternate;
-    }
-    .fbt-tag.other-event-tag {
-      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
-    }
-    .fbt-match-info {
-      font-family: var(--font-google-sans);
-      font-size: 0.65rem;
-      color: var(--color-silver-bright);
-      font-weight: 700;
-      text-transform: uppercase;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .fbt-scorecard-mini {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--color-graphite);
-      border: 1px solid var(--color-card-border-subtle);
-      padding: 3px 8px;
-      border-radius: 8px;
-      flex-shrink: 0;
-    }
-    .fbt-team-item { display: flex; align-items: center; gap: 4px; }
-    .fbt-emblem { width: 16px; height: 16px; object-fit: contain; }
-    .fbt-team-name { font-family: var(--font-google-sans); font-size: 0.58rem; font-weight: 700; color: var(--color-silver-mid); }
-    .fbt-score { font-family: var(--font-google-sans); font-size: 0.72rem; font-weight: 800; color: var(--color-crimson-red); }
-    .fbt-vs { font-family: var(--font-google-sans); font-size: 0.52rem; color: var(--color-gold); font-weight: 800; }
-    .fbt-winner-chip {
-      font-family: var(--font-google-sans);
-      font-size: 0.55rem;
-      font-weight: 800;
-      color: var(--color-emerald);
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      padding: 1px 6px;
-      border-radius: 4px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .fbt-col-history {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 6px;
-      border-right: 1px solid var(--color-card-border-subtle);
-      overflow: hidden;
-      height: 26px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
-    .fbt-rotating-container {
-      flex: 1;
-      position: relative;
-      height: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .header-circle-btn:hover {
+      transform: scale(1.08);
+      border-color: var(--color-gold);
+      color: var(--color-gold);
     }
-    .fbt-rotate-item {
+    .header-circle-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+    .notif-badge-dot {
       position: absolute;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--color-graphite);
-      border: 1px solid var(--color-card-border-subtle);
-      padding: 3px 8px;
-      border-radius: 6px;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      font-family: var(--font-google-sans);
-      font-size: 0.6rem;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-crimson-red);
+      border: 1.5px solid var(--color-card-bg);
+      display: none;
     }
-    .fbt-rotate-item.active { opacity: 1; transform: translateY(0); }
-
-    .fbt-col-status { display: flex; align-items: center; justify-content: space-around; padding-left: 6px; }
-    .fbt-status-podium {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--color-graphite);
-      border: 1px solid var(--color-card-border-subtle);
-      padding: 3px 8px;
-      border-radius: 8px;
-    }
-    .fbt-podium-item { display: flex; align-items: center; gap: 4px; }
-    .fbt-p-emblem { width: 16px; height: 16px; object-fit: contain; }
-    .p-rank { font-family: var(--font-google-sans); font-size: 0.55rem; color: var(--color-silver-dark); font-weight: 700; }
-    .p-pts { font-family: var(--font-google-sans); font-size: 0.6rem; color: var(--color-silver-bright); font-weight: 800; }
 
     .mobile-bottom-bar {
       display: flex;
@@ -342,7 +318,7 @@
       bottom: 0 !important;
       left: 0 !important;
       width: 100vw !important;
-      height: calc(58px + env(safe-area-inset-bottom, 0px)) !important;
+      height: calc(56px + env(safe-area-inset-bottom, 0px)) !important;
       padding-bottom: env(safe-area-inset-bottom, 0px) !important;
       background: var(--color-ticker-bg);
       border-top: 1px solid var(--color-card-border-subtle);
@@ -366,51 +342,9 @@
       padding: 4px 0;
       transition: color 0.15s ease;
     }
-    .mob-nav-item svg { width: 20px; height: 20px; margin-bottom: 3px; fill: currentColor; }
-    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.62rem; font-weight: 700; text-transform: uppercase; }
+    .mob-nav-item svg { width: 19px; height: 19px; margin-bottom: 2px; fill: currentColor; }
+    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
     .mob-nav-item.active { color: var(--color-gold); }
-
-    /* TOP SITE HEADER */
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 10px 0;
-      background: var(--color-header-bg);
-      border-bottom: 1px solid var(--color-card-border-subtle);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-      transform: translateZ(0);
-    }
-    .nav-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 92%;
-      max-width: 1140px;
-      margin: 0 auto;
-    }
-    .brand-identity { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-    .brand-logo-img { height: 34px; width: auto; object-fit: contain; }
-    .brand-title { font-family: var(--font-google-sans); font-size: 1.05rem; font-weight: 800; letter-spacing: 0.08em; color: var(--color-silver-bright); }
-    .desktop-nav-menu { display: flex; align-items: center; list-style: none; gap: 12px; }
-    .desktop-nav-menu .nav-item-link {
-      font-family: var(--font-google-sans);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--color-silver-mid);
-      cursor: pointer;
-      padding: 6px 12px;
-      border-radius: 8px;
-      transition: all 0.15s ease;
-    }
-    .desktop-nav-menu .nav-item-link:hover, .desktop-nav-menu .nav-item-link.active {
-      color: var(--color-gold);
-      background: rgba(245, 158, 11, 0.12);
-    }
 
     /* Page Panels */
     .page-panel { display: none; }
@@ -496,7 +430,7 @@
 
     /* Hero Banner */
     .hero-section {
-      padding: 90px 0 25px;
+      padding: 95px 0 25px;
       text-align: center;
     }
     .hero-logo2-img {
@@ -745,14 +679,6 @@
       .standing-points-block { grid-area: pts; }
       .standing-points-val { font-size: 1.7rem; }
       .standing-progress-block { grid-area: bar; padding-top: 6px; border-top: 1px solid var(--color-card-border-subtle); }
-      
-      .fixed-bottom-ticker {
-        grid-template-columns: 1fr !important;
-        gap: 4px !important;
-        padding: 4px 10px !important;
-      }
-      .fbt-col-history { display: none !important; }
-      .fbt-col-latest { border-right: none !important; border-bottom: 1px solid var(--color-card-border-subtle) !important; padding-bottom: 3px !important; }
     }
 
     /* TOP STORIES & UNCROPPED DRIVE IMAGES */
@@ -787,7 +713,7 @@
       width: 100%;
       height: 100%;
       max-height: 360px;
-      object-fit: contain; /* Full uncropped aspect ratio support */
+      object-fit: contain;
       background: #060910;
     }
     .fhs-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
@@ -1058,7 +984,7 @@
     /* Sticky Cart Bar */
     .cart-checkout-bar {
       position: fixed;
-      bottom: calc(118px + env(safe-area-inset-bottom, 0px));
+      bottom: calc(72px + env(safe-area-inset-bottom, 0px));
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
@@ -1076,7 +1002,7 @@
     }
 
     /* STEP WIZARD DIALOG */
-    .order-modal-backdrop, .news-modal-backdrop, .scores-modal-backdrop {
+    .order-modal-backdrop, .news-modal-backdrop, .scores-modal-backdrop, .notif-modal-backdrop {
       position: fixed;
       top: 0;
       left: 0;
@@ -1093,7 +1019,7 @@
       pointer-events: none;
       transition: opacity 0.25s ease;
     }
-    .order-modal-backdrop.open, .news-modal-backdrop.open, .scores-modal-backdrop.open {
+    .order-modal-backdrop.open, .news-modal-backdrop.open, .scores-modal-backdrop.open, .notif-modal-backdrop.open {
       opacity: 1;
       pointer-events: auto;
     }
@@ -1109,7 +1035,7 @@
       position: relative;
       box-shadow: 0 24px 60px rgba(0,0,0,0.6);
     }
-    .scores-modal-box {
+    .scores-modal-box, .notif-modal-box {
       max-width: 700px;
       width: 100%;
       max-height: 88vh;
@@ -1121,7 +1047,7 @@
       position: relative;
       box-shadow: 0 24px 60px rgba(0,0,0,0.6);
     }
-    .order-modal-close, .news-modal-close, .scores-modal-close {
+    .order-modal-close, .news-modal-close, .scores-modal-close, .notif-modal-close {
       position: absolute;
       top: 14px;
       right: 16px;
@@ -1138,7 +1064,7 @@
       font-size: 1.1rem;
       transition: background 0.15s ease;
     }
-    .order-modal-close:hover, .scores-modal-close:hover { background: var(--color-crimson-red); color: #fff; }
+    .order-modal-close:hover, .scores-modal-close:hover, .notif-modal-close:hover { background: var(--color-crimson-red); color: #fff; }
 
     /* Stepper Header */
     .order-stepper-header {
@@ -1558,10 +1484,40 @@
     .podium-team-name { font-family: var(--font-google-sans); font-size: 0.85rem; font-weight: 800; color: #fff; }
     .podium-pts-val { font-family: var(--font-sport); font-size: 1.25rem; font-weight: 700; color: var(--color-gold-light); line-height: 1; }
 
+    /* ANNOUNCEMENTS NOTIFICATION MODAL */
+    .notif-announcement-card {
+      background: var(--color-graphite);
+      border: 1px solid var(--color-card-border-subtle);
+      border-left: 3px solid var(--color-gold);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .notif-head-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .notif-title-text {
+      font-family: var(--font-google-sans);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--color-silver-bright);
+    }
+    .notif-body-text {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--color-stone-light);
+      line-height: 1.45;
+    }
+
     /* IN-APP TOAST NOTIFICATION */
     .eweek-toast-anchor {
       position: fixed;
-      top: 80px;
+      top: 75px;
       left: 50%;
       transform: translateX(-50%) translateY(-20px);
       background: var(--color-card-bg);
@@ -1619,7 +1575,7 @@
       width: 100%;
       height: auto;
       max-height: 480px;
-      object-fit: contain; /* Full uncropped picture preview */
+      object-fit: contain;
       display: block;
     }
     .news-modal-title {
@@ -1697,7 +1653,7 @@
     .form-textarea { resize: vertical; min-height: 85px; }
 
     .site-footer {
-      padding: 35px 0 160px;
+      padding: 35px 0 100px;
       border-top: 1px solid var(--color-card-border-subtle);
       background: var(--color-charcoal);
       text-align: center;
@@ -1725,56 +1681,16 @@
   <div id="bg-image-container" aria-hidden="true">
     <img id="bg-image" src="bg.jpeg" alt="Background" onerror="this.style.display='none';" />
   </div>
-  <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
-  <!-- Anchored Viewport Controls -->
-  <button class="theme-toggle-widget" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Theme" type="button">
-    <svg id="themeIcon" viewBox="0 0 24 24">
-      <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+  <!-- FLOATING SCORE UPDATES CIRCLE WITH WHATSAPP-STYLE BADGE -->
+  <button class="floating-scores-widget" id="floatingScoresBtn" onclick="openAllScoresModal()" aria-label="Live Match Scores & Updates" title="Tap to view live scores">
+    <svg viewBox="0 0 24 24">
+      <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
     </svg>
+    <span class="scores-badge-counter" id="scoresUnreadBadge">0</span>
   </button>
 
-  <!-- Live Ticker Bar with Direct Score, Outcome & Other Events Support -->
-  <div class="fixed-bottom-ticker" id="floatingResultsWidget" onclick="openAllScoresModal()" title="Tap to view all scores & event results">
-    <div class="fbt-col-latest">
-      <div class="fbt-left">
-        <span class="fbt-tag" id="fbtBadgeTag">LATEST</span>
-        <div class="fbt-match-info" id="fbtMatchTitle">Syncing scores...</div>
-      </div>
-      <div class="fbt-scorecard-mini" id="fbtScorecard">
-        <span style="font-size:0.65rem; color:var(--color-stone-light);">Loading...</span>
-      </div>
-    </div>
-
-    <div class="fbt-col-history">
-      <div class="fbt-rotating-container" id="fbtRotatingContainer">
-        <div class="fbt-rotate-item active" style="justify-content:center;">
-          <span style="font-size:0.65rem; color:var(--color-stone-light); font-weight:700;">Tap to view all released scores &amp; extra events</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="fbt-col-status" id="fbtStatusContainer">
-      <div class="fbt-status-podium">
-        <div class="fbt-podium-item">
-          <img src="e23.png" alt="1st" class="fbt-p-emblem" />
-          <span class="p-rank">1:</span>
-          <span class="p-pts" id="fbtPts1">0</span>
-        </div>
-        <div class="fbt-podium-item">
-          <img src="e22.png" alt="2nd" class="fbt-p-emblem" />
-          <span class="p-rank">2:</span>
-          <span class="p-pts" id="fbtPts2">0</span>
-        </div>
-        <div class="fbt-podium-item">
-          <img src="e24.png" alt="3rd" class="fbt-p-emblem" />
-          <span class="p-rank">3:</span>
-          <span class="p-pts" id="fbtPts3">0</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <!-- Mobile Bottom Navigation Bar -->
   <nav class="mobile-bottom-bar" aria-label="Mobile Navigation">
     <button class="mob-nav-item active" data-target="home" type="button">
       <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -1792,11 +1708,72 @@
       <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4zm10 16H4V8h16v12z"/></svg>
       <span>Merch</span>
     </button>
+    <a class="mob-nav-item" href="https://www.eweeek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+      <span>Aesthetic</span>
+    </a>
     <button class="mob-nav-item" data-target="contact" type="button">
       <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
       <span>Contact</span>
     </button>
   </nav>
+
+  <!-- Top App Header with Theme Toggler & Notification Symbol -->
+  <header class="site-header" id="siteHeader">
+    <div class="nav-wrapper">
+      <div class="brand-identity" onclick="switchTab('home')" aria-label="E-WEEK 2026 Home">
+        <img src="logo.png" alt="Logo" class="brand-logo-img" onerror="this.style.display='none';" />
+        <span class="brand-title">E-WEEK 2026</span>
+      </div>
+
+      <div class="header-right-zone">
+        <nav aria-label="Primary Navigation">
+          <ul class="desktop-nav-menu">
+            <li><a class="nav-item-link active" data-target="home">Home</a></li>
+            <li><a class="nav-item-link" data-target="teams">Teams</a></li>
+            <li><a class="nav-item-link" data-target="fixtures">Fixtures</a></li>
+            <li><a class="nav-item-link" data-target="merch">Merchandise</a></li>
+            <li><a class="nav-item-link" href="https://www.eweeek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">Aesthetic</a></li>
+            <li><a class="nav-item-link" data-target="contact">Contact Us</a></li>
+          </ul>
+        </nav>
+
+        <!-- Header Actions: Notifications & Theme Toggler -->
+        <div class="header-actions-group">
+          <!-- Notification Bell Tab -->
+          <button class="header-circle-btn" id="notifBtn" onclick="openAnnouncementsModal()" aria-label="Announcements & Notifications" title="Announcements">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
+            </svg>
+            <span class="notif-badge-dot" id="notifDot"></span>
+          </button>
+
+          <!-- Theme Toggler Widget located in Header -->
+          <button class="header-circle-btn" id="headerThemeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+            <svg id="themeIcon" viewBox="0 0 24 24">
+              <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ANNOUNCEMENTS NOTIFICATION MODAL -->
+  <div class="notif-modal-backdrop" id="notifModalBackdrop" role="dialog" aria-hidden="true">
+    <div class="notif-modal-box">
+      <button class="notif-modal-close" onclick="closeAnnouncementsModal()" type="button" aria-label="Close Announcements">&times;</button>
+      <span class="section-eyebrow">OFFICIAL BROADCASTS</span>
+      <h3 class="section-title" style="font-size: 1.3rem;">ALL ANNOUNCEMENTS</h3>
+      <p style="text-align:center; font-size:0.78rem; color:var(--color-stone-light); margin-top:-2px;">Important notices and bulletins from the organizing committee.</p>
+      
+      <div class="silver-divider"><span class="divider-node"></span></div>
+
+      <div id="announcementsListContainer">
+        <div style="text-align: center; color: var(--color-stone-light); padding: 30px;">Loading announcements feed...</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Professional Full Scores & Other Events Modal -->
   <div class="scores-modal-backdrop" id="scoresModalBackdrop" role="dialog" aria-hidden="true">
@@ -1820,26 +1797,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Top App Header -->
-  <header class="site-header" id="siteHeader">
-    <div class="nav-wrapper">
-      <div class="brand-identity" onclick="switchTab('home')" aria-label="E-WEEK 2026 Home">
-        <img src="logo.png" alt="Logo" class="brand-logo-img" onerror="this.style.display='none';" />
-        <span class="brand-title">E-WEEK 2026</span>
-      </div>
-
-      <nav aria-label="Primary Navigation">
-        <ul class="desktop-nav-menu">
-          <li><a class="nav-item-link active" data-target="home">Home</a></li>
-          <li><a class="nav-item-link" data-target="teams">Teams</a></li>
-          <li><a class="nav-item-link" data-target="fixtures">Fixtures</a></li>
-          <li><a class="nav-item-link" data-target="merch">Merchandise</a></li>
-          <li><a class="nav-item-link" data-target="contact">Contact Us</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
 
   <main id="main-content">
     <!-- HOME PANEL -->
@@ -2235,6 +2192,7 @@
         <li><a class="footer-nav-link" data-target="teams">Teams</a></li>
         <li><a class="footer-nav-link" data-target="fixtures">Fixtures</a></li>
         <li><a class="footer-nav-link" data-target="merch">Merchandise</a></li>
+        <li><a class="footer-nav-link" href="https://www.eweeek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">Aesthetic</a></li>
         <li><a class="footer-nav-link" data-target="contact">Contact Us</a></li>
       </ul>
       <div style="font-size: 0.72rem; color: var(--color-stone); margin-top: 10px;">&copy; 2026 E-WEEK. All Rights Reserved.</div>
@@ -2244,7 +2202,7 @@
   <!-- =========================================================================
        JAVASCRIPT LOGIC
        ========================================================================= -->
- <script>
+  <script>
     const MERCH_BACKEND_URL = "https://script.google.com/macros/s/AKfycbx4BJRrLSyVgC3U9WobDSao5egyWwpvfrvSkLE0c3L2wNmU7Zv80ih_6ovSyxj3GkK8/exec";
     const SCORES_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzo1KtK5zMkmLykmHdjJRqzNEtGccwfM1wGNF7JGB6mYiRDBJdSQ3cboJo4-hRerV4TQ/exec";
     const TEAMS_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFJsbdHQFZDAiFYWXyCIUvGbmbt0PxGqSGjm_FCEFvjSIC11CUEFyrhlcK30pzJ9fBg/exec";
@@ -2266,6 +2224,10 @@
     let globalNewsStore = [];
     let globalMatchesStore = [];
     let currentScoreFilter = "ALL";
+
+    // Track seen match count for WhatsApp popping badge
+    let previousMatchCount = null;
+    let unreadScoresCount = 0;
 
     let batchData = [
       { name: "E23", logo: "e23.png", score: 0, wins: 0 },
@@ -2303,14 +2265,13 @@
       setTheme(savedTheme);
 
       initNavigation();
-      initOptimizedParticles();
       initModalCloseHandlers();
       initBatchTabs();
 
       renderMerchCatalogCards();
       renderSmoothLeaderboard();
 
-      // Single Unified Fetch
+      // Initial Fetch
       fetchLiveScores();
       fetchFeaturedNews();
       fetchFixtures();
@@ -2383,44 +2344,6 @@
       });
     }
 
-    function initOptimizedParticles() {
-      const canvas = document.getElementById('particle-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      let width = canvas.width = window.innerWidth;
-      let height = canvas.height = window.innerHeight;
-
-      window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-      }, { passive: true });
-
-      const particles = Array.from({ length: 24 }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 1.5 + 0.5,
-        color: Math.random() > 0.5 ? 'rgba(245, 158, 11, 0.4)' : 'rgba(100, 116, 139, 0.3)',
-        vy: -(Math.random() * 0.3 + 0.2),
-        vx: (Math.random() - 0.5) * 0.2
-      }));
-
-      function renderFrame() {
-        ctx.clearRect(0, 0, width, height);
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
-          p.y += p.vy;
-          p.x += p.vx;
-          if (p.y < 0) { p.y = height + 5; p.x = Math.random() * width; }
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, 6.28);
-          ctx.fillStyle = p.color;
-          ctx.fill();
-        }
-        requestAnimationFrame(renderFrame);
-      }
-      renderFrame();
-    }
-
     function loadJSONP(url, callbackName, onSuccess, onError) {
       window[callbackName] = function(res) {
         delete window[callbackName];
@@ -2453,9 +2376,6 @@
       }
     }
 
-    // =========================================================================
-    // SINGLE PLACEMENT PARSER
-    // =========================================================================
     function parsePlacementEntry(rawStr, defaultRank) {
       if (!rawStr) return { rank: defaultRank, batch: "N/A", pts: 0 };
       const str = String(rawStr).trim();
@@ -2478,14 +2398,10 @@
       return false;
     }
 
-    // =========================================================================
-    // LEADERBOARD RECALCULATION & TICKER UPDATE
-    // =========================================================================
     function recalculateTotalPoints() {
       let scoreMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
       let winsMap = { "E22": 0, "E23": 0, "E24": 0, "E25": 0, "STAFF": 0 };
 
-      // Single source of truth from Match_Scores
       globalMatchesStore.forEach(m => {
         if (isRankedEvent(m)) {
           const p1 = m.place1Team ? { batch: m.place1Team.toUpperCase(), pts: Number(m.place1Pts) || 0 } : parsePlacementEntry(m.teamA, "1st");
@@ -2522,7 +2438,6 @@
       });
 
       renderSmoothLeaderboard();
-      updateLatestTickerOnly();
     }
 
     function renderSmoothLeaderboard() {
@@ -2568,85 +2483,42 @@
       `;
 
       mount.innerHTML = html;
+    }
 
-      if (sorted[0]) document.getElementById('fbtPts1').innerText = sorted[0].score;
-      if (sorted[1]) document.getElementById('fbtPts2').innerText = sorted[1].score;
-      if (sorted[2]) document.getElementById('fbtPts3').innerText = sorted[2].score;
+    function updateFloatingScoreBadge(newCount) {
+      const badge = document.getElementById('scoresUnreadBadge');
+      if (!badge) return;
+
+      if (previousMatchCount === null) {
+        previousMatchCount = newCount;
+        return;
+      }
+
+      if (newCount > previousMatchCount) {
+        const added = newCount - previousMatchCount;
+        unreadScoresCount += added;
+        previousMatchCount = newCount;
+
+        badge.innerText = unreadScoresCount > 99 ? '99+' : unreadScoresCount;
+        badge.style.display = 'flex';
+        // WhatsApp-like popping animation re-trigger
+        badge.style.animation = 'none';
+        void badge.offsetWidth;
+        badge.style.animation = 'popInWhatsApp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+      }
     }
 
     function fetchLiveScores() {
       const cbName = 'scores_cb_' + Math.round(Math.random() * 1000000);
       loadJSONP(`${SCORES_APPS_SCRIPT_URL}?action=getScores`, cbName, (res) => {
-        globalMatchesStore = (res && res.matches) ? res.matches : [];
+        const matches = (res && res.matches) ? res.matches : [];
+        updateFloatingScoreBadge(matches.length);
+        globalMatchesStore = matches;
         recalculateTotalPoints();
         if (document.getElementById('scoresModalBackdrop').classList.contains('open')) {
           renderAllScoresModalContent();
         }
       }, () => {});
-    }
-
-    // =========================================================================
-    // TICKER BAR: SHOWS ONLY THE LATEST RECORD
-    // =========================================================================
-    function updateLatestTickerOnly() {
-      const badgeTag = document.getElementById('fbtBadgeTag');
-      const titleEl = document.getElementById('fbtMatchTitle');
-      const scorecardEl = document.getElementById('fbtScorecard');
-
-      if (!globalMatchesStore || globalMatchesStore.length === 0) {
-        badgeTag.innerText = "STANDBY";
-        titleEl.innerText = "Awaiting event fixtures...";
-        scorecardEl.innerHTML = `<span style="font-size:0.65rem; color:var(--color-stone-light);">No releases</span>`;
-        return;
-      }
-
-      // Latest record only
-      const latest = globalMatchesStore[globalMatchesStore.length - 1];
-
-      if (isRankedEvent(latest)) {
-        const p1 = latest.place1Team ? { batch: latest.place1Team.toUpperCase(), pts: Number(latest.place1Pts) || 0 } : parsePlacementEntry(latest.teamA, "1st");
-        const p2 = latest.place2Team ? { batch: latest.place2Team.toUpperCase(), pts: Number(latest.place2Pts) || 0 } : parsePlacementEntry(latest.teamB, "2nd");
-        const p3 = latest.place3Team ? { batch: latest.place3Team.toUpperCase(), pts: Number(latest.place3Pts) || 0 } : parsePlacementEntry(latest.scoreA, "3rd");
-
-        badgeTag.className = "fbt-tag";
-        badgeTag.innerText = "LATEST";
-        titleEl.innerText = `${latest.sport || latest.eventName} (${latest.category || 'Open'})`;
-
-        const winnerEmblem = BATCH_LOGOS[p1.batch] || 'logo.png';
-
-        scorecardEl.innerHTML = `
-          <div class="fbt-team-item">
-            <img src="${winnerEmblem}" class="fbt-emblem" alt="${p1.batch}" onerror="this.src='logo.png';" />
-            <span class="fbt-team-name" style="color:var(--color-gold); font-weight:800;">1st (${p1.batch})(${p1.pts})</span>
-          </div>
-          <span class="fbt-vs">&bull;</span>
-          <span style="font-size:0.6rem; color:var(--color-silver-mid); font-weight:700;">2nd (${p2.batch})(${p2.pts})</span>
-          ${p3.batch && p3.batch !== "N/A" ? `<span class="fbt-vs">&bull;</span><span style="font-size:0.6rem; color:#f97316; font-weight:700;">3rd (${p3.batch})(${p3.pts})</span>` : ''}
-        `;
-      } else {
-        const outcome = resolveMatchWinner(latest.teamA, latest.scoreA, latest.teamB, latest.scoreB, latest.status);
-        badgeTag.className = "fbt-tag";
-        badgeTag.innerText = latest.status === 'Live' ? 'LIVE' : 'LATEST';
-        titleEl.innerText = latest.category ? `${latest.sport} (${latest.category})` : latest.sport;
-
-        const emblemA = BATCH_LOGOS[String(latest.teamA).toUpperCase()] || 'logo.png';
-        const emblemB = BATCH_LOGOS[String(latest.teamB).toUpperCase()] || 'logo.png';
-
-        scorecardEl.innerHTML = `
-          <div class="fbt-team-item">
-            <img src="${emblemA}" class="fbt-emblem" alt="${latest.teamA}" onerror="this.src='logo.png';" />
-            <span class="fbt-team-name">${latest.teamA}</span>
-          </div>
-          <span class="fbt-score">${latest.scoreA}</span>
-          <span class="fbt-vs">:</span>
-          <span class="fbt-score">${latest.scoreB}</span>
-          <div class="fbt-team-item">
-            <img src="${emblemB}" class="fbt-emblem" alt="${latest.teamB}" onerror="this.src='logo.png';" />
-            <span class="fbt-team-name">${latest.teamB}</span>
-          </div>
-          ${outcome.winner ? `<span class="fbt-winner-chip">${outcome.winner} WON</span>` : ''}
-        `;
-      }
     }
 
     // =========================================================================
@@ -2683,7 +2555,6 @@
         return;
       }
 
-      // Newest released first
       const list = [...filtered].reverse();
 
       container.innerHTML = list.map(item => {
@@ -2783,8 +2654,45 @@
     }
 
     function openAllScoresModal() {
+      // Clear unread indicator when opened
+      unreadScoresCount = 0;
+      const badge = document.getElementById('scoresUnreadBadge');
+      if (badge) badge.style.display = 'none';
+
       renderAllScoresModalContent();
       document.getElementById('scoresModalBackdrop').classList.add('open');
+    }
+
+    // =========================================================================
+    // ANNOUNCEMENTS MODAL (NOTIFICATION TAB)
+    // =========================================================================
+    function openAnnouncementsModal() {
+      const container = document.getElementById('announcementsListContainer');
+      const dot = document.getElementById('notifDot');
+      if (dot) dot.style.display = 'none';
+
+      if (!globalNewsStore || globalNewsStore.length === 0) {
+        container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 30px;">No announcements currently posted.</div>`;
+      } else {
+        // Collect all items tagged or posted under announcements (show all bulletins regardless of main feed suppression)
+        const reversedNews = [...globalNewsStore].reverse();
+        container.innerHTML = reversedNews.map(item => `
+          <div class="notif-announcement-card">
+            <div class="notif-head-row">
+              <span class="news-badge-tag">${item.category || "ANNOUNCEMENT"}</span>
+              <span style="font-size: 0.68rem; color: var(--color-stone-light);">${item.date || item.timestamp || 'Official Release'}</span>
+            </div>
+            <h4 class="notif-title-text">${item.title}</h4>
+            <p class="notif-body-text">${item.description}</p>
+          </div>
+        `).join('');
+      }
+
+      document.getElementById('notifModalBackdrop').classList.add('open');
+    }
+
+    function closeAnnouncementsModal() {
+      document.getElementById('notifModalBackdrop').classList.remove('open');
     }
 
     // =========================================================================
@@ -2792,11 +2700,18 @@
     // =========================================================================
     function fetchFeaturedNews() {
       const container = document.getElementById('topStoriesContainer');
-      if (!container) return;
       const cbName = 'news_cb_' + Math.round(Math.random() * 1000000);
       loadJSONP(`${SCORES_APPS_SCRIPT_URL}?action=getNews`, cbName, (res) => {
         const news = (res && res.news) ? res.news : [];
         globalNewsStore = news;
+
+        // If announcements exist, flag notification dot
+        const notifDot = document.getElementById('notifDot');
+        if (notifDot && news.length > 0) {
+          notifDot.style.display = 'block';
+        }
+
+        if (!container) return;
         if (news.length === 0) {
           container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 20px; grid-column: span 2;">No announcements posted yet.</div>`;
           return;
