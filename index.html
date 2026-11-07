@@ -2670,7 +2670,7 @@
       if (!category) return false;
       const cat = String(category).trim().toLowerCase();
       // Match only Announcement or Announcements (exclude Tournament Alert, Live Updates, etc.)
-      return cat === 'announcement' || cat === 'announcements';
+      return cat === 'ANNOUNCEMENT' || cat === 'announcements';
     }
 
     function openAnnouncementsModal() {
