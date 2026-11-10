@@ -164,7 +164,7 @@
     }
     :root[data-theme="light"] #bg-image-container { opacity: 0.08; }
 
-    /* FLOATING SCORES CIRCLE (REPLACING OLD TICKER) */
+    /* FLOATING SCORES CIRCLE */
     .floating-scores-widget {
       position: fixed !important;
       bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
@@ -193,7 +193,6 @@
       height: 24px;
       fill: currentColor;
     }
-    /* WHATSAPP STYLE POPPING BADGE */
     .scores-badge-counter {
       position: absolute;
       top: -4px;
@@ -202,7 +201,7 @@
       height: 20px;
       padding: 0 5px;
       border-radius: 10px;
-      background: #25d366; /* WhatsApp brand green */
+      background: #25d366;
       color: #ffffff;
       font-family: var(--font-google-sans);
       font-size: 0.68rem;
@@ -245,7 +244,7 @@
     .brand-identity { display: flex; align-items: center; gap: 10px; cursor: pointer; flex-shrink: 0; }
     .brand-logo-img { height: 34px; width: auto; object-fit: contain; }
     .brand-title { font-family: var(--font-google-sans); font-size: 1.05rem; font-weight: 800; letter-spacing: 0.08em; color: var(--color-silver-bright); }
-    
+
     .header-right-zone {
       display: flex;
       align-items: center;
@@ -472,7 +471,7 @@
 
     /* LEADERBOARD */
     .results-section {
-      padding: 30px 0 60px;
+      padding: 30px 0 50px;
       scroll-margin-top: 75px;
     }
     .leaderboard-container {
@@ -681,8 +680,8 @@
       .standing-progress-block { grid-area: bar; padding-top: 6px; border-top: 1px solid var(--color-card-border-subtle); }
     }
 
-    /* TOP STORIES & UNCROPPED DRIVE IMAGES */
-    .featured-news-section { padding: 40px 0; }
+    /* TOP STORIES */
+    .featured-news-section { padding: 30px 0 40px; }
     .top-stories-container {
       max-width: 1140px;
       margin: 20px auto 0;
@@ -727,6 +726,9 @@
       border-radius: 6px;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+    }
+    .news-badge-tag.tournament-alert {
+      background: var(--color-crimson-red);
     }
     .news-time-stamp { font-size: 0.68rem; color: var(--color-stone-light); font-family: var(--font-google-sans); }
     .news-title-text { font-family: var(--font-google-sans); color: var(--color-silver-bright); font-weight: 800; letter-spacing: 0.02em; margin-bottom: 4px; }
@@ -773,6 +775,44 @@
       background: #060910;
     }
     .ncs-body { padding: 10px 14px; }
+
+    /* AESTHETIC HOME SHOWCASE SECTION */
+    .aesthetic-showcase-section {
+      padding: 20px 0 60px;
+    }
+    .aesthetic-feature-card {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, var(--color-card-bg) 60%);
+      border: 1.5px solid var(--color-card-border);
+      border-radius: 20px;
+      padding: 30px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+    }
+    .aesthetic-feature-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .aesthetic-icon-wrap {
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: var(--color-graphite);
+      border: 1.5px solid var(--color-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold);
+    }
+    .aesthetic-icon-wrap svg { width: 28px; height: 28px; fill: currentColor; }
 
     /* TEAMS & EVENTS */
     .teams-main-section { padding: 90px 0 50px; text-align: center; }
@@ -1247,7 +1287,7 @@
     }
     .slip-preview-thumb { width: 34px; height: 34px; object-fit: cover; border-radius: 4px; }
 
-    /* Holographic Confirmation Card */
+    /* Confirmation Card */
     .order-success-card {
       text-align: center;
       padding: 20px 10px;
@@ -1284,9 +1324,7 @@
       line-height: 1;
     }
 
-    /* ==========================================================================
-       ALL RELEASED RESULTS SYSTEM (MATCHES + OTHER EVENTS)
-       ========================================================================== */
+    /* ALL RELEASED RESULTS SYSTEM */
     .scores-filter-bar {
       display: flex;
       justify-content: center;
@@ -1439,7 +1477,7 @@
     }
     .pro-outcome-summary.tie { color: var(--color-stone-light); }
 
-    /* Other Event Podium Layout inside Modal */
+    /* Other Event Podium Layout */
     .other-event-podium-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1682,7 +1720,7 @@
     <img id="bg-image" src="bg.jpeg" alt="Background" onerror="this.style.display='none';" />
   </div>
 
-  <!-- FLOATING SCORE UPDATES CIRCLE WITH WHATSAPP-STYLE BADGE -->
+  <!-- FLOATING SCORE UPDATES CIRCLE -->
   <button class="floating-scores-widget" id="floatingScoresBtn" onclick="openAllScoresModal()" aria-label="Live Match Scores & Updates" title="Tap to view live scores">
     <svg viewBox="0 0 24 24">
       <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/>
@@ -1690,7 +1728,7 @@
     <span class="scores-badge-counter" id="scoresUnreadBadge">0</span>
   </button>
 
-  <!-- Mobile Bottom Navigation Bar -->
+  <!-- Mobile Bottom Navigation Bar (Aesthetic Tab Removed) -->
   <nav class="mobile-bottom-bar" aria-label="Mobile Navigation">
     <button class="mob-nav-item active" data-target="home" type="button">
       <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -1708,17 +1746,13 @@
       <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4h4v2h-4V4zm10 16H4V8h16v12z"/></svg>
       <span>Merch</span>
     </button>
-    <a class="mob-nav-item" href="https://www.eweek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-      <span>Aesthetic</span>
-    </a>
     <button class="mob-nav-item" data-target="contact" type="button">
       <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
       <span>Contact</span>
     </button>
   </nav>
 
-  <!-- Top App Header with Theme Toggler & Notification Symbol -->
+  <!-- Top App Header with Theme Toggler & Notification Symbol (Aesthetic Tab Removed) -->
   <header class="site-header" id="siteHeader">
     <div class="nav-wrapper">
       <div class="brand-identity" onclick="switchTab('home')" aria-label="E-WEEK 2026 Home">
@@ -1733,14 +1767,13 @@
             <li><a class="nav-item-link" data-target="teams">Teams</a></li>
             <li><a class="nav-item-link" data-target="fixtures">Fixtures</a></li>
             <li><a class="nav-item-link" data-target="merch">Merchandise</a></li>
-            <li><a class="nav-item-link" href="https://www.eweek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">Aesthetic</a></li>
             <li><a class="nav-item-link" data-target="contact">Contact Us</a></li>
           </ul>
         </nav>
 
         <!-- Header Actions: Notifications & Theme Toggler -->
         <div class="header-actions-group">
-          <!-- Notification Bell Tab -->
+          <!-- Notification Bell Tab (Announcements Exclusively) -->
           <button class="header-circle-btn" id="notifBtn" onclick="openAnnouncementsModal()" aria-label="Announcements & Notifications" title="Announcements">
             <svg viewBox="0 0 24 24">
               <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
@@ -1759,14 +1792,14 @@
     </div>
   </header>
 
-  <!-- ANNOUNCEMENTS NOTIFICATION MODAL -->
+  <!-- ANNOUNCEMENTS NOTIFICATION MODAL (ANNOUNCEMENT ITEMS ONLY) -->
   <div class="notif-modal-backdrop" id="notifModalBackdrop" role="dialog" aria-hidden="true">
     <div class="notif-modal-box">
       <button class="notif-modal-close" onclick="closeAnnouncementsModal()" type="button" aria-label="Close Announcements">&times;</button>
       <span class="section-eyebrow">OFFICIAL BROADCASTS</span>
       <h3 class="section-title" style="font-size: 1.3rem;">ALL ANNOUNCEMENTS</h3>
-      <p style="text-align:center; font-size:0.78rem; color:var(--color-stone-light); margin-top:-2px;">Important notices and bulletins from the organizing committee.</p>
-      
+      <p style="text-align:center; font-size:0.78rem; color:var(--color-stone-light); margin-top:-2px;">Important notices and bulletins exclusively from the organizing committee.</p>
+
       <div class="silver-divider"><span class="divider-node"></span></div>
 
       <div id="announcementsListContainer">
@@ -1775,14 +1808,14 @@
     </div>
   </div>
 
-  <!-- Professional Full Scores & Other Events Modal -->
+  <!-- Professional Full Scores Modal -->
   <div class="scores-modal-backdrop" id="scoresModalBackdrop" role="dialog" aria-hidden="true">
     <div class="scores-modal-box">
       <button class="scores-modal-close" id="scoresModalCloseBtn" type="button" aria-label="Close scores">&times;</button>
       <span class="section-eyebrow">TOURNAMENT FEED</span>
       <h3 class="section-title" style="font-size: 1.3rem;">ALL RELEASED RESULTS</h3>
       <p style="text-align:center; font-size:0.78rem; color:var(--color-stone-light); margin-top:-2px;">Verified scores and placements from sports and extra events.</p>
-      
+
       <div class="silver-divider"><span class="divider-node"></span></div>
 
       <!-- Quick Filter Switcher -->
@@ -1835,16 +1868,36 @@
         </div>
       </section>
 
-      <!-- NEWS STORIES -->
+      <!-- NEWS STORIES: STRICTLY LIVE UPDATES & TOURNAMENT ALERT ONLY -->
       <section class="featured-news-section" id="featuredNewsSection">
         <div class="container">
-          <span class="section-eyebrow">LIVE FEED</span>
+          <span class="section-eyebrow">TOURNAMENT DISPATCH</span>
           <h2 class="section-title">TOP STORIES</h2>
+          <p class="section-subtitle">Live game coverage and breaking tournament alerts straight from the field.</p>
           <div class="silver-divider"><span class="divider-node"></span></div>
           <div class="top-stories-container" id="topStoriesContainer">
             <div style="text-align: center; color: var(--color-stone-light); padding: 20px; grid-column: span 2;">
               Loading tournament feed...
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AESTHETIC SECTION AT BOTTOM OF HOME PAGE -->
+      <section class="aesthetic-showcase-section" id="aestheticHomeSection">
+        <div class="container">
+          <div class="aesthetic-feature-card">
+            <div class="aesthetic-icon-wrap">
+              <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            </div>
+            <span class="section-eyebrow">CULTURAL &amp; ARTS SHOWCASE</span>
+            <h2 class="section-title" style="font-size: clamp(1.4rem, 2.5vw, 1.9rem); margin-bottom: 8px;">E-WEEK AESTHETIC PORTAL</h2>
+            <p class="section-subtitle" style="font-size: 0.88rem; max-width: 620px; margin-bottom: 20px;">
+              Discover music, visual media, stage performances, and cultural expressions crafted by the Faculty of Engineering student community.
+            </p>
+            <a href="https://www.eweek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer" class="btn-silver" style="font-size: 0.85rem; padding: 12px 28px;">
+              EXPLORE AESTHETIC PORTAL &rarr;
+            </a>
           </div>
         </div>
       </section>
@@ -1902,7 +1955,7 @@
           <span class="section-eyebrow">APPAREL &amp; SOUVENIRS</span>
           <h2 class="section-title">OFFICIAL MERCHANDISE</h2>
           <p class="section-subtitle">Support your batch. Select apparel, configure sizes, and submit your payment slip.</p>
-          
+
           <div class="merch-subnav">
             <button class="merch-subnav-btn active" id="btnTabCatalog" onclick="toggleMerchSubView('catalog')" type="button">Store Catalog</button>
             <button class="merch-subnav-btn" id="btnTabTracker" onclick="toggleMerchSubView('tracker')" type="button">Track Order Status</button>
@@ -2038,7 +2091,7 @@
   <div class="order-modal-backdrop" id="checkoutOrderModal" role="dialog" aria-hidden="true">
     <div class="order-modal-box">
       <button class="order-modal-close" onclick="closeOrderModal()" type="button" aria-label="Close dialog">&times;</button>
-      
+
       <span class="section-eyebrow">ORDER CONCIERGE</span>
       <h3 class="section-title" style="font-size: 1.25rem; text-align: left;" id="stepperTitle">CHECKOUT</h3>
 
@@ -2192,7 +2245,6 @@
         <li><a class="footer-nav-link" data-target="teams">Teams</a></li>
         <li><a class="footer-nav-link" data-target="fixtures">Fixtures</a></li>
         <li><a class="footer-nav-link" data-target="merch">Merchandise</a></li>
-        <li><a class="footer-nav-link" href="https://www.eweeek.lk/aesthetic.html" target="_blank" rel="noopener noreferrer">Aesthetic</a></li>
         <li><a class="footer-nav-link" data-target="contact">Contact Us</a></li>
       </ul>
       <div style="font-size: 0.72rem; color: var(--color-stone); margin-top: 10px;">&copy; 2026 E-WEEK. All Rights Reserved.</div>
@@ -2222,6 +2274,7 @@
     let uploadedSlipFileName = "";
     let activeWizardStep = 1;
     let globalNewsStore = [];
+    let displayedHomeNews = []; // Filtered strictly for Live Updates / Tournament Alert
     let globalMatchesStore = [];
     let currentScoreFilter = "ALL";
 
@@ -2501,7 +2554,6 @@
 
         badge.innerText = unreadScoresCount > 99 ? '99+' : unreadScoresCount;
         badge.style.display = 'flex';
-        // WhatsApp-like popping animation re-trigger
         badge.style.animation = 'none';
         void badge.offsetWidth;
         badge.style.animation = 'popInWhatsApp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
@@ -2654,7 +2706,6 @@
     }
 
     function openAllScoresModal() {
-      // Clear unread indicator when opened
       unreadScoresCount = 0;
       const badge = document.getElementById('scoresUnreadBadge');
       if (badge) badge.style.display = 'none';
@@ -2664,26 +2715,32 @@
     }
 
     // =========================================================================
-    // ANNOUNCEMENTS MODAL (NOTIFICATION TAB)
+    // CATEGORY HELPERS & ANNOUNCEMENTS MODAL (NOTIFICATION PANEL EXCLUSIVE)
     // =========================================================================
-    function getAnnouncementCategory(item) {
+    function getNormalizedCategory(item) {
       if (!item) return '';
       return String(item.category || item.Category || item.CATEGORY || item.type || item.Type || '').trim();
     }
 
-    function isAnnouncementCategory(category) {
-      if (!category) return false;
-      const cat = String(category).trim().toUpperCase();
-      // Match ANNOUNCEMENT or ANNOUNCEMENTS strictly (skip TOURNAMENT ALERT, LIVE UPDATES, etc.)
-      return cat === 'ANNOUNCEMENT' || cat === 'ANNOUNCEMENTS';
+    function isAnnouncementItem(item) {
+      const cat = getNormalizedCategory(item).toUpperCase();
+      return cat.includes('ANNOUNCEMENT');
+    }
+
+    function isNewsFeedItem(item) {
+      const cat = getNormalizedCategory(item).toUpperCase();
+      // Strictly "LIVE UPDATES" or "TOURNAMENT ALERT" only
+      // Excludes anything matching ANNOUNCEMENT
+      if (isAnnouncementItem(item)) return false;
+      return cat.includes('LIVE UPDATE') || cat.includes('LIVE UPDATES') || cat.includes('TOURNAMENT ALERT') || cat.includes('TOURNAMENT ALERTS') || cat.includes('TOURNAMENT');
     }
 
     function renderAnnouncementsList() {
       const container = document.getElementById('announcementsListContainer');
       if (!container) return;
 
-      // Strictly filter for category ANNOUNCEMENT only (Column B)
-      const announcementItems = (globalNewsStore || []).filter(item => isAnnouncementCategory(getAnnouncementCategory(item)));
+      // Filter strictly for ANNOUNCEMENT items ONLY
+      const announcementItems = (globalNewsStore || []).filter(isAnnouncementItem);
 
       if (announcementItems.length === 0) {
         container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 30px;">No announcements currently posted.</div>`;
@@ -2692,7 +2749,7 @@
         container.innerHTML = reversedNews.map(item => `
           <div class="notif-announcement-card">
             <div class="notif-head-row">
-              <span class="news-badge-tag">${getAnnouncementCategory(item) || "ANNOUNCEMENT"}</span>
+              <span class="news-badge-tag">${getNormalizedCategory(item) || "ANNOUNCEMENT"}</span>
               <span style="font-size: 0.68rem; color: var(--color-stone-light);">${item.date || 'Official Release'}</span>
             </div>
             <h4 class="notif-title-text">${item.title || item.Title || 'Announcement'}</h4>
@@ -2715,40 +2772,46 @@
     }
 
     // =========================================================================
-    // FEATURED NEWS
+    // FEATURED NEWS (STRICTLY "LIVE UPDATES" OR "TOURNAMENT ALERT" ONLY)
     // =========================================================================
     function fetchFeaturedNews() {
       const container = document.getElementById('topStoriesContainer');
       const cbName = 'news_cb_' + Math.round(Math.random() * 1000000);
       loadJSONP(`${SCORES_APPS_SCRIPT_URL}?action=getNews`, cbName, (res) => {
-        const news = (res && res.news) ? res.news : [];
-        globalNewsStore = news;
+        const allItems = (res && res.news) ? res.news : [];
+        globalNewsStore = allItems;
 
-        // Strictly check if any item is under the "ANNOUNCEMENT" category only
-        const hasAnnouncements = news.some(item => isAnnouncementCategory(getAnnouncementCategory(item)));
+        // Notification red dot: check if there are any ANNOUNCEMENT items
+        const hasAnnouncements = allItems.some(isAnnouncementItem);
         const notifDot = document.getElementById('notifDot');
         if (notifDot) {
-          // Keep showing dot if unread and modal is not currently open
           const isModalOpen = document.getElementById('notifModalBackdrop')?.classList.contains('open');
           if (!isModalOpen) {
             notifDot.style.display = hasAnnouncements ? 'block' : 'none';
           }
         }
 
-        // Real-time update: If the announcements dialog is currently open, re-render it automatically
+        // Live update if the announcements modal is already open
         if (document.getElementById('notifModalBackdrop')?.classList.contains('open')) {
           renderAnnouncementsList();
         }
 
         if (!container) return;
-        if (news.length === 0) {
-          container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 20px; grid-column: span 2;">No announcements posted yet.</div>`;
+
+        // STRICT FILTER: Display LIVE UPDATES or TOURNAMENT ALERT only in the Top Stories feed.
+        // Explicitly reject any ANNOUNCEMENT items.
+        displayedHomeNews = allItems.filter(isNewsFeedItem);
+
+        if (displayedHomeNews.length === 0) {
+          container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 20px; grid-column: span 2;">No live updates or tournament alerts at this time.</div>`;
           return;
         }
 
-        const latest = news[news.length - 1];
-        const prev = news.slice(0, news.length - 1).reverse();
+        const latest = displayedHomeNews[displayedHomeNews.length - 1];
+        const prev = displayedHomeNews.slice(0, displayedHomeNews.length - 1).reverse();
         const latestImg = transformDriveImageUrl(latest.imageUrl);
+        const latestCat = getNormalizedCategory(latest) || "LIVE UPDATES";
+        const isAlert = latestCat.toUpperCase().includes('ALERT');
 
         container.innerHTML = `
           <div class="featured-hero-story">
@@ -2757,24 +2820,26 @@
             </div>
             <div class="fhs-content">
               <div>
-                <span class="news-badge-tag">${latest.category || "UPDATE"}</span>
+                <span class="news-badge-tag ${isAlert ? 'tournament-alert' : ''}">${latestCat}</span>
                 <h3 class="news-title-text" style="font-size:1.2rem; margin-top:6px;">${latest.title}</h3>
                 <p class="news-desc-text">${latest.description}</p>
               </div>
-              <button class="news-see-more-btn" onclick="openNewsModal(${news.length - 1})" type="button">Read More &rarr;</button>
+              <button class="news-see-more-btn" onclick="openFilteredNewsModal(${displayedHomeNews.length - 1})" type="button">Read More &rarr;</button>
             </div>
           </div>
           <div class="news-grid-sub">
             ${prev.map((item, idx) => {
-              const origIdx = news.length - 2 - idx;
+              const origIdx = displayedHomeNews.length - 2 - idx;
               const subImg = transformDriveImageUrl(item.imageUrl);
+              const subCat = getNormalizedCategory(item) || "LIVE UPDATES";
+              const subIsAlert = subCat.toUpperCase().includes('ALERT');
               return `
-                <div class="news-card-sub" onclick="openNewsModal(${origIdx})">
+                <div class="news-card-sub" onclick="openFilteredNewsModal(${origIdx})">
                   <div class="ncs-img-wrap">
                     <img src="${subImg}" alt="${item.title}" class="ncs-img" onerror="this.src='logo.png';" />
                   </div>
                   <div class="ncs-body">
-                    <span class="news-badge-tag">${item.category || "NEWS"}</span>
+                    <span class="news-badge-tag ${subIsAlert ? 'tournament-alert' : ''}">${subCat}</span>
                     <h4 class="news-title-text" style="font-size:0.88rem; margin: 4px 0 2px;">${item.title}</h4>
                     <p class="news-desc-text" style="font-size:0.75rem; max-height: 38px; overflow: hidden;">${item.description}</p>
                   </div>
@@ -2786,10 +2851,14 @@
       }, () => {});
     }
 
-    function openNewsModal(idx) {
-      const item = globalNewsStore[idx];
+    function openFilteredNewsModal(idx) {
+      const item = displayedHomeNews[idx];
       if (!item) return;
-      document.getElementById('modalNewsTag').innerText = item.category || "UPDATE";
+      const cat = getNormalizedCategory(item) || "LIVE UPDATES";
+      const badge = document.getElementById('modalNewsTag');
+      badge.innerText = cat;
+      badge.className = 'news-badge-tag' + (cat.toUpperCase().includes('ALERT') ? ' tournament-alert' : '');
+
       document.getElementById('modalNewsImg').src = transformDriveImageUrl(item.imageUrl);
       document.getElementById('modalNewsTitle').innerText = item.title;
       document.getElementById('modalNewsDesc').innerText = item.description;
