@@ -342,7 +342,7 @@
       transition: color 0.15s ease;
     }
     .mob-nav-item svg { width: 19px; height: 19px; margin-bottom: 2px; fill: currentColor; }
-    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
+    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.58rem; font-weight: 700; text-transform: uppercase; }
     .mob-nav-item.active { color: var(--color-gold); }
 
     /* Page Panels */
@@ -813,6 +813,84 @@
       color: var(--color-gold);
     }
     .aesthetic-icon-wrap svg { width: 28px; height: 28px; fill: currentColor; }
+
+    /* DEDICATED ANNOUNCEMENTS PANEL */
+    .announcements-main-section { padding: 90px 0 50px; }
+    .announcements-page-feed {
+      max-width: 820px;
+      margin: 20px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .announcement-full-card {
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border-subtle);
+      border-left: 4px solid var(--color-gold);
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .announcement-full-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-gold);
+    }
+    .announcement-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .announcement-heading {
+      font-family: var(--font-google-sans);
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--color-silver-bright);
+    }
+    .announcement-body-copy {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--color-stone-light);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    /* PUSH NOTIFICATION OPT-IN BANNER */
+    .push-optin-card {
+      background: var(--color-graphite);
+      border: 1px dashed var(--color-gold);
+      border-radius: 16px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .push-optin-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .push-optin-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid var(--color-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold);
+      flex-shrink: 0;
+    }
+    .push-optin-icon svg { width: 22px; height: 22px; fill: currentColor; }
+    .push-optin-title { font-family: var(--font-google-sans); font-size: 0.95rem; font-weight: 800; color: var(--color-silver-bright); }
+    .push-optin-desc { font-size: 0.76rem; color: var(--color-stone-light); }
 
     /* TEAMS & EVENTS */
     .teams-main-section { padding: 90px 0 50px; text-align: center; }
@@ -1402,11 +1480,6 @@
       border-color: rgba(244, 63, 94, 0.35);
       color: var(--color-crimson-red);
     }
-    .pro-match-status-badge.other-event {
-      background: rgba(139, 92, 246, 0.15);
-      border-color: rgba(139, 92, 246, 0.35);
-      color: #a78bfa;
-    }
 
     .pro-match-body-grid {
       display: grid;
@@ -1728,11 +1801,15 @@
     <span class="scores-badge-counter" id="scoresUnreadBadge">0</span>
   </button>
 
-  <!-- Mobile Bottom Navigation Bar (Aesthetic Tab Removed) -->
+  <!-- Mobile Bottom Navigation Bar -->
   <nav class="mobile-bottom-bar" aria-label="Mobile Navigation">
     <button class="mob-nav-item active" data-target="home" type="button">
       <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
       <span>Home</span>
+    </button>
+    <button class="mob-nav-item" data-target="announcements" type="button">
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg>
+      <span>Notices</span>
     </button>
     <button class="mob-nav-item" data-target="teams" type="button">
       <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
@@ -1752,7 +1829,7 @@
     </button>
   </nav>
 
-  <!-- Top App Header with Theme Toggler & Notification Symbol (Aesthetic Tab Removed) -->
+  <!-- Top App Header with Theme Toggler & Notification Symbol -->
   <header class="site-header" id="siteHeader">
     <div class="nav-wrapper">
       <div class="brand-identity" onclick="switchTab('home')" aria-label="E-WEEK 2026 Home">
@@ -1764,6 +1841,7 @@
         <nav aria-label="Primary Navigation">
           <ul class="desktop-nav-menu">
             <li><a class="nav-item-link active" data-target="home">Home</a></li>
+            <li><a class="nav-item-link" data-target="announcements">Announcements</a></li>
             <li><a class="nav-item-link" data-target="teams">Teams</a></li>
             <li><a class="nav-item-link" data-target="fixtures">Fixtures</a></li>
             <li><a class="nav-item-link" data-target="merch">Merchandise</a></li>
@@ -1771,17 +1849,16 @@
           </ul>
         </nav>
 
-        <!-- Header Actions: Notifications & Theme Toggler -->
         <div class="header-actions-group">
-          <!-- Notification Bell Tab (Announcements Exclusively) -->
-          <button class="header-circle-btn" id="notifBtn" onclick="openAnnouncementsModal()" aria-label="Announcements & Notifications" title="Announcements">
+          <!-- Notification Bell Tab (Announcements Quick Modal) -->
+          <button class="header-circle-btn" id="notifBtn" onclick="openAnnouncementsModal()" aria-label="Announcements & Notifications" title="Official Announcements">
             <svg viewBox="0 0 24 24">
               <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
             </svg>
             <span class="notif-badge-dot" id="notifDot"></span>
           </button>
 
-          <!-- Theme Toggler Widget located in Header -->
+          <!-- Theme Toggler -->
           <button class="header-circle-btn" id="headerThemeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
             <svg id="themeIcon" viewBox="0 0 24 24">
               <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
@@ -1792,12 +1869,12 @@
     </div>
   </header>
 
-  <!-- ANNOUNCEMENTS NOTIFICATION MODAL (ANNOUNCEMENT ITEMS ONLY) -->
+  <!-- ANNOUNCEMENTS QUICK MODAL (POPUP FEED) -->
   <div class="notif-modal-backdrop" id="notifModalBackdrop" role="dialog" aria-hidden="true">
     <div class="notif-modal-box">
       <button class="notif-modal-close" onclick="closeAnnouncementsModal()" type="button" aria-label="Close Announcements">&times;</button>
       <span class="section-eyebrow">OFFICIAL BROADCASTS</span>
-      <h3 class="section-title" style="font-size: 1.3rem;">ALL ANNOUNCEMENTS</h3>
+      <h3 class="section-title" style="font-size: 1.3rem;">ANNOUNCEMENTS FEED</h3>
       <p style="text-align:center; font-size:0.78rem; color:var(--color-stone-light); margin-top:-2px;">Important notices and bulletins exclusively from the organizing committee.</p>
 
       <div class="silver-divider"><span class="divider-node"></span></div>
@@ -1808,7 +1885,7 @@
     </div>
   </div>
 
-  <!-- Professional Full Scores Modal -->
+  <!-- Full Tournament Scores Modal -->
   <div class="scores-modal-backdrop" id="scoresModalBackdrop" role="dialog" aria-hidden="true">
     <div class="scores-modal-box">
       <button class="scores-modal-close" id="scoresModalCloseBtn" type="button" aria-label="Close scores">&times;</button>
@@ -1818,7 +1895,6 @@
 
       <div class="silver-divider"><span class="divider-node"></span></div>
 
-      <!-- Quick Filter Switcher -->
       <div class="scores-filter-bar">
         <button type="button" class="scores-filter-btn active" onclick="setScoresFilter('ALL', this)">ALL RESULTS</button>
         <button type="button" class="scores-filter-btn" onclick="setScoresFilter('MATCHES', this)">MATCH SCORES</button>
@@ -1901,6 +1977,38 @@
           </div>
         </div>
       </section>
+    </section>
+
+    <!-- DEDICATED ANNOUNCEMENTS PANEL WITH PUSH OPT-IN -->
+    <section class="page-panel" id="panel-announcements">
+      <div class="container announcements-main-section">
+        <span class="section-eyebrow">OFFICIAL BULLETIN</span>
+        <h1 class="section-title">ANNOUNCEMENTS &amp; NOTICES</h1>
+        <p class="section-subtitle">Verified circulars, rule changes, and urgent schedules from the E23 organizing committee.</p>
+        <div class="silver-divider"><span class="divider-node"></span></div>
+
+        <!-- Push Notifications Opt-In Card -->
+        <div class="push-optin-card" id="pushOptinBanner">
+          <div class="push-optin-info">
+            <div class="push-optin-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+            </div>
+            <div>
+              <div class="push-optin-title" id="pushStatusText">Receive Real-Time Device Notifications</div>
+              <div class="push-optin-desc">Stay immediately alerted when the organizing committee posts urgent notices or match updates.</div>
+            </div>
+          </div>
+          <button type="button" class="btn-silver" id="btnTogglePush" onclick="requestNotificationSubscription()" style="padding: 8px 18px; font-size: 0.76rem;">
+            ENABLE PUSH ALERTS
+          </button>
+        </div>
+
+        <div class="announcements-page-feed" id="announcementsPageFeed">
+          <div style="text-align: center; color: var(--color-stone-light); padding: 30px;">
+            Loading official announcements...
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- TEAMS PANEL -->
@@ -2095,7 +2203,6 @@
       <span class="section-eyebrow">ORDER CONCIERGE</span>
       <h3 class="section-title" style="font-size: 1.25rem; text-align: left;" id="stepperTitle">CHECKOUT</h3>
 
-      <!-- 3-Step Wizard Navigation -->
       <div class="order-stepper-header">
         <div class="step-node active" id="stepNode1">
           <div class="step-circle">1</div>
@@ -2220,7 +2327,7 @@
     </div>
   </div>
 
-  <!-- News Modal (Full uncropped image display) -->
+  <!-- News Modal -->
   <div class="news-modal-backdrop" id="newsModalBackdrop" role="dialog" aria-hidden="true">
     <div class="news-modal-box">
       <button class="news-modal-close" id="newsModalCloseBtn" type="button">&times;</button>
@@ -2242,6 +2349,7 @@
       <p style="font-size: 0.8rem; color: var(--color-stone-light); margin-top: 4px;">Faculty of Engineering &bull; University of Jaffna &bull; Organized by E23</p>
       <ul class="footer-nav-list">
         <li><a class="footer-nav-link" data-target="home">Home</a></li>
+        <li><a class="footer-nav-link" data-target="announcements">Announcements</a></li>
         <li><a class="footer-nav-link" data-target="teams">Teams</a></li>
         <li><a class="footer-nav-link" data-target="fixtures">Fixtures</a></li>
         <li><a class="footer-nav-link" data-target="merch">Merchandise</a></li>
@@ -2306,8 +2414,10 @@
         const parts = str.split('drive.google.com/file/d/')[1];
         fileId = parts ? parts.split('/')[0] : null;
       } else if (str.includes('id=')) {
-        const urlObj = new URL(str.startsWith('http') ? str : 'https://' + str);
-        fileId = urlObj.searchParams.get('id');
+        try {
+          const urlObj = new URL(str.startsWith('http') ? str : 'https://' + str);
+          fileId = urlObj.searchParams.get('id');
+        } catch (e) {}
       }
       if (fileId) return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
       return str;
@@ -2324,7 +2434,11 @@
       renderMerchCatalogCards();
       renderSmoothLeaderboard();
 
-      // Initial Fetch
+      // Initialize Service Worker & Check Push Status
+      initServiceWorker();
+      checkPushNotificationStatus();
+
+      // Initial Data Fetch
       fetchLiveScores();
       fetchFeaturedNews();
       fetchFixtures();
@@ -2356,6 +2470,75 @@
       toastTimeout = setTimeout(() => {
         toast.classList.remove('show');
       }, 3200);
+    }
+
+    // =========================================================================
+    // SERVICE WORKER & WEB PUSH SYSTEM
+    // =========================================================================
+    function initServiceWorker() {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js')
+          .then((registration) => {
+            console.log('E-WEEK SW Registered:', registration.scope);
+          })
+          .catch((err) => {
+            console.warn('SW registration bypassed:', err);
+          });
+
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          if (event.data && event.data.action === 'open_announcements') {
+            switchTab('announcements');
+          }
+        });
+      }
+    }
+
+    function checkPushNotificationStatus() {
+      const btn = document.getElementById('btnTogglePush');
+      const statusText = document.getElementById('pushStatusText');
+      if (!('Notification' in window) || !btn) return;
+
+      if (Notification.permission === 'granted') {
+        btn.innerText = 'NOTIFICATIONS ACTIVE';
+        btn.classList.add('btn-silver-secondary');
+        btn.disabled = true;
+        if (statusText) statusText.innerText = 'Device Push Notifications Enabled';
+      } else if (Notification.permission === 'denied') {
+        btn.innerText = 'PERMISSION BLOCKED';
+        btn.classList.add('btn-silver-secondary');
+        btn.disabled = true;
+        if (statusText) statusText.innerText = 'Notifications Blocked in Browser Settings';
+      }
+    }
+
+    async function requestNotificationSubscription() {
+      if (!('Notification' in window)) {
+        showToast("Web Notifications are not supported in this browser.", "error");
+        return;
+      }
+
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          checkPushNotificationStatus();
+          showToast("Push Notifications enabled successfully!", "success");
+
+          if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+            navigator.serviceWorker.ready.then((reg) => {
+              reg.showNotification('E-WEEK 2026 Connected!', {
+                body: 'You are now synced for real-time tournament alerts and batch notices.',
+                icon: 'logo.png',
+                badge: 'logo.png'
+              });
+            });
+          }
+        } else {
+          showToast("Notification permission was denied.", "error");
+          checkPushNotificationStatus();
+        }
+      } catch (err) {
+        console.error("Notification permission error:", err);
+      }
     }
 
     function toggleTheme() {
@@ -2715,7 +2898,7 @@
     }
 
     // =========================================================================
-    // CATEGORY HELPERS & ANNOUNCEMENTS MODAL (NOTIFICATION PANEL EXCLUSIVE)
+    // CATEGORY HELPERS & ANNOUNCEMENTS LOGIC
     // =========================================================================
     function getNormalizedCategory(item) {
       if (!item) return '';
@@ -2735,18 +2918,24 @@
       return cat.includes('LIVE UPDATE') || cat.includes('LIVE UPDATES') || cat.includes('TOURNAMENT ALERT') || cat.includes('TOURNAMENT ALERTS') || cat.includes('TOURNAMENT');
     }
 
-    function renderAnnouncementsList() {
-      const container = document.getElementById('announcementsListContainer');
-      if (!container) return;
+    function renderAnnouncementsFeed() {
+      const modalContainer = document.getElementById('announcementsListContainer');
+      const pageFeedContainer = document.getElementById('announcementsPageFeed');
 
-      // Filter strictly for ANNOUNCEMENT items ONLY
       const announcementItems = (globalNewsStore || []).filter(isAnnouncementItem);
 
       if (announcementItems.length === 0) {
-        container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 30px;">No announcements currently posted.</div>`;
-      } else {
-        const reversedNews = [...announcementItems].reverse();
-        container.innerHTML = reversedNews.map(item => `
+        const emptyHtml = `<div style="text-align: center; color: var(--color-stone-light); padding: 30px;">No official announcements posted yet.</div>`;
+        if (modalContainer) modalContainer.innerHTML = emptyHtml;
+        if (pageFeedContainer) pageFeedContainer.innerHTML = emptyHtml;
+        return;
+      }
+
+      const reversed = [...announcementItems].reverse();
+
+      // Render Modal list
+      if (modalContainer) {
+        modalContainer.innerHTML = reversed.map(item => `
           <div class="notif-announcement-card">
             <div class="notif-head-row">
               <span class="news-badge-tag">${getNormalizedCategory(item) || "ANNOUNCEMENT"}</span>
@@ -2757,13 +2946,27 @@
           </div>
         `).join('');
       }
+
+      // Render Dedicated Announcements Page
+      if (pageFeedContainer) {
+        pageFeedContainer.innerHTML = reversed.map(item => `
+          <article class="announcement-full-card">
+            <div class="announcement-top-bar">
+              <span class="news-badge-tag">${getNormalizedCategory(item) || "ANNOUNCEMENT"}</span>
+              <span style="font-size: 0.72rem; color: var(--color-stone-light); font-weight:600;">${item.date || 'Official Circular'}</span>
+            </div>
+            <h3 class="announcement-heading">${item.title || item.Title || 'Official Notice'}</h3>
+            <p class="announcement-body-copy">${item.description || item.Description || item.desc || ''}</p>
+          </article>
+        `).join('');
+      }
     }
 
     function openAnnouncementsModal() {
       const dot = document.getElementById('notifDot');
       if (dot) dot.style.display = 'none';
 
-      renderAnnouncementsList();
+      renderAnnouncementsFeed();
       document.getElementById('notifModalBackdrop').classList.add('open');
     }
 
@@ -2781,7 +2984,6 @@
         const allItems = (res && res.news) ? res.news : [];
         globalNewsStore = allItems;
 
-        // Notification red dot: check if there are any ANNOUNCEMENT items
         const hasAnnouncements = allItems.some(isAnnouncementItem);
         const notifDot = document.getElementById('notifDot');
         if (notifDot) {
@@ -2791,15 +2993,11 @@
           }
         }
 
-        // Live update if the announcements modal is already open
-        if (document.getElementById('notifModalBackdrop')?.classList.contains('open')) {
-          renderAnnouncementsList();
-        }
+        renderAnnouncementsFeed();
 
         if (!container) return;
 
-        // STRICT FILTER: Display LIVE UPDATES or TOURNAMENT ALERT only in the Top Stories feed.
-        // Explicitly reject any ANNOUNCEMENT items.
+        // Filter: Live Updates and Tournament Alerts only
         displayedHomeNews = allItems.filter(isNewsFeedItem);
 
         if (displayedHomeNews.length === 0) {
