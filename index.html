@@ -1,5 +1,5 @@
 <!-- ==========================================================================
-     FILE: index.html (Ultra Smooth Native-Feel E-WEEK 2026 Portal)
+     FILE: index.html (Ultra Smooth Native-Feel E-WEEK 2026 Portal with Reels)
      ========================================================================== -->
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
@@ -342,7 +342,7 @@
       transition: color 0.15s ease;
     }
     .mob-nav-item svg { width: 19px; height: 19px; margin-bottom: 2px; fill: currentColor; }
-    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.6rem; font-weight: 700; text-transform: uppercase; }
+    .mob-nav-item span { font-family: var(--font-google-sans); font-size: 0.58rem; font-weight: 700; text-transform: uppercase; }
     .mob-nav-item.active { color: var(--color-gold); }
 
     /* Page Panels */
@@ -1699,6 +1699,126 @@
     .footer-nav-list { display: flex; align-items: center; justify-content: center; gap: 14px; list-style: none; flex-wrap: wrap; margin: 10px 0; }
     .footer-nav-link { font-family: var(--font-google-sans); font-size: 0.72rem; font-weight: 700; color: var(--color-silver-mid); text-transform: uppercase; cursor: pointer; }
 
+    /* ==========================================================================
+       TIKTOK / REELS FEED ARCHITECTURE
+       ========================================================================== */
+    .reels-fullscreen-viewport {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 65px - 56px);
+      margin-top: 60px;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      background: #000;
+    }
+    .reels-fullscreen-viewport::-webkit-scrollbar { display: none; }
+
+    .reel-snap-item {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      overflow: hidden;
+    }
+    .reel-video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      height: 100%;
+      background: #05070c;
+    }
+    .reel-video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: auto;
+    }
+    .reel-bottom-meta {
+      position: absolute;
+      bottom: 24px;
+      left: 16px;
+      right: 76px;
+      z-index: 10;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.85);
+      pointer-events: none;
+    }
+    .reel-batch-tag {
+      display: inline-block;
+      font-family: var(--font-google-sans);
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--color-gold);
+      background: rgba(0,0,0,0.65);
+      border: 1px solid var(--color-card-border);
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+    .reel-caption-text {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: #fff;
+      line-height: 1.4;
+      max-height: 58px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .reel-actions-rail {
+      position: absolute;
+      bottom: 24px;
+      right: 12px;
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+    .reel-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      background: rgba(17, 23, 38, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      justify-content: center;
+      cursor: pointer;
+      color: #fff;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .reel-action-btn:active {
+      transform: scale(1.25);
+    }
+    .reel-action-btn.reacted {
+      border-color: var(--color-gold);
+      background: rgba(245, 158, 11, 0.2);
+    }
+    .reel-emoji-icon {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+    .reel-count-val {
+      font-family: var(--font-google-sans);
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: #fff;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+    }
+
     @media (max-width: 992px) {
       .desktop-nav-menu { display: none; }
       .top-stories-container, .contact-grid-layout { grid-template-columns: 1fr; }
@@ -1728,11 +1848,15 @@
     <span class="scores-badge-counter" id="scoresUnreadBadge">0</span>
   </button>
 
-  <!-- Mobile Bottom Navigation Bar (Aesthetic Tab Removed) -->
+  <!-- Mobile Bottom Navigation Bar (Updated with Reels Tab) -->
   <nav class="mobile-bottom-bar" aria-label="Mobile Navigation">
     <button class="mob-nav-item active" data-target="home" type="button">
       <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
       <span>Home</span>
+    </button>
+    <button class="mob-nav-item" data-target="reels" type="button">
+      <svg viewBox="0 0 24 24"><path d="M4 6.47L5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z"/></svg>
+      <span>Reels</span>
     </button>
     <button class="mob-nav-item" data-target="teams" type="button">
       <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
@@ -1752,7 +1876,7 @@
     </button>
   </nav>
 
-  <!-- Top App Header with Theme Toggler & Notification Symbol (Aesthetic Tab Removed) -->
+  <!-- Top App Header with Theme Toggler & Notification Symbol -->
   <header class="site-header" id="siteHeader">
     <div class="nav-wrapper">
       <div class="brand-identity" onclick="switchTab('home')" aria-label="E-WEEK 2026 Home">
@@ -1764,6 +1888,7 @@
         <nav aria-label="Primary Navigation">
           <ul class="desktop-nav-menu">
             <li><a class="nav-item-link active" data-target="home">Home</a></li>
+            <li><a class="nav-item-link" data-target="reels">Reels</a></li>
             <li><a class="nav-item-link" data-target="teams">Teams</a></li>
             <li><a class="nav-item-link" data-target="fixtures">Fixtures</a></li>
             <li><a class="nav-item-link" data-target="merch">Merchandise</a></li>
@@ -1773,7 +1898,6 @@
 
         <!-- Header Actions: Notifications & Theme Toggler -->
         <div class="header-actions-group">
-          <!-- Notification Bell Tab (Announcements Exclusively) -->
           <button class="header-circle-btn" id="notifBtn" onclick="openAnnouncementsModal()" aria-label="Announcements & Notifications" title="Announcements">
             <svg viewBox="0 0 24 24">
               <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
@@ -1781,7 +1905,6 @@
             <span class="notif-badge-dot" id="notifDot"></span>
           </button>
 
-          <!-- Theme Toggler Widget located in Header -->
           <button class="header-circle-btn" id="headerThemeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
             <svg id="themeIcon" viewBox="0 0 24 24">
               <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
@@ -1792,7 +1915,7 @@
     </div>
   </header>
 
-  <!-- ANNOUNCEMENTS NOTIFICATION MODAL (ANNOUNCEMENT ITEMS ONLY) -->
+  <!-- ANNOUNCEMENTS NOTIFICATION MODAL -->
   <div class="notif-modal-backdrop" id="notifModalBackdrop" role="dialog" aria-hidden="true">
     <div class="notif-modal-box">
       <button class="notif-modal-close" onclick="closeAnnouncementsModal()" type="button" aria-label="Close Announcements">&times;</button>
@@ -1808,7 +1931,7 @@
     </div>
   </div>
 
-  <!-- Professional Full Scores Modal -->
+  <!-- Full Scores Modal -->
   <div class="scores-modal-backdrop" id="scoresModalBackdrop" role="dialog" aria-hidden="true">
     <div class="scores-modal-box">
       <button class="scores-modal-close" id="scoresModalCloseBtn" type="button" aria-label="Close scores">&times;</button>
@@ -1818,7 +1941,6 @@
 
       <div class="silver-divider"><span class="divider-node"></span></div>
 
-      <!-- Quick Filter Switcher -->
       <div class="scores-filter-bar">
         <button type="button" class="scores-filter-btn active" onclick="setScoresFilter('ALL', this)">ALL RESULTS</button>
         <button type="button" class="scores-filter-btn" onclick="setScoresFilter('MATCHES', this)">MATCH SCORES</button>
@@ -1843,7 +1965,7 @@
 
           <div class="hero-intro-badge-box">
             <p class="hero-intro-text">
-               <strong>E-WEEK 2026</strong> is proudly organized by Batch E23 at the Faculty of Engineering, University of Jaffna. Bringing together all engineering batches and staff in an epic showcase of intellect, skill, and sportsmanship. Across intense competitive fixtures spanning technical hackathons, sports tournaments, cultural exhibitions, and esports trials, compete with honor to establish annual faculty supremacy.
+               <strong>E-WEEK 2026</strong> is proudly organized by Batch E23 at the Faculty of Engineering, University of Jaffna. Bringing together all engineering batches and staff in an epic showcase of intellect, skill, and sportsmanship.
             </p>
           </div>
         </div>
@@ -1868,7 +1990,7 @@
         </div>
       </section>
 
-      <!-- NEWS STORIES: STRICTLY LIVE UPDATES & TOURNAMENT ALERT ONLY -->
+      <!-- NEWS STORIES -->
       <section class="featured-news-section" id="featuredNewsSection">
         <div class="container">
           <span class="section-eyebrow">TOURNAMENT DISPATCH</span>
@@ -1883,7 +2005,7 @@
         </div>
       </section>
 
-      <!-- AESTHETIC SECTION AT BOTTOM OF HOME PAGE -->
+      <!-- AESTHETIC SECTION -->
       <section class="aesthetic-showcase-section" id="aestheticHomeSection">
         <div class="container">
           <div class="aesthetic-feature-card">
@@ -1901,6 +2023,13 @@
           </div>
         </div>
       </section>
+    </section>
+
+    <!-- REELS PANEL (VERTICAL TIKTOK-STYLE SHORT VIDEO FEED) -->
+    <section class="page-panel" id="panel-reels" style="padding: 0; background: #000;">
+      <div class="reels-fullscreen-viewport" id="reelsViewport">
+        <!-- Initially empty; if no videos, renders nothing -->
+      </div>
     </section>
 
     <!-- TEAMS PANEL -->
@@ -2038,18 +2167,6 @@
                 </a>
               </div>
 
-              <h3 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--color-silver-bright); margin: 18px 0 12px; border-bottom: 1px solid var(--color-card-border-subtle); padding-bottom: 8px;">Editorial Board</h3>
-              <div class="committee-grid">
-                <a href="tel:0701601718" class="member-card">
-                  <img src="editor.jpeg" alt="Prianjana W.K.D.N." class="member-avatar" onerror="this.src='logo.png';" />
-                  <div><div class="member-role">Editor</div><div class="member-name">Prianjana W.K.D.N.</div><span class="member-phone">070 160 1718</span></div>
-                </a>
-                <a href="tel:0757093260" class="member-card">
-                  <img src="editor2.jpeg" alt="Alaxan S." class="member-avatar" onerror="this.src='logo.png';" />
-                  <div><div class="member-role">Editor</div><div class="member-name">Alaxan S.</div><span class="member-phone">075 709 3260</span></div>
-                </a>
-              </div>
-
               <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--color-card-border-subtle);">
                 <a href="mailto:eweek2026@gmail.com" class="member-card" style="justify-content: flex-start; gap: 14px;">
                   <div style="width: 44px; height: 44px; border-radius: 50%; background: var(--color-obsidian); border: 2px solid var(--color-gold); display: flex; align-items: center; justify-content: center; color: var(--color-gold); font-weight: 800; font-size: 1.1rem;">@</div>
@@ -2091,47 +2208,25 @@
   <div class="order-modal-backdrop" id="checkoutOrderModal" role="dialog" aria-hidden="true">
     <div class="order-modal-box">
       <button class="order-modal-close" onclick="closeOrderModal()" type="button" aria-label="Close dialog">&times;</button>
-
       <span class="section-eyebrow">ORDER CONCIERGE</span>
       <h3 class="section-title" style="font-size: 1.25rem; text-align: left;" id="stepperTitle">CHECKOUT</h3>
 
-      <!-- 3-Step Wizard Navigation -->
       <div class="order-stepper-header">
-        <div class="step-node active" id="stepNode1">
-          <div class="step-circle">1</div>
-          <span class="step-label">Details</span>
-        </div>
-        <div class="step-node" id="stepNode2">
-          <div class="step-circle">2</div>
-          <span class="step-label">Payment</span>
-        </div>
-        <div class="step-node" id="stepNode3">
-          <div class="step-circle">3</div>
-          <span class="step-label">Complete</span>
-        </div>
+        <div class="step-node active" id="stepNode1"><div class="step-circle">1</div><span class="step-label">Details</span></div>
+        <div class="step-node" id="stepNode2"><div class="step-circle">2</div><span class="step-label">Payment</span></div>
+        <div class="step-node" id="stepNode3"><div class="step-circle">3</div><span class="step-label">Complete</span></div>
       </div>
 
-      <!-- STEP 1: REVIEW & CUSTOMER DETAILS -->
+      <!-- STEP 1 -->
       <div class="step-view active" id="stepView1">
         <div style="margin-bottom: 14px; max-height: 160px; overflow-y: auto;" id="cartModalSummaryList"></div>
-
         <div style="display:flex; justify-content:space-between; align-items:center; background: var(--color-graphite); padding: 10px 14px; border-radius: 10px; margin-bottom: 14px; border: 1px solid var(--color-card-border-subtle);">
           <span style="font-weight:700; font-size:0.85rem; color:var(--color-silver-mid);">Total Payable:</span>
           <span style="font-size:1.35rem; font-family:var(--font-sport); font-weight:800; color:var(--color-gold);" id="cartModalTotalPayable">0 LKR</span>
         </div>
-
-        <div class="form-group">
-          <label class="form-label">Full Name *</label>
-          <input type="text" id="custFullName" class="form-input" placeholder="e.g. Kasun Fernando" required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Registration Number (Index No.) *</label>
-          <input type="text" id="custRegNumber" class="form-input" placeholder="e.g. 2023/E/158" required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">WhatsApp Mobile Number *</label>
-          <input type="tel" id="custWhatsApp" class="form-input" placeholder="e.g. 0771234567" required />
-        </div>
+        <div class="form-group"><label class="form-label">Full Name *</label><input type="text" id="custFullName" class="form-input" placeholder="e.g. Kasun Fernando" required /></div>
+        <div class="form-group"><label class="form-label">Registration Number (Index No.) *</label><input type="text" id="custRegNumber" class="form-input" placeholder="e.g. 2023/E/158" required /></div>
+        <div class="form-group"><label class="form-label">WhatsApp Mobile Number *</label><input type="tel" id="custWhatsApp" class="form-input" placeholder="e.g. 0771234567" required /></div>
         <div class="form-group">
           <label class="form-label">University Batch *</label>
           <select id="custBatchSelect" class="form-input" required>
@@ -2143,22 +2238,14 @@
             <option value="STAFF">Academic / Non-Academic Staff</option>
           </select>
         </div>
-
-        <button type="button" class="btn-silver" onclick="goToWizardStep(2)" style="width: 100%; margin-top: 10px;">
-          CONTINUE TO PAYMENT &rarr;
-        </button>
+        <button type="button" class="btn-silver" onclick="goToWizardStep(2)" style="width: 100%; margin-top: 10px;">CONTINUE TO PAYMENT &rarr;</button>
       </div>
 
-      <!-- STEP 2: BANK DEPOSIT & SLIP SUBMISSION -->
+      <!-- STEP 2 -->
       <div class="step-view" id="stepView2">
         <div class="bank-details-card">
-          <div class="bank-card-title">
-            <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor;"><path d="M4 10v7h3v-7H4zm6 0v7h3v-7h-3zM2 22h19v-3H2v3zm14-12v7h3v-7h-3zm-4.5-9L2 6v2h19V6l-9.5-5z"/></svg>
-            Bank of Ceylon Transfer Details
-          </div>
-          <div style="font-size: 0.78rem; color: var(--color-silver-mid); margin-bottom: 6px;">
-            Beneficiary: <strong style="color:var(--color-silver-bright);">Aniruththish T. (Treasurer)</strong>
-          </div>
+          <div class="bank-card-title">Bank of Ceylon Transfer Details</div>
+          <div style="font-size: 0.78rem; color: var(--color-silver-mid); margin-bottom: 6px;">Beneficiary: <strong style="color:var(--color-silver-bright);">Aniruththish T. (Treasurer)</strong></div>
           <div class="bank-acc-grid">
             <span class="bank-acc-num" id="bankAccNumberText">97171666</span>
             <button type="button" class="btn-copy-acc" onclick="copyBankAccNumber()">COPY NUMBER</button>
@@ -2173,7 +2260,6 @@
             <div style="font-size: 0.68rem; color: var(--color-stone-light); margin-top: 2px;">Supports JPG, PNG, PDF up to 5MB</div>
             <input type="file" id="bankSlipFileInput" style="display: none;" accept="image/*,application/pdf" onchange="handleBankSlipUpload(event)" />
           </div>
-
           <div class="slip-preview-container" id="slipPreviewBar">
             <div style="display:flex; align-items:center; gap:8px;">
               <img id="slipThumbImg" class="slip-preview-thumb" src="" alt="Slip Preview" />
@@ -2184,43 +2270,30 @@
         </div>
 
         <div style="display:flex; gap:10px; margin-top: 16px;">
-          <button type="button" class="btn-silver btn-silver-secondary" onclick="goToWizardStep(1)" style="flex: 1;">
-            &larr; BACK
-          </button>
-          <button type="button" class="btn-silver" id="btnSubmitOrder" onclick="executeFinalOrderSubmission()" style="flex: 1.5;">
-            SUBMIT ORDER
-          </button>
+          <button type="button" class="btn-silver btn-silver-secondary" onclick="goToWizardStep(1)" style="flex: 1;">&larr; BACK</button>
+          <button type="button" class="btn-silver" id="btnSubmitOrder" onclick="executeFinalOrderSubmission()" style="flex: 1.5;">SUBMIT ORDER</button>
         </div>
       </div>
 
-      <!-- STEP 3: ORDER CONFIRMED -->
+      <!-- STEP 3 -->
       <div class="step-view" id="stepView3">
         <div class="order-success-card">
-          <div class="success-check-bubble">
-            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-          </div>
+          <div class="success-check-bubble"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
           <h3 style="font-family: var(--font-display); font-size: 1.35rem; color: var(--color-silver-bright); margin-bottom: 4px;">ORDER SUBMITTED!</h3>
           <p style="font-size: 0.8rem; color: var(--color-stone-light);">Your deposit slip has been securely transmitted for committee verification.</p>
-
           <div class="invoice-token-badge">
             <span style="font-family: var(--font-google-sans); font-size: 0.7rem; font-weight: 800; color: var(--color-stone-light); text-transform: uppercase;">INVOICE ID:</span>
             <span class="invoice-token-val" id="confirmedInvoiceId">EW26-000000</span>
             <button type="button" class="btn-copy-acc" onclick="copyInvoiceId()">COPY</button>
           </div>
-
-          <div style="background: var(--color-graphite); border-radius: 12px; padding: 12px; font-size: 0.78rem; text-align: left; margin-bottom: 18px; border: 1px solid var(--color-card-border-subtle);" id="confirmedOrderSummaryBox">
-          </div>
-
-          <button type="button" class="btn-silver" onclick="closeOrderModalAndReset()" style="width: 100%;">
-            RETURN TO TOURNAMENT PORTAL
-          </button>
+          <div style="background: var(--color-graphite); border-radius: 12px; padding: 12px; font-size: 0.78rem; text-align: left; margin-bottom: 18px; border: 1px solid var(--color-card-border-subtle);" id="confirmedOrderSummaryBox"></div>
+          <button type="button" class="btn-silver" onclick="closeOrderModalAndReset()" style="width: 100%;">RETURN TO TOURNAMENT PORTAL</button>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- News Modal (Full uncropped image display) -->
+  <!-- News Modal -->
   <div class="news-modal-backdrop" id="newsModalBackdrop" role="dialog" aria-hidden="true">
     <div class="news-modal-box">
       <button class="news-modal-close" id="newsModalCloseBtn" type="button">&times;</button>
@@ -2242,6 +2315,7 @@
       <p style="font-size: 0.8rem; color: var(--color-stone-light); margin-top: 4px;">Faculty of Engineering &bull; University of Jaffna &bull; Organized by E23</p>
       <ul class="footer-nav-list">
         <li><a class="footer-nav-link" data-target="home">Home</a></li>
+        <li><a class="footer-nav-link" data-target="reels">Reels</a></li>
         <li><a class="footer-nav-link" data-target="teams">Teams</a></li>
         <li><a class="footer-nav-link" data-target="fixtures">Fixtures</a></li>
         <li><a class="footer-nav-link" data-target="merch">Merchandise</a></li>
@@ -2251,10 +2325,9 @@
     </div>
   </footer>
 
-  <!-- =========================================================================
-       JAVASCRIPT LOGIC
-       ========================================================================= -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
+    const REELS_BACKEND_URL = "https://script.google.com/macros/s/AKfycbwaDyePYIYBxKz-f0S-Vloh8o2JuBgY_f172mJfdCRGEGu-EQ0mIjUSBYqoKrQn10GgPQ/exec";
     const MERCH_BACKEND_URL = "https://script.google.com/macros/s/AKfycbx4BJRrLSyVgC3U9WobDSao5egyWwpvfrvSkLE0c3L2wNmU7Zv80ih_6ovSyxj3GkK8/exec";
     const SCORES_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzo1KtK5zMkmLykmHdjJRqzNEtGccwfM1wGNF7JGB6mYiRDBJdSQ3cboJo4-hRerV4TQ/exec";
     const TEAMS_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkFJsbdHQFZDAiFYWXyCIUvGbmbt0PxGqSGjm_FCEFvjSIC11CUEFyrhlcK30pzJ9fBg/exec";
@@ -2274,11 +2347,11 @@
     let uploadedSlipFileName = "";
     let activeWizardStep = 1;
     let globalNewsStore = [];
-    let displayedHomeNews = []; // Filtered strictly for Live Updates / Tournament Alert
+    let displayedHomeNews = [];
     let globalMatchesStore = [];
     let currentScoreFilter = "ALL";
+    let globalReelsStore = [];
 
-    // Track seen match count for WhatsApp popping badge
     let previousMatchCount = null;
     let unreadScoresCount = 0;
 
@@ -2324,13 +2397,14 @@
       renderMerchCatalogCards();
       renderSmoothLeaderboard();
 
-      // Initial Fetch
       fetchLiveScores();
       fetchFeaturedNews();
       fetchFixtures();
+      fetchReels();
 
       setInterval(fetchLiveScores, 5000);
       setInterval(fetchFeaturedNews, 5000);
+      setInterval(fetchReels, 15000);
     });
 
     let toastTimeout = null;
@@ -2413,6 +2487,96 @@
       document.body.appendChild(script);
     }
 
+    // =========================================================================
+    // REELS INTEGRATION LOGIC
+    // =========================================================================
+    function fetchReels() {
+      const cbName = 'reels_cb_' + Math.round(Math.random() * 1000000);
+      loadJSONP(`${REELS_BACKEND_URL}?action=getReels`, cbName, (res) => {
+        if (res && res.success && Array.isArray(res.reels)) {
+          globalReelsStore = res.reels;
+          renderReelsViewport();
+        }
+      }, () => {});
+    }
+
+    function renderReelsViewport() {
+      const viewport = document.getElementById('reelsViewport');
+      if (!viewport) return;
+
+      // If no videos exist, display nothing
+      if (!globalReelsStore || globalReelsStore.length === 0) {
+        viewport.innerHTML = '';
+        return;
+      }
+
+      const reactedStore = JSON.parse(localStorage.getItem('eweek_reacted_reels') || '{}');
+
+      viewport.innerHTML = globalReelsStore.map(reel => {
+        const reactions = reel.reactions || { heart: 0, love: 0, clap: 0, fire: 0 };
+        const myReacts = reactedStore[reel.id] || {};
+
+        return `
+          <div class="reel-snap-item" id="reel_${reel.id}">
+            <div class="reel-video-wrapper">
+        <iframe 
+            src="https://www.youtube.com/embed/${encodeURIComponent(reel.youtubeId)}?playsinline=1&rel=0&modestbranding=1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+        </iframe>
+
+              <div class="reel-bottom-meta">
+                <span class="reel-batch-tag">E-WEEK HIGHLIGHT</span>
+                <div class="reel-caption-text">${reel.caption || 'Tournament moment from E-WEEK 2026.'}</div>
+              </div>
+
+              <div class="reel-actions-rail">
+                <button class="reel-action-btn ${myReacts['heart'] ? 'reacted' : ''}" onclick="submitReelReaction('${reel.id}', 'heart')" title="Heart">
+                  <span class="reel-emoji-icon">❤️</span>
+                  <span class="reel-count-val" id="cnt_${reel.id}_heart">${reactions.heart}</span>
+                </button>
+                <button class="reel-action-btn ${myReacts['love'] ? 'reacted' : ''}" onclick="submitReelReaction('${reel.id}', 'love')" title="Love">
+                  <span class="reel-emoji-icon">🥰</span>
+                  <span class="reel-count-val" id="cnt_${reel.id}_love">${reactions.love}</span>
+                </button>
+                <button class="reel-action-btn ${myReacts['clap'] ? 'reacted' : ''}" onclick="submitReelReaction('${reel.id}', 'clap')" title="Clap">
+                  <span class="reel-emoji-icon">👏</span>
+                  <span class="reel-count-val" id="cnt_${reel.id}_clap">${reactions.clap}</span>
+                </button>
+                <button class="reel-action-btn ${myReacts['fire'] ? 'reacted' : ''}" onclick="submitReelReaction('${reel.id}', 'fire')" title="Fire">
+                  <span class="reel-emoji-icon">🔥</span>
+                  <span class="reel-count-val" id="cnt_${reel.id}_fire">${reactions.fire}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function submitReelReaction(reelId, type) {
+      const reactedStore = JSON.parse(localStorage.getItem('eweek_reacted_reels') || '{}');
+      if (!reactedStore[reelId]) reactedStore[reelId] = {};
+      reactedStore[reelId][type] = true;
+      localStorage.setItem('eweek_reacted_reels', JSON.stringify(reactedStore));
+
+      // Optimistic UI increment
+      const countEl = document.getElementById(`cnt_${reelId}_${type}`);
+      if (countEl) {
+        countEl.innerText = (parseInt(countEl.innerText, 10) || 0) + 1;
+      }
+
+      const cbName = 'react_cb_' + Math.round(Math.random() * 1000000);
+      loadJSONP(`${REELS_BACKEND_URL}?action=reactReel&id=${encodeURIComponent(reelId)}&type=${encodeURIComponent(type)}`, cbName, (res) => {
+        if (res && res.success && countEl) {
+          countEl.innerText = res.newCount;
+        }
+      }, () => {});
+    }
+
+    // =========================================================================
+    // LEADERBOARD, SCORES & NEWS LOGIC
+    // =========================================================================
     function resolveMatchWinner(teamA, scoreA, teamB, scoreB, status) {
       const sA = Number(scoreA) || 0;
       const sB = Number(scoreB) || 0;
@@ -2420,13 +2584,9 @@
       const tB = String(teamB).trim().toUpperCase();
       const isCompleted = String(status || '').toLowerCase() === 'completed';
 
-      if (sA > sB) {
-        return { winner: tA, loser: tB, text: `${tA} WON`, isTie: false, winnerScore: sA, loserScore: sB, winnerTeam: 'A' };
-      } else if (sB > sA) {
-        return { winner: tB, loser: tA, text: `${tB} WON`, isTie: false, winnerScore: sB, loserScore: sA, winnerTeam: 'B' };
-      } else {
-        return { winner: null, loser: null, text: isCompleted ? "MATCH TIED" : "LEVEL SCORE", isTie: true, winnerScore: sA, loserScore: sB, winnerTeam: null };
-      }
+      if (sA > sB) return { winner: tA, loser: tB, text: `${tA} WON`, isTie: false, winnerScore: sA, loserScore: sB, winnerTeam: 'A' };
+      if (sB > sA) return { winner: tB, loser: tA, text: `${tB} WON`, isTie: false, winnerScore: sB, loserScore: sA, winnerTeam: 'B' };
+      return { winner: null, loser: null, text: isCompleted ? "MATCH TIED" : "LEVEL SCORE", isTie: true, winnerScore: sA, loserScore: sB, winnerTeam: null };
     }
 
     function parsePlacementEntry(rawStr, defaultRank) {
@@ -2500,7 +2660,7 @@
       const sorted = [...batchData].sort((a, b) => b.score - a.score);
       const maxScore = Math.max(...sorted.map(s => s.score), 100);
 
-      const html = `
+      mount.innerHTML = `
         <div class="standings-list-wrapper">
           ${sorted.map((team, idx) => {
             const rank = idx + 1;
@@ -2534,8 +2694,6 @@
           }).join('')}
         </div>
       `;
-
-      mount.innerHTML = html;
     }
 
     function updateFloatingScoreBadge(newCount) {
@@ -2573,9 +2731,6 @@
       }, () => {});
     }
 
-    // =========================================================================
-    // PAST RELEASED RESULTS MODAL
-    // =========================================================================
     function setScoresFilter(filter, btn) {
       currentScoreFilter = filter;
       document.querySelectorAll('.scores-filter-btn').forEach(b => b.classList.remove('active'));
@@ -2593,14 +2748,9 @@
       }
 
       let filtered = [];
-
-      if (currentScoreFilter === "MATCHES") {
-        filtered = globalMatchesStore.filter(m => !isRankedEvent(m));
-      } else if (currentScoreFilter === "OTHER") {
-        filtered = globalMatchesStore.filter(m => isRankedEvent(m));
-      } else {
-        filtered = [...globalMatchesStore];
-      }
+      if (currentScoreFilter === "MATCHES") filtered = globalMatchesStore.filter(m => !isRankedEvent(m));
+      else if (currentScoreFilter === "OTHER") filtered = globalMatchesStore.filter(m => isRankedEvent(m));
+      else filtered = [...globalMatchesStore];
 
       if (filtered.length === 0) {
         container.innerHTML = `<div style="text-align:center; padding:30px; color:var(--color-stone-light);">No results in this category.</div>`;
@@ -2608,7 +2758,6 @@
       }
 
       const list = [...filtered].reverse();
-
       container.innerHTML = list.map(item => {
         if (!isRankedEvent(item)) {
           const m = item;
@@ -2623,33 +2772,24 @@
                 <span class="pro-match-sport-name">${m.sport} ${m.category ? `&bull; ${m.category}` : ''}</span>
                 <span class="pro-match-status-badge ${isLive ? 'live' : ''}">${m.status || 'Completed'}</span>
               </div>
-
               <div class="pro-match-body-grid">
                 <div class="pro-team-unit left ${outcome.winnerTeam === 'A' ? 'is-winner' : ''}">
                   <span class="pro-team-name-tag">${m.teamA}</span>
                   <img src="${emblemA}" class="pro-team-emblem" alt="${m.teamA}" onerror="this.src='logo.png';" />
                 </div>
-
                 <div class="pro-score-cluster">
                   <span class="pro-score-digit ${outcome.winnerTeam === 'A' ? 'winner-score' : ''}">${m.scoreA}</span>
                   <span class="pro-score-colon">:</span>
                   <span class="pro-score-digit ${outcome.winnerTeam === 'B' ? 'winner-score' : ''}">${m.scoreB}</span>
                 </div>
-
                 <div class="pro-team-unit right ${outcome.winnerTeam === 'B' ? 'is-winner' : ''}">
                   <img src="${emblemB}" class="pro-team-emblem" alt="${m.teamB}" onerror="this.src='logo.png';" />
                   <span class="pro-team-name-tag">${m.teamB}</span>
                 </div>
               </div>
-
               <div class="pro-match-footer">
                 <div class="pro-outcome-summary ${outcome.isTie ? 'tie' : ''}">
-                  ${outcome.winner ? `
-                    <svg viewBox="0 0 24 24" style="width:14px; height:14px; fill:currentColor;"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>
-                    <span>VICTORY: <strong>${outcome.winner}</strong> (+${outcome.winnerScore - outcome.loserScore} PTS)</span>
-                  ` : `
-                    <span>RESULT: <strong>${outcome.text}</strong></span>
-                  `}
+                  ${outcome.winner ? `<span>VICTORY: <strong>${outcome.winner}</strong> (+${outcome.winnerScore - outcome.loserScore} PTS)</span>` : `<span>RESULT: <strong>${outcome.text}</strong></span>`}
                 </div>
                 <span style="font-size:0.65rem; color:var(--color-stone-light);">${m.date || m.timestamp || 'Official Record'}</span>
               </div>
@@ -2671,7 +2811,6 @@
                 <span class="pro-match-sport-name" style="color: var(--color-gold);">${m.sport || m.eventName} &bull; ${m.category || 'Open'}</span>
                 <span class="pro-match-status-badge">1st: ${p1.batch}</span>
               </div>
-
               <div class="other-event-podium-grid">
                 <div class="podium-box p1">
                   <span class="podium-place-title">1st Place</span>
@@ -2679,14 +2818,12 @@
                   <span class="podium-team-name">${p1.batch}</span>
                   <span class="podium-pts-val">+${p1.pts} PTS</span>
                 </div>
-
                 <div class="podium-box p2">
                   <span class="podium-place-title">2nd Place</span>
                   <img src="${e2}" class="podium-emblem" alt="${p2.batch}" onerror="this.src='logo.png';" />
                   <span class="podium-team-name">${p2.batch}</span>
                   <span class="podium-pts-val">+${p2.pts} PTS</span>
                 </div>
-
                 <div class="podium-box p3">
                   <span class="podium-place-title">3rd Place</span>
                   <img src="${e3}" class="podium-emblem" alt="${p3.batch}" onerror="this.src='logo.png';" />
@@ -2694,7 +2831,6 @@
                   <span class="podium-pts-val">+${p3.pts} PTS</span>
                 </div>
               </div>
-
               <div class="pro-match-footer">
                 <span style="font-weight:700; color:var(--color-silver-mid); font-size:0.68rem;">Verified Placements</span>
                 <span style="font-size:0.65rem; color:var(--color-stone-light);">${m.timestamp ? new Date(m.timestamp).toLocaleDateString() : 'Official Record'}</span>
@@ -2709,44 +2845,34 @@
       unreadScoresCount = 0;
       const badge = document.getElementById('scoresUnreadBadge');
       if (badge) badge.style.display = 'none';
-
       renderAllScoresModalContent();
       document.getElementById('scoresModalBackdrop').classList.add('open');
     }
 
-    // =========================================================================
-    // CATEGORY HELPERS & ANNOUNCEMENTS MODAL (NOTIFICATION PANEL EXCLUSIVE)
-    // =========================================================================
     function getNormalizedCategory(item) {
       if (!item) return '';
       return String(item.category || item.Category || item.CATEGORY || item.type || item.Type || '').trim();
     }
 
     function isAnnouncementItem(item) {
-      const cat = getNormalizedCategory(item).toUpperCase();
-      return cat.includes('ANNOUNCEMENT');
+      return getNormalizedCategory(item).toUpperCase().includes('ANNOUNCEMENT');
     }
 
     function isNewsFeedItem(item) {
       const cat = getNormalizedCategory(item).toUpperCase();
-      // Strictly "LIVE UPDATES" or "TOURNAMENT ALERT" only
-      // Excludes anything matching ANNOUNCEMENT
       if (isAnnouncementItem(item)) return false;
-      return cat.includes('LIVE UPDATE') || cat.includes('LIVE UPDATES') || cat.includes('TOURNAMENT ALERT') || cat.includes('TOURNAMENT ALERTS') || cat.includes('TOURNAMENT');
+      return cat.includes('LIVE UPDATE') || cat.includes('LIVE UPDATES') || cat.includes('TOURNAMENT ALERT') || cat.includes('TOURNAMENT');
     }
 
     function renderAnnouncementsList() {
       const container = document.getElementById('announcementsListContainer');
       if (!container) return;
-
-      // Filter strictly for ANNOUNCEMENT items ONLY
       const announcementItems = (globalNewsStore || []).filter(isAnnouncementItem);
 
       if (announcementItems.length === 0) {
         container.innerHTML = `<div style="text-align: center; color: var(--color-stone-light); padding: 30px;">No announcements currently posted.</div>`;
       } else {
-        const reversedNews = [...announcementItems].reverse();
-        container.innerHTML = reversedNews.map(item => `
+        container.innerHTML = [...announcementItems].reverse().map(item => `
           <div class="notif-announcement-card">
             <div class="notif-head-row">
               <span class="news-badge-tag">${getNormalizedCategory(item) || "ANNOUNCEMENT"}</span>
@@ -2762,7 +2888,6 @@
     function openAnnouncementsModal() {
       const dot = document.getElementById('notifDot');
       if (dot) dot.style.display = 'none';
-
       renderAnnouncementsList();
       document.getElementById('notifModalBackdrop').classList.add('open');
     }
@@ -2771,9 +2896,6 @@
       document.getElementById('notifModalBackdrop').classList.remove('open');
     }
 
-    // =========================================================================
-    // FEATURED NEWS (STRICTLY "LIVE UPDATES" OR "TOURNAMENT ALERT" ONLY)
-    // =========================================================================
     function fetchFeaturedNews() {
       const container = document.getElementById('topStoriesContainer');
       const cbName = 'news_cb_' + Math.round(Math.random() * 1000000);
@@ -2781,25 +2903,18 @@
         const allItems = (res && res.news) ? res.news : [];
         globalNewsStore = allItems;
 
-        // Notification red dot: check if there are any ANNOUNCEMENT items
         const hasAnnouncements = allItems.some(isAnnouncementItem);
         const notifDot = document.getElementById('notifDot');
         if (notifDot) {
           const isModalOpen = document.getElementById('notifModalBackdrop')?.classList.contains('open');
-          if (!isModalOpen) {
-            notifDot.style.display = hasAnnouncements ? 'block' : 'none';
-          }
+          if (!isModalOpen) notifDot.style.display = hasAnnouncements ? 'block' : 'none';
         }
 
-        // Live update if the announcements modal is already open
         if (document.getElementById('notifModalBackdrop')?.classList.contains('open')) {
           renderAnnouncementsList();
         }
 
         if (!container) return;
-
-        // STRICT FILTER: Display LIVE UPDATES or TOURNAMENT ALERT only in the Top Stories feed.
-        // Explicitly reject any ANNOUNCEMENT items.
         displayedHomeNews = allItems.filter(isNewsFeedItem);
 
         if (displayedHomeNews.length === 0) {
@@ -2815,9 +2930,7 @@
 
         container.innerHTML = `
           <div class="featured-hero-story">
-            <div class="fhs-img-wrap">
-              <img src="${latestImg}" alt="${latest.title}" class="fhs-img" onerror="this.src='logo.png';" />
-            </div>
+            <div class="fhs-img-wrap"><img src="${latestImg}" alt="${latest.title}" class="fhs-img" onerror="this.src='logo.png';" /></div>
             <div class="fhs-content">
               <div>
                 <span class="news-badge-tag ${isAlert ? 'tournament-alert' : ''}">${latestCat}</span>
@@ -2835,9 +2948,7 @@
               const subIsAlert = subCat.toUpperCase().includes('ALERT');
               return `
                 <div class="news-card-sub" onclick="openFilteredNewsModal(${origIdx})">
-                  <div class="ncs-img-wrap">
-                    <img src="${subImg}" alt="${item.title}" class="ncs-img" onerror="this.src='logo.png';" />
-                  </div>
+                  <div class="ncs-img-wrap"><img src="${subImg}" alt="${item.title}" class="ncs-img" onerror="this.src='logo.png';" /></div>
                   <div class="ncs-body">
                     <span class="news-badge-tag ${subIsAlert ? 'tournament-alert' : ''}">${subCat}</span>
                     <h4 class="news-title-text" style="font-size:0.88rem; margin: 4px 0 2px;">${item.title}</h4>
@@ -2893,7 +3004,7 @@
     }
 
     // =========================================================================
-    // MERCHANDISE & STORE WIZARD
+    // STORE & CHECKOUT LOGIC
     // =========================================================================
     function renderMerchCatalogCards() {
       const container = document.getElementById('merchItemsGrid');
